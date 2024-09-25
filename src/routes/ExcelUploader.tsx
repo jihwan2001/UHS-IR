@@ -83,7 +83,7 @@ function ExcelUploader({ mainMenus, item, year, showExcel }: IItems) {
         }
       };
 
-      reader.readAsBinaryString(blob);
+      reader.readAsArrayBuffer(blob);
     } catch (error: any) {
       setError(error.message);
     }
@@ -102,13 +102,15 @@ function ExcelUploader({ mainMenus, item, year, showExcel }: IItems) {
     XLSX.writeFile(workbook, "modified_data.xlsx");
   };
 
+  // E:\ir-uhs\public\새 폴더\재학생 충원율 19~23\2019 재학생 충원율.xlsx
+
   useEffect(() => {
     if (showExcel) {
       const filePath =
         mainMenus === "교원DB"
-          ? `/새 폴더/${item} 21~23/${year} ${item}.xlsx`
-          : `/새 폴더/${item} 19~23/${year} ${item}.xlsx`;
-
+          ? `./public/새 폴더/${item} 21~23/${year} ${item}.xlsx`
+          : `./public/새 폴더/${item} 19~23/${year} ${item}.xlsx`;
+      console.log(item, year);
       loadExcelFile(filePath); // 자동으로 엑셀 파일 로드
     }
   }, [mainMenus, item, year, showExcel]);

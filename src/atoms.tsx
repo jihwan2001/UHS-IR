@@ -18,7 +18,7 @@ export interface IMenus {
 export const divMenus = atom<IMenus>({
   key: "menus",
   default: {
-    학생DB: ["신입생 총원율", "재학생 충원율", "취업률", "중도탈락률"],
+    학생DB: ["신입생 충원율", "재학생 충원율", "취업률", "중도탈락률"],
     교원DB: [
       "전임교원의 연구 실적",
       "전임교원 1인당 학생 수 및 전임교원 확보율",

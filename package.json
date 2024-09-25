@@ -1,6 +1,5 @@
 {
-  "proxy" : "http://127.0.0.1:4000",
-
+  "proxy": "http://127.0.0.1:4000/",
   "homepage": "./",
   "name": "ir-uhs",
   "version": "0.1.0",
@@ -63,5 +62,4 @@
   "devDependencies": {
     "@types/file-saver": "^2.0.7"
   }
-
 }
