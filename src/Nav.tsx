@@ -152,6 +152,9 @@ const Nav: React.FC = () => {
     setTeacherDbMenu(false);
     setManagementMenu((prev) => !prev);
   };
+  const handleLoginClick = () => {
+    window.open("/adminPage");
+  };
 
   return (
     <>
@@ -204,9 +207,11 @@ const Nav: React.FC = () => {
             </DropdownMenu>
           </MenuItem>
         </Menus>
-        <Login>
+        {/* <Link to={"/adminPage"}> */}
+        <Login onClick={handleLoginClick}>
           <LoginImage src={loginPic} alt="Login" />
         </Login>
+        {/* </Link> */}
       </Container>
     </>
   );
