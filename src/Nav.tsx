@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import symbolMark from "./img/symbolMark.png";
 import loginPic from "./img/login.png";
 import SchoolteacherDb from "./navBarsDropDown/SchoolteacherDb";
@@ -47,7 +47,7 @@ const Menus = styled.div`
 `;
 
 interface MenuItemProps {
-  active: boolean;
+  $active: boolean;
 }
 
 const MenuItem = styled.div<MenuItemProps>`
@@ -56,10 +56,10 @@ const MenuItem = styled.div<MenuItemProps>`
   width: 220px;
   padding: 2.4rem;
   cursor: pointer;
-  background-color: ${(props) => (props.active ? "#0f2280" : "transparent")};
+  background-color: ${(props) => (props.$active ? "#0f2280" : "transparent")};
   p {
     text-align: center;
-    color: ${(props) => (props.active ? "white" : "black")};
+    color: ${(props) => (props.$active ? "white" : "black")};
   }
   &:hover {
     transition: 0.5s ease;
@@ -71,7 +71,7 @@ const MenuItem = styled.div<MenuItemProps>`
 `;
 
 interface DropdownMenuProps {
-  visible: boolean;
+  $visible: boolean;
 }
 
 const DropdownMenu = styled.div<DropdownMenuProps>`
@@ -84,7 +84,7 @@ const DropdownMenu = styled.div<DropdownMenuProps>`
   font-size: 17px;
   z-index: 1000;
   width: 220px;
-  display: ${(props) => (props.visible ? "block" : "none")};
+  display: ${(props) => (props.$visible ? "block" : "none")};
 `;
 
 const Login = styled.div`
@@ -169,40 +169,40 @@ const Nav: React.FC = () => {
           <MenuItem
             className="menu-item"
             onClick={toggleIntroduceMenu}
-            active={introduceMenu}
+            $active={introduceMenu}
           >
             <p>센터 소개</p>
-            <DropdownMenu visible={introduceMenu}>
+            <DropdownMenu $visible={introduceMenu}>
               <Introduce />
             </DropdownMenu>
           </MenuItem>
           <MenuItem
             className="menu-item"
             onClick={toggleStudentDbMenu}
-            active={studentDbMenu}
+            $active={studentDbMenu}
           >
             <p>학생 DB</p>
-            <DropdownMenu visible={studentDbMenu}>
+            <DropdownMenu $visible={studentDbMenu}>
               <StudentDb />
             </DropdownMenu>
           </MenuItem>
           <MenuItem
             className="menu-item"
             onClick={toggleTeacherDbMenu}
-            active={teacherDbMenu}
+            $active={teacherDbMenu}
           >
             <p>교원 DB</p>
-            <DropdownMenu visible={teacherDbMenu}>
+            <DropdownMenu $visible={teacherDbMenu}>
               <SchoolteacherDb />
             </DropdownMenu>
           </MenuItem>
           <MenuItem
             className="menu-item"
             onClick={toggleManagementMenu}
-            active={managementMenu}
+            $active={managementMenu}
           >
             <p>경영 DB</p>
-            <DropdownMenu visible={managementMenu}>
+            <DropdownMenu $visible={managementMenu}>
               <ManagementDb />
             </DropdownMenu>
           </MenuItem>
