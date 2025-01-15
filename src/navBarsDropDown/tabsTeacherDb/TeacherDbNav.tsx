@@ -1,15 +1,10 @@
-<<<<<<< HEAD
-import { ChangeEvent, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import styled from "styled-components";
-=======
 import { ChangeEvent, useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import FolderExplorer from "../../FolderExplorer";
->>>>>>> c9c3bcb (upload)
 
+// 스타일 정의
 const Body = styled.div`
   height: 724px;
   display: flex;
@@ -49,11 +44,7 @@ const NavList = styled.ul`
   margin: 0;
   padding-left: 10px;
   font-size: 16px;
-<<<<<<< HEAD
-  flex-grow: 2; /* 리스트 항목이 더 많으므로 더 큰 비율로 설정 */
-=======
   flex-grow: 2;
->>>>>>> c9c3bcb (upload)
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -72,7 +63,7 @@ const StyledLink = styled(Link)<{ isActive: boolean }>`
 `;
 
 const Line = styled.div`
-  margin-top: 80px;
+  margin-top: 40px;
   font-size: 24px;
   font-weight: bold;
   display: flex;
@@ -82,13 +73,8 @@ const Line = styled.div`
 `;
 
 const Underline = styled.div`
-<<<<<<< HEAD
-  width: 1000px; /* 원하는 길이로 설정 */
-  height: 1px; /* 두께를 조정할 수 있음 */
-=======
-  width: 1000px;
+  width: 100%;
   height: 1px;
->>>>>>> c9c3bcb (upload)
   background-color: black;
   margin: 10px 0;
 `;
@@ -99,37 +85,6 @@ const Content = styled.div`
   margin-left: 35px;
 `;
 
-<<<<<<< HEAD
-const Navigation = () => {
-  const location = useLocation();
-
-  return (
-    <Nav>
-      <Name>교원 DB</Name>
-      <NavList>
-        <NavItem>
-          <StyledLink
-            to="/teacherDB/Research"
-            isActive={location.pathname === "/teacherDB/Research"}
-          >
-            • 전임교원 연구 실적
-          </StyledLink>
-        </NavItem>
-        <NavItem>
-          <StyledLink
-            to="/teacherDB/teacherPerStu"
-            isActive={location.pathname === "/teacherDB/teacherPerStu"}
-          >
-            • 전입교원 1인당 학생 수
-          </StyledLink>
-        </NavItem>
-      </NavList>
-    </Nav>
-  );
-};
-
-=======
->>>>>>> c9c3bcb (upload)
 const Select = styled.select`
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -142,17 +97,10 @@ const Select = styled.select`
   font-size: 16px;
   font-weight: bold;
   padding: 0.5rem 0;
-<<<<<<< HEAD
-  padding-right: 2rem; /* 화살표를 위한 여백 */
-  margin-left: 0.5rem;
-  cursor: pointer;
-  outline: none; /* 포커스 시 나타나는 외곽선을 제거 */
-=======
   padding-right: 2rem;
   margin-left: 0.5rem;
   cursor: pointer;
   outline: none;
->>>>>>> c9c3bcb (upload)
 `;
 
 const SelectYear = styled.div`
@@ -171,37 +119,19 @@ const SelectYear = styled.div`
     align-items: center;
   }
 `;
-<<<<<<< HEAD
-=======
 
->>>>>>> c9c3bcb (upload)
 const Files = styled.div`
   width: 1000px;
   height: 290px;
   background-color: white;
-<<<<<<< HEAD
-  overflow: auto; /* 넘치는 콘텐츠에 대해 스크롤바를 추가 */
-`;
-=======
   overflow: auto;
 `;
 
->>>>>>> c9c3bcb (upload)
+// 데이터 타입 정의
 interface IYear {
   year: string;
 }
 
-<<<<<<< HEAD
-interface FileProps {
-  year: string;
-}
-
-const File = ({ year }: FileProps) => {
-  return (
-    <Files>
-      {/* 서버에서 받아온 엑셀 파일 목록을 이 div 안에 렌더링 */}
-      <div>선택된 연도: {year}</div>
-=======
 interface FolderData {
   fileId: string;
   filename: string;
@@ -223,20 +153,14 @@ const File = ({ year, folderId, loading, children }: FileProps) => {
         <div>로딩 중...</div>
       ) : (
         <>
-          {/* <div>선택된 연도: {year}</div> */}
           <div>현재 폴더 ID: {folderId}</div>
           {children}
         </>
       )}
->>>>>>> c9c3bcb (upload)
     </Files>
   );
 };
 
-<<<<<<< HEAD
-const Year = () => {
-  const [year, setYear] = useState<IYear>({ year: "" });
-=======
 const Navigation = () => {
   const location = useLocation();
 
@@ -304,7 +228,6 @@ const Year = () => {
 
     fetchFolderId();
   }, [location.pathname]);
->>>>>>> c9c3bcb (upload)
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setYear({ year: event.target.value });
@@ -312,17 +235,7 @@ const Year = () => {
 
   return (
     <>
-<<<<<<< HEAD
       <SelectYear>
-=======
-      {/* <Line>
-        {location.pathname === "/teacherDB/Research" && "전임교원 연구 실적"}
-        {location.pathname === "/teacherDB/teacherPerStu" &&
-          "전임교원 1인당 학생 수"}
-        <Underline />
-      </Line> */}
-      {/* <SelectYear>
->>>>>>> c9c3bcb (upload)
         <div>공시연도</div>
         <div>|</div>
         <form action="#">
@@ -336,14 +249,7 @@ const Year = () => {
             <option value="2023">2023</option>
           </Select>
         </form>
-<<<<<<< HEAD
       </SelectYear>
-      <File year={year.year} />
-    </>
-  );
-};
-=======
-      </SelectYear> */}
       <File year={year.year} folderId={folderId} loading={loading}>
         {!loading && folderId && <FolderExplorer initialFolderId={folderId} />}
       </File>
@@ -351,5 +257,4 @@ const Year = () => {
   );
 };
 
->>>>>>> c9c3bcb (upload)
 export { Body, Line, Underline, Content, Navigation, Year };

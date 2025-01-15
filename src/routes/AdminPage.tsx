@@ -3,8 +3,6 @@ import styled from "styled-components";
 import symbolMark from "../img/symbolMark.png";
 import loginPic from "../img/login.png";
 
-import AdminPageMenu from "./AdminPageMenu";
-import ExcelUploader from "./ExcelUploader";
 import { useState, useCallback } from "react";
 
 const Nav = styled.div`
@@ -102,31 +100,7 @@ function AdminPage() {
           <LoginImage src={loginPic} alt="Login" />
         </Login>
       </Nav>
-      <Body>
-        <MenuContainer>
-          <AdminPageMenu
-            setExels={handleSetExels}
-            setMainMenus={setMainMenus}
-            setItem={setItem}
-            setYear={setYear}
-            setShowExcel={setShowExcel}
-            showExcel={false}
-          />
-        </MenuContainer>
-        <ExcelsContainer>
-          {excels && (
-            <ExcelUploader
-              mainMenus={mainMenus}
-              item={item}
-              year={year}
-              showExcel={showExcel}
-              onLoadFile={function (filePath: string): void {
-                throw new Error("Function not implemented.");
-              }}
-            />
-          )}
-        </ExcelsContainer>
-      </Body>
+      <Body></Body>
     </>
   );
 }

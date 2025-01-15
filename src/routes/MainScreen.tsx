@@ -1,10 +1,7 @@
 import styled from "styled-components";
 import banner from "../img/banner.png";
 import symbolMark from "../img/symbolMark.png";
-<<<<<<< HEAD
-=======
 import ChatBox from "../chat/ChatClickBox";
->>>>>>> c9c3bcb (upload)
 
 const MainBg = styled.div`
   background-image: url(${banner});
@@ -144,10 +141,7 @@ function MainScreen() {
           <SymbolMark />
         </BoxRow>
       </Boxes>
-<<<<<<< HEAD
-=======
       <ChatBox />
->>>>>>> c9c3bcb (upload)
     </>
   );
 }

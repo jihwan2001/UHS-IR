@@ -1,47 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import MainScreen from "./routes/MainScreen";
-import OrganChart from "./navBarsDropDown/tabsIntroduce/OrganChart";
-import Road from "./navBarsDropDown/tabsIntroduce/Road";
-import Goal from "./navBarsDropDown/tabsIntroduce/Goal";
-import FreshStuRate from "./navBarsDropDown/tabsStudentDb/FreshStuRate";
-import EmploymentRate from "./navBarsDropDown/tabsStudentDb/EmploymentRate";
-import StudentsRate from "./navBarsDropDown/tabsStudentDb/StudentsRate";
-import DropOutRate from "./navBarsDropDown/tabsStudentDb/DropOutRate";
-import Research from "./navBarsDropDown/tabsTeacherDb/Research";
-import TeacherPerStu from "./navBarsDropDown/tabsTeacherDb/TeacherPerStu";
-import Scholarship from "./navBarsDropDown/tabsManagementDb/Scholarship";
-<<<<<<< HEAD
-import AdminPage from "./routes/AdminPage";
-import Nav from "./Nav";
-import Footer from "./Footer";
-import ExcelUploader from "./routes/ExcelUploader";
-
-function RouterMain() {
-  const location = useLocation();
-  const isAdminPage = location.pathname === "/adminPage";
-  const isExels = location.pathname === "/exelspage";
-  return (
-    <>
-      {/* Nav는 AdminPage가 아닐 때만 렌더링 */}
-      {!isAdminPage && !isExels && <Nav />}
-
-      <Routes>
-        <Route
-          path="/exelspage"
-          element={
-            <ExcelUploader
-              item={""}
-              year={""}
-              mainMenus={""}
-              showExcel={false}
-              onLoadFile={function (filePath: string): void {
-                throw new Error("Function not implemented.");
-              }}
-            />
-          }
-        />
-        <Route path="/adminPage" element={<AdminPage />} /> {/*관리자 페이지*/}
-=======
 import AdminPage from "./adminPages/AdminPage";
 import EnrollmentStatus from "./adminPages/first/EnrollmentStatus";
 import Footer from "./Footer";
@@ -57,6 +15,16 @@ import ReportManagement from "./adminPages/third/ReportManagement";
 import ScheduleManagement from "./adminPages/third/ScheduleManagement";
 import Nav from "./Nav";
 import NoticesAdd from "./adminPages/third/NoticesAdd";
+import Goal from "./navBarsDropDown/tabsIntroduce/Goal";
+import OrganChart from "./navBarsDropDown/tabsIntroduce/OrganChart";
+import Road from "./navBarsDropDown/tabsIntroduce/Road";
+import Scholarship from "./navBarsDropDown/tabsManagementDb/Scholarship";
+import DropOutRate from "./navBarsDropDown/tabsStudentDb/DropOutRate";
+import EmploymentRate from "./navBarsDropDown/tabsStudentDb/EmploymentRate";
+import FreshStuRate from "./navBarsDropDown/tabsStudentDb/FreshStuRate";
+import StudentsRate from "./navBarsDropDown/tabsStudentDb/StudentsRate";
+import Research from "./navBarsDropDown/tabsTeacherDb/Research";
+import TeacherPerStu from "./navBarsDropDown/tabsTeacherDb/TeacherPerStu";
 
 function RouterMain() {
   const location = useLocation();
@@ -97,9 +65,7 @@ function RouterMain() {
 
           <Route path="UserPermissions" element={<UserPermissions />} />
         </Route>
-
         {/* 일반 페이지 */}
->>>>>>> c9c3bcb (upload)
         <Route path="/introduce/Goal" element={<Goal />} />
         <Route path="/introduce/organChart" element={<OrganChart />} />
         <Route path="/introduce/road" element={<Road />} />
