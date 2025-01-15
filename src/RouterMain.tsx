@@ -10,6 +10,7 @@ import DropOutRate from "./navBarsDropDown/tabsStudentDb/DropOutRate";
 import Research from "./navBarsDropDown/tabsTeacherDb/Research";
 import TeacherPerStu from "./navBarsDropDown/tabsTeacherDb/TeacherPerStu";
 import Scholarship from "./navBarsDropDown/tabsManagementDb/Scholarship";
+<<<<<<< HEAD
 import AdminPage from "./routes/AdminPage";
 import Nav from "./Nav";
 import Footer from "./Footer";
@@ -40,6 +41,65 @@ function RouterMain() {
           }
         />
         <Route path="/adminPage" element={<AdminPage />} /> {/*관리자 페이지*/}
+=======
+import AdminPage from "./adminPages/AdminPage";
+import EnrollmentStatus from "./adminPages/first/EnrollmentStatus";
+import Footer from "./Footer";
+import UserPermissions from "./adminPages/fifth/UserPermissions";
+import WebsiteNoticeSettings from "./adminPages/fourth/WebsiteNoticeSettings";
+import AcademicPerformance from "./adminPages/second/AcademicPerformance";
+import CompetitionResults from "./adminPages/second/CompetitionResults";
+import ProgramParticipation from "./adminPages/second/ProgramParticipation";
+import StudentExperience from "./adminPages/second/StudentExperience";
+import ComplaintsManagement from "./adminPages/third/ComplaintsManagement";
+import Notices from "./adminPages/third/Notices";
+import ReportManagement from "./adminPages/third/ReportManagement";
+import ScheduleManagement from "./adminPages/third/ScheduleManagement";
+import Nav from "./Nav";
+import NoticesAdd from "./adminPages/third/NoticesAdd";
+
+function RouterMain() {
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith("/adminPage");
+
+  return (
+    <>
+      {/* Nav는 AdminPage가 아닐 때만 렌더링 */}
+      {!isAdminPage && <Nav />}
+
+      <Routes>
+        {/* 관리자 페이지 */}
+        <Route path="/adminPage" element={<AdminPage />}>
+          {/* 기본 라우트로 EnrollmentStatus 설정 */}
+          <Route index element={<EnrollmentStatus />} />
+          <Route path="EnrollmentStatus" element={<EnrollmentStatus />} />
+
+          <Route path="AcademicPerformance" element={<AcademicPerformance />} />
+          <Route
+            path="ProgramParticipation"
+            element={<ProgramParticipation />}
+          />
+          <Route path="CompetitionResults" element={<CompetitionResults />} />
+          <Route path="StudentExperience" element={<StudentExperience />} />
+
+          <Route path="Notices" element={<Notices />} />
+          <Route
+            path="ComplaintsManagement"
+            element={<ComplaintsManagement />}
+          />
+          <Route path="ScheduleManagement" element={<ScheduleManagement />} />
+          <Route path="ReportManagement" element={<ReportManagement />} />
+
+          <Route
+            path="WebsiteNoticeSettings"
+            element={<WebsiteNoticeSettings />}
+          />
+
+          <Route path="UserPermissions" element={<UserPermissions />} />
+        </Route>
+
+        {/* 일반 페이지 */}
+>>>>>>> c9c3bcb (upload)
         <Route path="/introduce/Goal" element={<Goal />} />
         <Route path="/introduce/organChart" element={<OrganChart />} />
         <Route path="/introduce/road" element={<Road />} />

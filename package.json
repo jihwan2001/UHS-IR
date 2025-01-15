@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "proxy": "http://127.0.0.1:4000/",
+=======
+  "proxy": "http://localhost:8080",
+>>>>>>> c9c3bcb (upload)
   "homepage": "./",
   "name": "ir-uhs",
   "version": "0.1.0",
@@ -20,6 +24,10 @@
     "@types/node": "^16.18.101",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+<<<<<<< HEAD
+=======
+    "axios": "^1.7.9",
+>>>>>>> c9c3bcb (upload)
     "bootstrap": "^5.3.3",
     "file-saver": "^2.0.5",
     "pdfjs-dist": "^4.5.136",
