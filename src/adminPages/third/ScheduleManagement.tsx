@@ -1,7 +1,9 @@
+import Schedule from "./Schedule";
+
 const ScheduleManagement = () => {
   return (
     <div>
-      <div>djqwoiedhakjshdbqwiuehikqwendjkasdnk</div>
+      <Schedule />
     </div>
   );
 };

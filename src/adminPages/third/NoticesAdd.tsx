@@ -23,6 +23,12 @@ const Label = styled.label`
   margin-bottom: 10px;
 `;
 
+const InputContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
 const Input = styled.input`
   width: 100%;
   padding: 10px;
@@ -30,10 +36,27 @@ const Input = styled.input`
   border: 1px solid #ddd;
   border-radius: 4px;
   outline: none;
+  text-overflow: ellipsis; /* 텍스트가 넘칠 경우 줄임표(...) 표시 */
+  white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 강제 */
+  overflow: hidden; /* 넘치는 텍스트를 숨김 */
   &:focus {
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
+`;
+
+const FullText = styled.div`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  white-space: normal; /* 여러 줄로 표시 */
 `;
 
 const TextArea = styled.textarea`
@@ -110,27 +133,42 @@ interface NoticesAddProps {
 
 const NoticesAdd = ({ setAddBtnClicked }: NoticesAddProps) => {
   const [checked, setChecked] = useState(false); // 체크박스 선택시
+  const [showFullTitle, setShowFullTitle] = useState(false);
+
   const [formData, setFormData] = useState({
     board_title: "",
     board_description: "",
     schedul_event_date: "",
+    start_date: "",
+    end_date: "",
     schedul_title: "",
     user_id: 1,
   });
+
   const handleCancel = () => {
     setAddBtnClicked(false);
   };
 
+  // const handleChange = (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ) => {
+  //   const { id, value } = e.target;
+  //   // setFormData({ ...formData, [id]: value });
+  //   setFormData({ ...formData, schedul_title: e.target.value });
+  // };
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
   };
-
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked);
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -190,23 +228,42 @@ const NoticesAdd = ({ setAddBtnClicked }: NoticesAddProps) => {
           <>
             <ScheduleContainer>
               <ScheduleDate>
-                <Label htmlFor="schedul_event_date">날짜:</Label>
+                <Label htmlFor="start_date">시작 날짜:</Label>
                 <SmallInput
                   type="date"
-                  id="schedul_event_date"
-                  value={formData.schedul_event_date}
-                  onChange={handleChange}
+                  id="start_date"
+                  value={formData.start_date} // 시작 날짜 값
+                  onChange={handleChange} // 하나의 이벤트 객체를 넘김
+                />
+
+                <Label htmlFor="end_date">종료 날짜:</Label>
+                <SmallInput
+                  type="date"
+                  id="end_date"
+                  value={formData.end_date} // 종료 날짜 값
+                  onChange={handleChange} // 하나의 이벤트 객체를 넘김
                 />
               </ScheduleDate>
+
               <FormGroup>
                 <Label htmlFor="schedul_title">일정 제목</Label>
-                <Input
-                  type="text"
-                  id="schedul_title"
-                  value={formData.schedul_title}
-                  onChange={handleChange}
-                  placeholder="일정 제목을 입력해 주세요"
-                />
+                <InputContainer>
+                  <Input
+                    type="text"
+                    id="schedul_title"
+                    value={formData.schedul_title}
+                    onChange={handleChange}
+                    placeholder="일정 제목을 입력해 주세요"
+                    onFocus={() =>
+                      formData.schedul_title.length > 18 &&
+                      setShowFullTitle(true)
+                    }
+                    onBlur={() => setShowFullTitle(false)}
+                  />
+                  {showFullTitle && formData.schedul_title.length > 18 && (
+                    <FullText>{formData.schedul_title}</FullText>
+                  )}
+                </InputContainer>
               </FormGroup>
             </ScheduleContainer>
           </>
