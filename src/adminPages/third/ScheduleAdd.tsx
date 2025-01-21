@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import find from "../../img/find.png";
+import { EventType } from "./types";
 
 const Modal = styled.div<{ show: boolean }>`
   position: fixed;
@@ -94,20 +95,8 @@ const Modal = styled.div<{ show: boolean }>`
 
 type ScheduleAddProps = {
   show: boolean;
-  event: {
-    id?: string;
-    title: string;
-    start: string;
-    end: string;
-    description: string;
-  } | null; // event가 없을 수도 있으므로 null 허용
-  onSave: (newEvent: {
-    id?: string;
-    title: string;
-    start: string;
-    end: string;
-    description: string;
-  }) => void;
+  event: EventType | null;
+  onSave: (newEvent: EventType) => void;
   onCancel: () => void;
 };
 
@@ -122,7 +111,6 @@ const ScheduleAdd: React.FC<ScheduleAddProps> = ({
   const [end, setEnd] = useState("");
   const [description, setDescription] = useState("");
 
-  // event가 변경될 때 필드 초기화
   useEffect(() => {
     if (event) {
       setTitle(event.title);
@@ -139,23 +127,19 @@ const ScheduleAdd: React.FC<ScheduleAddProps> = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (!title || !start || !end) {
       alert("모든 필드를 입력해주세요!");
       return;
     }
-
-    onSave({
-      id: event?.id, // 수정 중인 경우 기존 id를 전달
-      title,
-      start,
-      end,
-      description,
-    });
+    onSave({ id: event?.id, title, start, end, description });
+    onCancel();
   };
 
   return (
-    <Modal show={show}>
+    <Modal
+      show={show}
+      onClick={(e) => e.target === e.currentTarget && onCancel()}
+    >
       <form onSubmit={handleSubmit}>
         <div className="modal-header">
           <input
@@ -166,7 +150,6 @@ const ScheduleAdd: React.FC<ScheduleAddProps> = ({
             required
           />
         </div>
-
         <div className="form-group">
           <label>시작일</label>
           <input
@@ -176,7 +159,6 @@ const ScheduleAdd: React.FC<ScheduleAddProps> = ({
             required
           />
         </div>
-
         <div className="form-group">
           <label>종료일</label>
           <input
@@ -186,7 +168,6 @@ const ScheduleAdd: React.FC<ScheduleAddProps> = ({
             required
           />
         </div>
-
         <div className="form-group with-icon">
           <label>연결 공지사항</label>
           <img src={find} alt="find" />
@@ -197,12 +178,15 @@ const ScheduleAdd: React.FC<ScheduleAddProps> = ({
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
-
         <div className="btn-group">
           <button type="button" className="cancel-btn" onClick={onCancel}>
             취소
           </button>
-          <button type="submit" className="save-btn">
+          <button
+            type="submit"
+            className="save-btn"
+            disabled={!title || !start || !end}
+          >
             저장
           </button>
         </div>

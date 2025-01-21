@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react"; // 타입 import
 import dayGridPlugin from "@fullcalendar/daygrid";
 import styled from "styled-components";
@@ -7,6 +7,8 @@ import trashCan from "../../img/trashCan.png";
 import cancel from "../../img/cancel.png";
 import { EventClickArg } from "@fullcalendar/core";
 import ScheduleAdd from "./ScheduleAdd";
+import axios from "axios";
+import { EventType } from "./types";
 
 const CalendarContainer = styled.div`
   .fc .fc-day-sun a {
@@ -71,24 +73,61 @@ const ToggleBtn = styled.div`
     cursor: pointer;
   }
 `;
+const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+`;
+
+const Button = styled.button`
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #6c757d;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    background-color: #5a6268;
+  }
+  &:last-child {
+    background-color: #ff8a8a;
+    &:hover {
+      background-color: #c46a6a;
+    }
+  }
+`;
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+`;
+
+const DeletePopUp = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 450px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  z-index: 100;
+  background-color: #fff;
+`;
 
 const Schedule = () => {
-  const [events, setEvents] = useState([
-    {
-      id: "1",
-      title: "학사 일정 확인",
-      start: "2025-01-05",
-      end: "2025-01-12",
-      description: "여기 들어가는 이름은 음 대략 띄어쓰기 포함 25",
-    },
-    {
-      id: "2",
-      title: "팀 회의",
-      start: "2025-01-07",
-      end: "2025-01-11",
-      description: "회의 주제는 프로젝트 상태 점검입니다.",
-    },
-  ]);
+  const [events, setEvents] = useState<EventType[]>([]);
   const [modalData, setModalData] = useState<null | {
     id: string;
     title: string;
@@ -100,6 +139,41 @@ const Schedule = () => {
   const [selectedEvent, setSelectedEvent] = useState<null | (typeof events)[0]>(
     null
   );
+  const [deleteClick, setDeleteClicked] = useState(false); // 삭제버튼
+
+  // 서버로부터 이벤트 데이터를 가져오는 함수
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get(
+        "https://localhost:3000/api/schedul/list"
+      );
+
+      const formattedEvents = response.data.map((item: any) => ({
+        id: item.schedul_id.toString(),
+        title: item.schedul_title,
+        start: `${item.schedul_year}-${String(item.schedul_month).padStart(
+          2,
+          "0"
+        )}-${String(item.schedul_day).padStart(2, "0")}`,
+        end: `${item.schedul_year}-${String(item.schedul_month).padStart(
+          2,
+          "0"
+        )}-${String(item.schedul_day).padStart(2, "0")}`,
+        description: item.board_id
+          ? `공지사항 ID: ${item.board_id}`
+          : "설명이 없습니다.",
+      }));
+
+      setEvents(formattedEvents); // 상태 업데이트
+    } catch (error) {
+      console.error("이벤트 데이터를 가져오는 중 오류 발생:", error);
+    }
+  };
+
+  // 컴포넌트가 마운트될 때 데이터 가져오기
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   // 이벤트 클릭 핸들러
   const handleEventClick = (info: EventClickArg) => {
@@ -139,36 +213,42 @@ const Schedule = () => {
   };
 
   // 저장 핸들러 (수정 및 새 일정 추가)
-  const handleSaveEvent = (newEvent: {
-    id?: string;
-    title: string;
-    start: string;
-    end: string;
-    description: string;
-  }) => {
+  const handleSaveEvent = (newEvent: EventType) => {
+    // 종료일을 하루 뒤로 설정
+    const adjustedEnd = new Date(newEvent.end);
+    adjustedEnd.setDate(adjustedEnd.getDate() + 1);
+
+    const formattedEnd = adjustedEnd.toISOString().split("T")[0]; // yyyy-MM-dd 형식으로 변환
+
     if (newEvent.id) {
       // 기존 이벤트 수정
       setEvents((prevEvents) =>
         prevEvents.map((event) =>
-          event.id === newEvent.id ? { ...event, ...newEvent } : event
+          event.id === newEvent.id
+            ? { ...event, ...newEvent, end: formattedEnd }
+            : event
         )
       );
     } else {
       // 새 이벤트 추가
       setEvents((prevEvents) => [
         ...prevEvents,
-        { ...newEvent, id: (prevEvents.length + 1).toString() },
+        {
+          ...newEvent,
+          end: formattedEnd,
+          id: (prevEvents.length + 1).toString(),
+        },
       ]);
     }
-
-    setCreateModalOpen(false);
-    setSelectedEvent(null);
   };
-
   // 이벤트 삭제 핸들러
   const deleteModal = (id: string) => {
     setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
     setModalOpen(false);
+  };
+  // 삭제 버튼 클릭시
+  const handleDeleteClick = () => {
+    setDeleteClicked((prev) => !prev);
   };
 
   return (
@@ -210,26 +290,51 @@ const Schedule = () => {
                 <img
                   src={pencil}
                   alt="Edit"
+                  title="수정"
                   onClick={() => modifyModal(modalData.id)}
                 />
                 <img
                   src={trashCan}
                   alt="Delete"
-                  onClick={() => deleteModal(modalData.id)}
+                  title="삭제"
+                  onClick={() => setDeleteClicked((prev) => !prev)}
                 />
               </div>
               <img
                 src={cancel}
                 alt="Cancel"
+                title="취소"
                 onClick={() => setModalOpen(false)}
               />
             </ToggleBtn>
             <div className="modal-header">{modalData.title}</div>
             <div className="modal-date">{modalData.date}</div>
             <div className="modal-description">{modalData.description}</div>
+            {deleteClick && (
+              <>
+                <DeletePopUp>
+                  <div>해당 일정을 삭제하겠습니까?</div>
+                  <ButtonGroup>
+                    <Button type="button" onClick={handleDeleteClick}>
+                      취소
+                    </Button>
+                    <Button
+                      type="button"
+                      onClick={() => {
+                        deleteModal(modalData.id);
+                        setDeleteClicked(false);
+                      }}
+                    >
+                      삭제
+                    </Button>
+                  </ButtonGroup>
+                </DeletePopUp>
+              </>
+            )}
           </>
         )}
       </Modal>
+      {deleteClick && <Overlay />}
 
       {/* 일정 추가/수정 모달 */}
       {isCreateModalOpen && (
