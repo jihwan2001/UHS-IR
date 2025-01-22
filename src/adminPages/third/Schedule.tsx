@@ -184,12 +184,14 @@ const Schedule = () => {
       month: "long",
       day: "numeric",
     });
+
     const endDate = end
-      ? new Date(end).toLocaleDateString("ko-KR", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })
+      ? new Date(new Date(end).getTime() - 24 * 60 * 60 * 1000) // 하루 빼기
+          .toLocaleDateString("ko-KR", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
       : null;
 
     setModalData({
@@ -213,34 +215,104 @@ const Schedule = () => {
   };
 
   // 저장 핸들러 (수정 및 새 일정 추가)
-  const handleSaveEvent = (newEvent: EventType) => {
-    // 종료일을 하루 뒤로 설정
+  const handleSaveEvent = async (newEvent: EventType) => {
+    // 종료일을 하루 뒤로 조정 (FullCalendar용)
     const adjustedEnd = new Date(newEvent.end);
     adjustedEnd.setDate(adjustedEnd.getDate() + 1);
 
-    const formattedEnd = adjustedEnd.toISOString().split("T")[0]; // yyyy-MM-dd 형식으로 변환
+    const formattedEnd = adjustedEnd.toISOString().split("T")[0]; // yyyy-MM-dd 형식
 
     if (newEvent.id) {
       // 기존 이벤트 수정
-      setEvents((prevEvents) =>
-        prevEvents.map((event) =>
-          event.id === newEvent.id
-            ? { ...event, ...newEvent, end: formattedEnd }
-            : event
-        )
-      );
+      try {
+        await axios.put(
+          `https://localhost:3000/api/schedul/${newEvent.id}/update`,
+          {
+            schedulTitle: newEvent.title,
+            schedulEventStartDate: newEvent.start,
+            schedulEventEndDate: formattedEnd,
+            boardId: newEvent.description, // 연결 공지사항 ID
+            // schedulDate: newEvent.start, // 이건 머임?
+          }
+        );
+
+        setEvents((prevEvents) =>
+          prevEvents.map((event) =>
+            event.id === newEvent.id
+              ? { ...event, ...newEvent, end: formattedEnd }
+              : event
+          )
+        );
+        alert("일정이 수정되었습니다.");
+      } catch (error) {
+        console.error("일정 수정 실패:", error);
+        alert("일정 수정 중 오류가 발생했습니다.");
+      }
     } else {
       // 새 이벤트 추가
-      setEvents((prevEvents) => [
-        ...prevEvents,
-        {
-          ...newEvent,
-          end: formattedEnd,
-          id: (prevEvents.length + 1).toString(),
-        },
-      ]);
+      try {
+        const response = await axios.post(
+          "https://localhost:3000/api/schedul/create",
+          {
+            schedul_title: newEvent.title,
+            schedul_start_date: newEvent.start,
+            schedul_end_date: formattedEnd,
+            schedul_date: newEvent.start, // 학사 일정 메인 날짜로 start 사용
+            board_id: newEvent.description, // 연결 공지사항 ID
+          }
+        );
+
+        const createdEvent = response.data;
+
+        setEvents((prevEvents) => [
+          ...prevEvents,
+          {
+            ...newEvent,
+            id: createdEvent.id.toString(), // 서버에서 생성된 ID 사용
+            end: formattedEnd,
+          },
+        ]);
+
+        alert("새 일정이 추가되었습니다.");
+      } catch (error) {
+        console.error("새 일정 추가 실패:", error);
+        alert("새 일정 추가 중 오류가 발생했습니다.");
+      }
+      try {
+        const response = await axios.post(
+          "https://localhost:3000/api/schedul/create",
+          {
+            schedul_title: newEvent.title,
+            schedul_start_date: newEvent.start,
+            schedul_end_date: formattedEnd,
+            schedul_date: newEvent.start, // 학사 일정 메인 날짜로 start 사용
+            board_id: newEvent.description, // 연결 공지사항 ID
+          }
+        );
+
+        const createdEvent = response.data;
+
+        setEvents((prevEvents) => [
+          ...prevEvents,
+          {
+            ...newEvent,
+            id: createdEvent.id.toString(), // 서버에서 생성된 ID 사용
+            end: formattedEnd,
+          },
+        ]);
+
+        alert("새 일정이 추가되었습니다.");
+      } catch (error) {
+        console.error("새 일정 추가 실패:", error);
+        alert("새 일정 추가 중 오류가 발생했습니다.");
+      }
     }
+
+    // 모달 닫기
+    setCreateModalOpen(false);
+    setSelectedEvent(null);
   };
+
   // 이벤트 삭제 핸들러
   const deleteModal = (id: string) => {
     setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));

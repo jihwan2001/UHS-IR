@@ -44,3 +44,44 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+### `npm list시 출력되는 내용들`
+
+── @fullcalendar/core@6.1.15
+├── @fullcalendar/daygrid@6.1.15
+├── @fullcalendar/react@6.1.15
+├── @mescius/spread-sheets-charts@17.1.3
+├── @mescius/spread-sheets-io@17.1.3
+├── @mescius/spread-sheets-pivot-addon@17.1.3
+├── @mescius/spread-sheets-react@17.1.3
+├── @mescius/spread-sheets-resources-ko@17.1.3
+├── @mescius/spread-sheets-shapes@17.1.3
+├── @mescius/spread-sheets-slicers@17.1.3
+├── @mescius/spread-sheets@17.1.3
+├── @testing-library/jest-dom@5.17.0
+├── @testing-library/react@13.4.0
+├── @testing-library/user-event@13.5.0
+├── @types/file-saver@2.0.7
+├── @types/jest@27.5.2
+├── @types/node@16.18.101
+├── @types/react-dom@18.3.0
+├── @types/react@18.3.3
+├── axios@1.7.9
+├── bootstrap@5.3.3
+├── css-loader@7.1.2
+├── file-saver@2.0.5
+├── node-sass@7.0.3
+├── pdfjs-dist@4.5.136
+├── react-bootstrap@2.10.4
+├── react-dom@18.3.1
+├── react-hook-form@7.52.2
+├── react-router-dom@6.24.1
+├── react-scripts@5.0.1
+├── react@18.3.1
+├── recoil@0.7.7
+├── sass-loader@16.0.4
+├── style-loader@4.0.0
+├── styled-components@6.1.11
+├── typescript@4.9.5
+├── web-vitals@2.1.4
+└── xlsx@0.18.5
