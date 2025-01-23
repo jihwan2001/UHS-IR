@@ -135,7 +135,7 @@ const PageButton = styled.button<{ active?: boolean }>`
 
 const getInfo = async (pageNum: number) => {
   try {
-    const response = await axios.get("https://localhost:8080/api/board/list", {
+    const response = await axios.get("http://localhost:8080/api/board/list", {
       params: { pageNum },
     });
     return response.data;
@@ -158,9 +158,18 @@ const Notices = () => {
 
   const [searchedData, setSearchedData] = useState(""); // 검색창에 입력된 검색어를 저장 하는 곳
 
-  const filteredData = boardData.filter((data) =>
-    data.board_title.toLowerCase().includes(searchedData.toLowerCase())
-  ); // 검색후 필터링된 데이터
+  // const filteredData = boardData.filter((data) =>
+  //   data.board_title.toLowerCase().includes(searchedData.toLowerCase())
+  // ); // 검색후 필터링된 데이터
+
+  const filteredData = [];
+  if (Array.isArray(boardData)) {
+    for (const data of boardData) {
+      if (data.board_title.toLowerCase().includes(searchedData.toLowerCase())) {
+        filteredData.push(data); // 조건에 맞는 데이터만 추가
+      }
+    }
+  } // 대체
 
   const itemsPerPage = 10; // 페이지당 게시글 수
   // 페이지에 해당하는 데이터 계산
@@ -194,7 +203,9 @@ const Notices = () => {
   const handleContentsClick = () => {
     setContentsBtnClicked(true);
   };
-
+  useEffect(() => {
+    console.log("Board Data", boardData);
+  }, [boardData]);
   return (
     <>
       {!addBtnClicked && !contentsBtnClicked && (
@@ -221,7 +232,7 @@ const Notices = () => {
           </InfoContainer>
 
           {/* 활성화된 데이터 표시 */}
-          {currentData.map((data) => (
+          {boardData.map((data) => (
             <ContentsContainer
               key={data.board_id}
               onClick={handleContentsClick}
@@ -233,7 +244,7 @@ const Notices = () => {
           ))}
 
           {/* 임의의 데이터 값 넣어놓음 */}
-          <ContentsContainer onClick={handleContentsClick}>
+          {/* <ContentsContainer onClick={handleContentsClick}>
             <ContentTitle>2025 게시글 제목1</ContentTitle>
             <ContentDetails>황을선</ContentDetails>
             <ContentDate>2025.01.10</ContentDate>
@@ -242,7 +253,7 @@ const Notices = () => {
             <ContentTitle>2025 게시글 제목2</ContentTitle>
             <ContentDetails>홍길동</ContentDetails>
             <ContentDate>2025.01.11</ContentDate>
-          </ContentsContainer>
+          </ContentsContainer> */}
           {/* 추가 게시글 */}
 
           {/* 페이지네이션 UI */}
