@@ -8,6 +8,7 @@ const Container = styled.div`
   border: 1px solid #ddd;
   border-left: 0;
   border-right: 0;
+  max-width: 1000px;
   margin-bottom: 20px;
   padding: 20px;
   background-color: #fff;
@@ -68,21 +69,24 @@ const DeletePopUp = styled.div`
 const Title = styled.h1`
   font-size: 32px;
   font-weight: bold;
+  margin-bottom: 20px;
 `;
 const Date = styled.div`
   font-size: 18px;
-  font-weight: 200;
-  color: lightgray;
+  font-weight: 400;
+  margin-bottom: 15px;
+  color: #4a4a4a;
 `;
 const Details = styled.div`
   font-size: 24px;
+  margin-bottom: 15px;
 `;
 
 // 게시물 관련 api 받아오기
 const getContents = async (board_id: number) => {
   try {
     const response = await axios.get(
-      `https://localhost:8080/api/board/list/${board_id}`
+      `http://39.127.112.109:8080/api/board/list/${board_id}`
     );
     console.log("응답받은 데이터", response.data);
     return response.data;
@@ -107,6 +111,7 @@ const boardDelete = async (board_id: number) => {
 
 interface NoticesContentsProps {
   setContentsBtnClicked: (value: boolean) => void;
+  boardId: number;
 }
 
 interface BoardData {
@@ -157,7 +162,10 @@ const NoticesContents = ({ setContentsBtnClicked }: NoticesContentsProps) => {
       {/* {boardData ? ( */}
       <>
         <Container>
-          <Title>제목{/*oardData.board_title*/}</Title>
+          <Title>
+            제목
+            {/*oardData.board_title*/}
+          </Title>
           <Date>작성일: {/*boardData.board_date*/}</Date>
           <Details>내용: {/*boardData.board_description*/}</Details>
         </Container>

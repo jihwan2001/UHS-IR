@@ -132,67 +132,32 @@ const PageButton = styled.button<{ active?: boolean }>`
     cursor: not-allowed;
   }
 `;
-
+interface BoardData {
+  boardId: number;
+  boardTitle: string;
+  userName: string;
+  boardDate: string;
+}
 const getInfo = async (pageNum: number) => {
   try {
     const response = await axios.get("http://localhost:8080/api/board/list", {
-      params: { pageNum },
+      params: { pageNum }, // API가 기대하는 파라미터 이름 확인
     });
-    return response.data;
+    console.log(`Page ${pageNum} 데이터:`, response.data); // 응답 확인
+    return response.data; // 전체 응답 반환
   } catch (error) {
     console.error("응답 처리 오류:", error);
     throw error;
   }
 };
 
-interface BoardData {
-  board_id: number;
-  board_title: string;
-  user_name: string;
-  board_date: string;
-}
-
 const Notices = () => {
-  const [boardData, setBoardData] = useState<BoardData[]>([]); // 받아온 데이터를 저장 하는 곳
-  const [pageNum, setPageNum] = useState(1); // 페이지 번호를 저장 하는 곳
+  const [boardData, setBoardData] = useState<BoardData[]>([]); // 현재 페이지 데이터
+  const [pageNum, setPageNum] = useState(1); // 현재 페이지 번호
+  const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
+  const [searchedData, setSearchedData] = useState(""); // 검색어
 
-  const [searchedData, setSearchedData] = useState(""); // 검색창에 입력된 검색어를 저장 하는 곳
-
-  // const filteredData = boardData.filter((data) =>
-  //   data.board_title.toLowerCase().includes(searchedData.toLowerCase())
-  // ); // 검색후 필터링된 데이터
-
-  const filteredData = [];
-  if (Array.isArray(boardData)) {
-    for (const data of boardData) {
-      if (data.board_title.toLowerCase().includes(searchedData.toLowerCase())) {
-        filteredData.push(data); // 조건에 맞는 데이터만 추가
-      }
-    }
-  } // 대체
-
-  const itemsPerPage = 10; // 페이지당 게시글 수
-  // 페이지에 해당하는 데이터 계산
-  const startIndex = (pageNum - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentData = filteredData.slice(startIndex, endIndex);
-
-  const totalPages = Math.max(1, Math.ceil(boardData.length / itemsPerPage));
-  const handlePageChange = (page: number) => {
-    setPageNum(page); // 페이지 번호 변경
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getInfo(pageNum);
-        setBoardData(data);
-      } catch (error) {
-        console.log("데이터 가져오기 실패", error);
-      }
-    };
-    fetchData();
-  }, [pageNum]);
+  const [selectedBoardId, setSelectedBoardId] = useState<number | null>(null); // 선택된 boardId 상태
 
   const [addBtnClicked, setAddBtnClicked] = useState(false); // 만들기 버튼 클릭 시
   const [contentsBtnClicked, setContentsBtnClicked] = useState(false); // 게시물 클릭 시
@@ -200,18 +165,39 @@ const Notices = () => {
     setAddBtnClicked(true);
     setContentsBtnClicked(false);
   };
-  const handleContentsClick = () => {
+  const handleContentsClick = (boardId: number) => {
+    setSelectedBoardId(boardId); // 클릭된 게시물의 ID 저장
     setContentsBtnClicked(true);
+    setAddBtnClicked(false);
   };
+
   useEffect(() => {
-    console.log("Board Data", boardData);
-  }, [boardData]);
+    const fetchData = async () => {
+      try {
+        const data = await getInfo(pageNum); // 페이지 번호에 따른 데이터 가져오기
+        setBoardData(data.content || []); // 현재 페이지 데이터 설정
+        setTotalPages(data.totalPages || 1); // 전체 페이지 수 설정
+      } catch (error) {
+        console.error("데이터 가져오기 실패:", error);
+      }
+    };
+    fetchData();
+  }, [pageNum]);
+
+  // 검색 필터링
+  const filteredData = searchedData.trim()
+    ? boardData.filter((data) =>
+        data.boardTitle.toLowerCase().includes(searchedData.toLowerCase())
+      )
+    : boardData;
+
+  const handlePageChange = (page: number) => setPageNum(page); // 페이지 변경 핸들러
+
   return (
     <>
       {!addBtnClicked && !contentsBtnClicked && (
         <>
           <Header>
-            {/* 검색어 입력 */}
             <SearchContainer>
               <SearchIcon src={find} alt="Search icon" />
               <SearchData
@@ -219,44 +205,32 @@ const Notices = () => {
                 placeholder="검색어를 입력하세요..."
                 onChange={(e) => {
                   setSearchedData(e.target.value); // 검색어 업데이트
-                  setPageNum(1); // 검색어 변경 시 페이지 번호 초기화
+                  setPageNum(1); // 검색 시 첫 페이지로 이동
                 }}
               />
             </SearchContainer>
             <AddContents onClick={handleAddClick}>+ 만들기</AddContents>
           </Header>
+
           <InfoContainer>
             <InfoTitle>제목</InfoTitle>
             <InfoDetails>작성자</InfoDetails>
             <InfoDetails>일자</InfoDetails>
           </InfoContainer>
 
-          {/* 활성화된 데이터 표시 */}
-          {boardData.map((data) => (
+          {/* 데이터 표시 */}
+          {filteredData.map((data) => (
             <ContentsContainer
-              key={data.board_id}
-              onClick={handleContentsClick}
+              key={data.boardId}
+              onClick={() => handleContentsClick(data.boardId)}
             >
-              <ContentTitle>{data.board_title}</ContentTitle>
-              <ContentDetails>{data.user_name}</ContentDetails>
-              <ContentDate>{data.board_date}</ContentDate>
+              <ContentTitle>{data.boardTitle}</ContentTitle>
+              <ContentDetails>{data.userName}</ContentDetails>
+              <ContentDate>{data.boardDate}</ContentDate>
             </ContentsContainer>
           ))}
 
-          {/* 임의의 데이터 값 넣어놓음 */}
-          {/* <ContentsContainer onClick={handleContentsClick}>
-            <ContentTitle>2025 게시글 제목1</ContentTitle>
-            <ContentDetails>황을선</ContentDetails>
-            <ContentDate>2025.01.10</ContentDate>
-          </ContentsContainer>
-          <ContentsContainer>
-            <ContentTitle>2025 게시글 제목2</ContentTitle>
-            <ContentDetails>홍길동</ContentDetails>
-            <ContentDate>2025.01.11</ContentDate>
-          </ContentsContainer> */}
-          {/* 추가 게시글 */}
-
-          {/* 페이지네이션 UI */}
+          {/* 페이지네이션 */}
           <Pagination>
             <PageButton
               disabled={pageNum === 1}
@@ -282,9 +256,13 @@ const Notices = () => {
           </Pagination>
         </>
       )}
+
       {addBtnClicked && <NoticesAdd setAddBtnClicked={setAddBtnClicked} />}
-      {contentsBtnClicked && (
-        <NoticesContents setContentsBtnClicked={setContentsBtnClicked} />
+      {contentsBtnClicked && selectedBoardId !== null && (
+        <NoticesContents
+          setContentsBtnClicked={setContentsBtnClicked}
+          boardId={selectedBoardId} // 선택된 boardId 전달
+        />
       )}
     </>
   );

@@ -25,6 +25,7 @@ import FreshStuRate from "./navBarsDropDown/tabsStudentDb/FreshStuRate";
 import StudentsRate from "./navBarsDropDown/tabsStudentDb/StudentsRate";
 import Research from "./navBarsDropDown/tabsTeacherDb/Research";
 import TeacherPerStu from "./navBarsDropDown/tabsTeacherDb/TeacherPerStu";
+import ReportManagementPdf from "./adminPages/third/ReportManagementPdf";
 
 function RouterMain() {
   const location = useLocation();
@@ -57,6 +58,10 @@ function RouterMain() {
           />
           <Route path="ScheduleManagement" element={<ScheduleManagement />} />
           <Route path="ReportManagement" element={<ReportManagement />} />
+          <Route
+            path="ReportManagement/pdf-viewer"
+            element={<ReportManagementPdf />}
+          />
 
           <Route
             path="WebsiteNoticeSettings"
