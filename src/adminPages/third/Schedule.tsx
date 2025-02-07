@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react"; // 타입 import
 import dayGridPlugin from "@fullcalendar/daygrid";
-import styled from "styled-components";
-import pencil from "../../img/pencil.png";
-import trashCan from "../../img/trashCan.png";
-import cancel from "../../img/cancel.png";
+
 import { EventClickArg } from "@fullcalendar/core";
 import ScheduleAdd from "./ScheduleAdd";
 import axios from "axios";
 import { EventType } from "./types";
 import Scss from "./Scss";
+import ScheduleToggleBtn from "./ScheduleToggleBtn";
+import ScheduleDelete from "./ScheduleDelete";
 
 const Schedule = () => {
   const [events, setEvents] = useState<EventType[]>([]);
@@ -43,7 +42,7 @@ const Schedule = () => {
           start: item.schedulEventStartDate,
           end: endDate.toISOString().split("T")[0], // yyyy-MM-dd 형식 변환
           description: item.boardId
-            ? `공지사항 ID: ${item.boardId}`
+            ? `공지사항 ID: ${item.description}`
             : "설명이 없습니다.",
         };
       });
@@ -64,26 +63,35 @@ const Schedule = () => {
   const handleEventClick = (info: EventClickArg) => {
     const { id, title, start, end, extendedProps } = info.event;
 
+    // 시작 날짜 변환
     const startDate = new Date(start!).toLocaleDateString("ko-KR", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
 
-    const endDate = end
-      ? new Date(new Date(end).getTime() - 24 * 60 * 60 * 1000) // 하루 빼기
-          .toLocaleDateString("ko-KR", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })
-      : null;
+    // `end` 값이 있는 경우만 변환 (없으면 null)
+    let endDate = null;
+    if (end) {
+      try {
+        endDate = new Date(end);
+        endDate.setDate(endDate.getDate() - 1); // 하루 빼기
+        endDate = endDate.toLocaleDateString("ko-KR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+      } catch (error) {
+        console.error("날짜 변환 오류:", error);
+        endDate = null; // 유효하지 않은 날짜인 경우 null 처리
+      }
+    }
 
     setModalData({
       id,
       title,
       date: endDate ? `${startDate} ~ ${endDate}` : startDate,
-      description: extendedProps.description,
+      description: extendedProps.description || "설명이 없습니다.",
     });
 
     setModalOpen(true);
@@ -105,7 +113,8 @@ const Schedule = () => {
     const adjustedEnd = new Date(newEvent.end);
     adjustedEnd.setDate(adjustedEnd.getDate() + 1);
 
-    const formattedEnd = adjustedEnd.toISOString().split("T")[0]; // yyyy-MM-dd 형식
+    // const formattedEnd = new Date(newEvent.end).toISOString().split("T")[0]; // yyyy-MM-dd 형식
+    const formattedEnd = adjustedEnd.toISOString().split("T")[0];
 
     if (newEvent.id) {
       // 기존 이벤트 수정
@@ -115,8 +124,11 @@ const Schedule = () => {
           {
             schedulTitle: newEvent.title,
             schedulEventStartDate: newEvent.start,
-            schedulEventEndDate: formattedEnd,
-            boardId: newEvent.description, // 연결 공지사항 ID
+            schedulEventEndDate: newEvent.end,
+            boardId:
+              typeof newEvent.description === "number"
+                ? newEvent.description
+                : null, // 연결 공지사항 ID
             // schedulDate: newEvent.start, // 이건 머임?
           }
         );
@@ -137,18 +149,22 @@ const Schedule = () => {
       // 새 이벤트 추가
       try {
         const response = await axios.post(
-          "https://localhost:3000/api/schedul/create",
+          "http://localhost:3000/api/schedul/create",
           {
             schedulTitle: newEvent.title,
-            schedulStartDate: newEvent.start,
-            schedulEndDate: formattedEnd,
-            schedulDate: newEvent.start, // 학사 일정 메인 날짜로 start 사용
-            boardId: newEvent.description, // 연결 공지사항 ID
+            schedulEventStartDate: newEvent.start, // ✅ 올바른 필드 사용
+            schedulEventEndDate: newEvent.end, //formattedEnd,      // ✅ 올바른 필드 사용
+            boardId:
+              typeof newEvent.description === "number"
+                ? newEvent.description
+                : null,
           }
         );
-
         const createdEvent = response.data;
-
+        console.log("일정 : ", createdEvent); // 수정
+        if (!createdEvent || !createdEvent.id) {
+          throw new Error("서버에서 생성된 일정 ID가 없습니다.");
+        }
         setEvents((prevEvents) => [
           ...prevEvents,
           {
@@ -157,38 +173,9 @@ const Schedule = () => {
             end: formattedEnd,
           },
         ]);
-
         alert("새 일정이 추가되었습니다.");
       } catch (error) {
-        console.error("새 일정 추가 실패:", error);
-        alert("새 일정 추가 중 오류가 발생했습니다.");
-      }
-      try {
-        const response = await axios.post(
-          "https://localhost:3000/api/schedul/create",
-          {
-            schedulTitle: newEvent.title,
-            schedulStartDate: newEvent.start,
-            schedulEndDate: formattedEnd,
-            schedulDate: newEvent.start, // 학사 일정 메인 날짜로 start 사용
-            boardId: newEvent.description, // 연결 공지사항 ID
-          }
-        );
-
-        const createdEvent = response.data;
-
-        setEvents((prevEvents) => [
-          ...prevEvents,
-          {
-            ...newEvent,
-            id: createdEvent.id.toString(), // 서버에서 생성된 ID 사용
-            end: formattedEnd,
-          },
-        ]);
-
-        alert("새 일정이 추가되었습니다.");
-      } catch (error) {
-        console.error("새 일정 추가 실패:", error);
+        console.error("❌ 새 일정 추가 실패:", error);
         alert("새 일정 추가 중 오류가 발생했습니다.");
       }
     }
@@ -198,11 +185,6 @@ const Schedule = () => {
     setSelectedEvent(null);
   };
 
-  // 이벤트 삭제 핸들러
-  const deleteModal = (id: string) => {
-    setEvents((prevEvents) => prevEvents.filter((event) => event.id !== id));
-    setModalOpen(false);
-  };
   // 삭제 버튼 클릭시
   const handleDeleteClick = () => {
     setDeleteClicked((prev) => !prev);
@@ -242,51 +224,24 @@ const Schedule = () => {
       <Scss.Modal show={isModalOpen}>
         {modalData && (
           <>
-            <Scss.ToggleBtn>
-              <div>
-                <img
-                  src={pencil}
-                  alt="Edit"
-                  title="수정"
-                  onClick={() => modifyModal(modalData.id)}
-                />
-                <img
-                  src={trashCan}
-                  alt="Delete"
-                  title="삭제"
-                  onClick={() => setDeleteClicked((prev) => !prev)}
-                />
-              </div>
-              <img
-                src={cancel}
-                alt="Cancel"
-                title="취소"
-                onClick={() => setModalOpen(false)}
-              />
-            </Scss.ToggleBtn>
+            {/* 수정 삭제 취소 버튼 */}
+            <ScheduleToggleBtn
+              modalData={modalData!} // 반드시 값이 존재한다고 가정
+              modifyModal={modifyModal} // 수정 핸들러 함수
+              setDeleteClicked={setDeleteClicked} // 삭제 클릭 상태 업데이트 함수
+              setModalOpen={setModalOpen} // 모달 상태 업데이트 함수
+            />
             <div className="modal-header">{modalData.title}</div>
             <div className="modal-date">{modalData.date}</div>
             <div className="modal-description">{modalData.description}</div>
             {deleteClick && (
-              <>
-                <Scss.DeletePopUp>
-                  <div>해당 일정을 삭제하겠습니까?</div>
-                  <Scss.ButtonGroup>
-                    <Scss.Button type="button" onClick={handleDeleteClick}>
-                      취소
-                    </Scss.Button>
-                    <Scss.Button
-                      type="button"
-                      onClick={() => {
-                        deleteModal(modalData.id);
-                        setDeleteClicked(false);
-                      }}
-                    >
-                      삭제
-                    </Scss.Button>
-                  </Scss.ButtonGroup>
-                </Scss.DeletePopUp>
-              </>
+              <ScheduleDelete
+                modalData={modalData!}
+                setEvents={setEvents}
+                setDeleteClicked={setDeleteClicked}
+                handleDeleteClick={handleDeleteClick}
+                setCreateModalOpen={setCreateModalOpen}
+              />
             )}
           </>
         )}

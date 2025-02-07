@@ -1,103 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import styled from "styled-components";
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 60px;
-  background-color: #fff;
-`;
-
-const CheckBox = styled.div`
-  width: 400px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-`;
-
-const Title = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
-  line-height: 1.5;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 10px 15px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  outline: none;
-  margin-bottom: 20px;
-  transition: border-color 0.3s;
-
-  &:focus {
-    border-color: #888;
-  }
-`;
-
-const ButtonGroup = styled.div<{ align?: string }>`
-  display: flex;
-  gap: 10px;
-  justify-content: ${(props) => props.align || "center"};
-`;
-
-const Button = styled.button`
-  padding: 10px 30px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:last-child {
-    background-color: #ccc;
-    color: #333;
-    &:hover {
-      background-color: #b3b3b3;
-    }
-  }
-`;
-
-const RowContainer = styled.div`
-  display: flex;
-  align-items: center;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  padding: 10px 0;
-  margin: 20px 0;
-  text-align: center;
-`;
-
-const InfoDetails = styled.div`
-  flex: 1;
-  font-size: 14px;
-  font-weight: bold;
-  color: #333;
-
-  &:nth-last-child(2),
-  &:last-child {
-    flex: 2;
-  }
-`;
-
-const ContentDetails = styled.div`
-  flex: 1;
-  font-size: 14px;
-
-  &:nth-last-child(2),
-  &:last-child {
-    flex: 2;
-  }
-`;
+import UserList from "./UserList";
 
 interface ReqDatas {
   user_id: number | string;
@@ -256,133 +159,19 @@ const UserPermissions = () => {
   return (
     <>
       {/* {checkPw && (
-        <Container>
-          <CheckBox>
-            <Title>
-              보안을 위해 한 번 더<br />
-              비밀번호를 입력해주세요.
-            </Title>
-            <Input
-              type="password"
-              value={okPw}
-              placeholder="비밀번호를 입력해주세요."
-              onChange={handlePasswordChange}
-            />
-            <ButtonGroup align="center">
-              <Button type="button" onClick={handlePasswordSubmit}>
-                확인
-              </Button>
-              <Button type="button" onClick={() => setOkPw("")}>취소</Button>
-            </ButtonGroup>
-          </CheckBox>
-        </Container>
+        <PasswordCheck
+          okPw={okPw}
+          setOkPw={setOkPw}
+          handlePasswordChange={handlePasswordChange}
+          handlePasswordSubmit={handlePasswordSubmit}
+        />
       )} */}
-
       {!showDetails && (
-        <>
-          <RowContainer>
-            <InfoDetails>이름</InfoDetails>
-            <InfoDetails>보안등급</InfoDetails>
-            <InfoDetails>부서</InfoDetails>
-            <InfoDetails>직책</InfoDetails>
-            <InfoDetails>이메일</InfoDetails>
-            <InfoDetails>특이사항</InfoDetails>
-          </RowContainer>
-          {accountData.map((account, index) => (
-            <RowContainer key={account.user_id}>
-              <ContentDetails>{account.user_name}</ContentDetails>
-              <ContentDetails>
-                <select
-                  value={account.user_level}
-                  onChange={(e) => {
-                    const newLevel = parseInt(e.target.value, 10);
-                    setAccountData((prev) => {
-                      const updated = [...prev];
-                      updated[index].user_level = newLevel;
-                      return updated;
-                    });
-                  }}
-                >
-                  <option value="0">가</option>
-                  <option value="1">나</option>
-                  <option value="2">다</option>
-                  <option value="3">라</option>
-                </select>
-              </ContentDetails>
-              <ContentDetails>
-                <select
-                  value={account.user_dept}
-                  onChange={(e) => {
-                    const newDept = parseInt(e.target.value, 10);
-                    setAccountData((prev) => {
-                      const updated = [...prev];
-                      updated[index].user_dept = newDept;
-                      return updated;
-                    });
-                  }}
-                >
-                  <option value="0">행정</option>
-                  <option value="1">안전</option>
-                  <option value="2">시설</option>
-                  <option value="3">교육</option>
-                  <option value="4">경영</option>
-                </select>
-              </ContentDetails>
-              <ContentDetails>
-                <select
-                  value={account.user_position}
-                  onChange={(e) => {
-                    const newPosition = parseInt(e.target.value, 10);
-                    setAccountData((prev) => {
-                      const updated = [...prev];
-                      updated[index].user_position = newPosition;
-                      return updated;
-                    });
-                  }}
-                >
-                  <option value="0">대표</option>
-                  <option value="1">부서장</option>
-                  <option value="2">팀장</option>
-                  <option value="3">파트장</option>
-                  <option value="4">사원</option>
-                </select>
-              </ContentDetails>
-              <ContentDetails>
-                <input
-                  type="email"
-                  value={account.user_account}
-                  onChange={(e) => {
-                    const newAccount = e.target.value;
-                    setAccountData((prev) => {
-                      const updated = [...prev];
-                      updated[index].user_account = newAccount;
-                      return updated;
-                    });
-                  }}
-                />
-              </ContentDetails>
-              <ContentDetails>
-                <input
-                  type="text"
-                  value={account.user_memo}
-                  onChange={(e) => {
-                    const newMemo = e.target.value;
-                    setAccountData((prev) => {
-                      const updated = [...prev];
-                      updated[index].user_memo = newMemo;
-                      return updated;
-                    });
-                  }}
-                />
-              </ContentDetails>
-            </RowContainer>
-          ))}
-          <ButtonGroup align="flex-end">
-            <Button type="button" onClick={handleSave}>
-              저장
-            </Button>
-          </ButtonGroup>
-        </>
+        <UserList
+          accountData={accountData}
+          setAccountData={setAccountData}
+          handleSave={handleSave}
+        />
       )}
     </>
   );

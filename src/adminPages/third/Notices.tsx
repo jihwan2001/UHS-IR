@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import find from "../../img/find.png";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import NoticesAdd from "./NoticesAdd";
 import NoticesContents from "./NoticesContents";
+import { getSearch, getInfo } from "../../api/notice";
 
 const Header = styled.div`
   display: flex;
@@ -138,24 +138,13 @@ interface BoardData {
   userName: string;
   boardDate: string;
 }
-const getInfo = async (pageNum: number) => {
-  try {
-    const response = await axios.get("http://localhost:8080/api/board/list", {
-      params: { pageNum }, // API가 기대하는 파라미터 이름 확인
-    });
-    console.log(`Page ${pageNum} 데이터:`, response.data); // 응답 확인
-    return response.data; // 전체 응답 반환
-  } catch (error) {
-    console.error("응답 처리 오류:", error);
-    throw error;
-  }
-};
 
 const Notices = () => {
   const [boardData, setBoardData] = useState<BoardData[]>([]); // 현재 페이지 데이터
   const [pageNum, setPageNum] = useState(1); // 현재 페이지 번호
   const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
   const [searchedData, setSearchedData] = useState(""); // 검색어
+  const [isSearching, setIsSearching] = useState(false); // 검색 중인지 여부
 
   const [selectedBoardId, setSelectedBoardId] = useState<number | null>(null); // 선택된 boardId 상태
 
@@ -184,12 +173,30 @@ const Notices = () => {
     fetchData();
   }, [pageNum]);
 
-  // 검색 필터링
-  const filteredData = searchedData.trim()
-    ? boardData.filter((data) =>
-        data.boardTitle.toLowerCase().includes(searchedData.toLowerCase())
-      )
-    : boardData;
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!searchedData.trim()) {
+        setIsSearching(false);
+        setPageNum(1);
+        const data = await getInfo(1);
+        setBoardData(data.content || []);
+        setTotalPages(data.totalPages || 1);
+        return;
+      }
+
+      try {
+        setIsSearching(true);
+        setPageNum(1);
+        const data = await getSearch(searchedData);
+        setBoardData(data.slice(0, 10)); // 검색 결과 최대 10개 표시
+        setTotalPages(Math.ceil(data.length / 10));
+      } catch (error) {
+        console.error("❌ 검색 요청 중 오류:", error);
+      }
+    };
+
+    fetchData();
+  }, [searchedData]);
 
   const handlePageChange = (page: number) => setPageNum(page); // 페이지 변경 핸들러
 
@@ -219,16 +226,22 @@ const Notices = () => {
           </InfoContainer>
 
           {/* 데이터 표시 */}
-          {filteredData.map((data) => (
-            <ContentsContainer
-              key={data.boardId}
-              onClick={() => handleContentsClick(data.boardId)}
-            >
-              <ContentTitle>{data.boardTitle}</ContentTitle>
-              <ContentDetails>{data.userName}</ContentDetails>
-              <ContentDate>{data.boardDate}</ContentDate>
-            </ContentsContainer>
-          ))}
+          {boardData.length === 0
+            ? isSearching && (
+                <p style={{ textAlign: "center", marginTop: "20px" }}>
+                  🔍 검색 결과가 없습니다.
+                </p>
+              )
+            : boardData.map((data) => (
+                <ContentsContainer
+                  key={data.boardId}
+                  onClick={() => handleContentsClick(data.boardId)}
+                >
+                  <ContentTitle>{data.boardTitle}</ContentTitle>
+                  <ContentDetails>{data.userName}</ContentDetails>
+                  <ContentDate>{data.boardDate}</ContentDate>
+                </ContentsContainer>
+              ))}
 
           {/* 페이지네이션 */}
           <Pagination>

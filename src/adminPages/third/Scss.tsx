@@ -116,6 +116,112 @@ const DeletePopUp = styled.div`
   background-color: #fff;
 `;
 
+const SModal = styled.div<{ show: boolean }>`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  width: 400px;
+  padding: 20px;
+  z-index: 1000;
+  display: ${(props) => (props.show ? "block" : "none")};
+
+  .modal-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  .modal-header input {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    font-size: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  }
+
+  .form-group.with-icon {
+    position: relative;
+
+    input {
+      padding-left: 40px;
+    }
+
+    img {
+      position: absolute;
+      top: 65%;
+      left: 10px;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .btn-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    button {
+      padding: 10px 20px;
+      font-size: 14px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .save-btn {
+      background-color: #ff6b6b;
+      color: white;
+      &:hover {
+        background-color: #e45757;
+      }
+    }
+
+    .cancel-btn {
+      background-color: #ccc;
+      &:hover {
+        background-color: #bbb;
+      }
+    }
+  }
+`;
+const NoticeDropdown = styled.div`
+  position: absolute;
+  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 10;
+`;
+
+const NoticeItem = styled.div`
+  padding: 8px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
 export default {
   CalendarContainer,
   Modal,
@@ -124,4 +230,7 @@ export default {
   Button,
   Overlay,
   DeletePopUp,
+  SModal,
+  NoticeDropdown,
+  NoticeItem,
 };

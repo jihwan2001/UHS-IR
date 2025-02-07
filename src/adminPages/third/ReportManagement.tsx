@@ -10,11 +10,17 @@ interface Folder {
   dir_parent_id: number;
 }
 
+interface File {
+  file_name: string;
+  file_date: string;
+}
+
 const today = new Date().toISOString().split("T")[0].replace(/-/g, ".");
 
 const ReportManagement = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [folders, setFolders] = useState<Folder[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
   const [parentDirId, setParentDirId] = useState<number>(0); // 현재 디렉터리 ID
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -37,9 +43,9 @@ const ReportManagement = () => {
     };
   }, []);
 
-  // 폴더 데이터를 가져오는 useEffect
+  // 폴더 및 파일 데이터를 가져오는 useEffect
   useEffect(() => {
-    const fetchFolders = async () => {
+    const fetchFoldersAndFiles = async () => {
       try {
         const endpoint =
           parentDirId === 0
@@ -50,14 +56,15 @@ const ReportManagement = () => {
           parentDirId === 0 ? { user_id: 1 } : { parentDir: parentDirId }; // 요청 파라미터
         const response = await axios.get(endpoint, { params });
 
-        console.log("폴더 데이터 : ", response.data);
-        setFolders(response.data || []);
+        console.log("폴더 및 파일 데이터 :", response.data);
+        setFolders(response.data.folders || []);
+        setFiles(response.data.files || []);
       } catch (error) {
-        console.error("폴더 데이터를 가져오는 중 오류 발생:", error);
+        console.error("데이터를 가져오는 중 오류 발생:", error);
       }
     };
 
-    fetchFolders();
+    fetchFoldersAndFiles();
   }, [parentDirId]); // parentDirId가 변경될 때마다 실행
 
   // 폴더 생성 버튼 클릭 시 POST 요청
@@ -137,7 +144,7 @@ const ReportManagement = () => {
       />
       <input
         type="file"
-        accept=".pdf"
+        accept=".hwp"
         ref={fileInputRef}
         style={{ display: "none" }}
         onChange={handleFileUpload}
@@ -186,6 +193,17 @@ const ReportManagement = () => {
             {folder.dir_name}
           </RMcss.ContentDetails>
           <RMcss.ContentDate flexValue={1}>{today}</RMcss.ContentDate>
+        </RMcss.ContentsContainer>
+      ))}
+
+      {/* 파일 리스트 출력 */}
+      {files.map((file, index) => (
+        <RMcss.ContentsContainer key={index}>
+          <RMcss.ContentTitle flexValue={1}>📄</RMcss.ContentTitle>
+          <RMcss.ContentDetails flexValue={3}>
+            {file.file_name}
+          </RMcss.ContentDetails>
+          <RMcss.ContentDate flexValue={1}>{file.file_date}</RMcss.ContentDate>
         </RMcss.ContentsContainer>
       ))}
     </>

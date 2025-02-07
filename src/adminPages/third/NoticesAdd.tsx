@@ -136,13 +136,12 @@ const NoticesAdd = ({ setAddBtnClicked }: NoticesAddProps) => {
   const [showFullTitle, setShowFullTitle] = useState(false);
 
   const [formData, setFormData] = useState({
-    board_title: "",
-    board_description: "",
-    schedul_event_date: "",
-    start_date: "",
-    end_date: "",
-    schedul_title: "",
-    user_id: 1,
+    boardTitle: "",
+    boardDescription: "",
+    schedulStartEventDate: "",
+    schedulEndEventDate: "",
+    schedulTitle: "",
+    userId: 1,
   });
 
   const handleCancel = () => {
@@ -173,14 +172,16 @@ const NoticesAdd = ({ setAddBtnClicked }: NoticesAddProps) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/board/add",
+        "http://39.127.112.109:3000/api/board/add",
         formData
       );
       console.log("요청 성공", response);
       alert("공지가 성공적으로 등록되었습니다.");
+      window.location.reload();
       setAddBtnClicked(false);
     } catch (error) {
       console.log("요청 실패", error);
+      console.log(formData);
       alert("공지를 등록하는 중 오류가 발생했습니다.");
     }
   };
@@ -190,21 +191,21 @@ const NoticesAdd = ({ setAddBtnClicked }: NoticesAddProps) => {
       <form onSubmit={handleSubmit}>
         {/* 제목 및 내용 */}
         <FormGroup>
-          <Label htmlFor="board_title">제목</Label>
+          <Label htmlFor="boardTitle">제목</Label>
           <Input
             type="text"
-            id="board_title"
-            value={formData.board_title}
+            id="boardTitle"
+            value={formData.boardTitle}
             onChange={handleChange}
             placeholder="제목을 입력해 주세요"
             required
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="board_description">내용</Label>
+          <Label htmlFor="boardDescription">내용</Label>
           <TextArea
-            id="board_description"
-            value={formData.board_description}
+            id="boardDescription"
+            value={formData.boardDescription}
             onChange={handleChange}
             placeholder="내용을 입력해 주세요"
             required
@@ -228,40 +229,40 @@ const NoticesAdd = ({ setAddBtnClicked }: NoticesAddProps) => {
           <>
             <ScheduleContainer>
               <ScheduleDate>
-                <Label htmlFor="start_date">시작 날짜:</Label>
+                <Label htmlFor="schedulStartEventDate">시작 날짜:</Label>
                 <SmallInput
                   type="date"
-                  id="start_date"
-                  value={formData.start_date} // 시작 날짜 값
+                  id="schedulStartEventDate"
+                  value={formData.schedulStartEventDate} // 시작 날짜 값
                   onChange={handleChange} // 하나의 이벤트 객체를 넘김
                 />
 
-                <Label htmlFor="end_date">종료 날짜:</Label>
+                <Label htmlFor="schedulEndEventDate">종료 날짜:</Label>
                 <SmallInput
                   type="date"
-                  id="end_date"
-                  value={formData.end_date} // 종료 날짜 값
+                  id="schedulEndEventDate"
+                  value={formData.schedulEndEventDate} // 종료 날짜 값
                   onChange={handleChange} // 하나의 이벤트 객체를 넘김
                 />
               </ScheduleDate>
 
               <FormGroup>
-                <Label htmlFor="schedul_title">일정 제목</Label>
+                <Label htmlFor="schedulTitle">일정 제목</Label>
                 <InputContainer>
                   <Input
                     type="text"
-                    id="schedul_title"
-                    value={formData.schedul_title}
+                    id="schedulTitle"
+                    value={formData.schedulTitle}
                     onChange={handleChange}
                     placeholder="일정 제목을 입력해 주세요"
                     onFocus={() =>
-                      formData.schedul_title.length > 18 &&
+                      formData.schedulTitle.length > 18 &&
                       setShowFullTitle(true)
                     }
                     onBlur={() => setShowFullTitle(false)}
                   />
-                  {showFullTitle && formData.schedul_title.length > 18 && (
-                    <FullText>{formData.schedul_title}</FullText>
+                  {showFullTitle && formData.schedulTitle.length > 18 && (
+                    <FullText>{formData.schedulTitle}</FullText>
                   )}
                 </InputContainer>
               </FormGroup>
