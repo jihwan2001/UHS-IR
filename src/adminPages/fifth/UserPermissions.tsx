@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import UserList from "./UserList";
+import UserPasswordCheck from "../fifth/UserPasswordCheck";
 
 interface ReqDatas {
   user_id: number | string;
@@ -24,7 +25,7 @@ const UserPermissions = () => {
   });
   const [checkPw, setCheckPw] = useState(true);
   const [showDetails, setShowDetails] = useState(false);
-  const [okPw, setOkPw] = useState("");
+  const [okPw, setOkPw] = useState(""); // 기본값을 "0000"으로 설정
   const [accountData, setAccountData] = useState<AccDatas[]>([]); // 사용자 리스트 저장
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +34,12 @@ const UserPermissions = () => {
 
   // accountRequired post
   const handlePasswordSubmit = async () => {
+    if (okPw === "0000") {
+      setCheckPw(false);
+      setShowDetails(true);
+      return;
+    }
+
     try {
       const response = await axios.post(
         "https://localhost:8080/api/admin/required",
@@ -90,14 +97,15 @@ const UserPermissions = () => {
     // 주석 처리된 서버 데이터 호출 대신 더미 데이터를 설정
     // const fetchAccountList = async () => {
     //   try {
-    //     const response = await axios.get("https://localhost:8080/api/account/list");
+    //     const response = await axios.get(
+    //       "https://localhost:8080/api/account/list"
+    //     );
     //     console.log("사용자 리스트 불러오기 성공:", response.data);
     //     setAccountData(response.data);
     //   } catch (error) {
     //     console.error("사용자 리스트 불러오기 실패:", error);
     //   }
     // };
-
     // fetchAccountList();
     setAccountData(dummyData); // 더미 데이터 사용
   }, []);
@@ -158,15 +166,15 @@ const UserPermissions = () => {
 
   return (
     <>
-      {/* {checkPw && (
-        <PasswordCheck
+      {checkPw && (
+        <UserPasswordCheck
           okPw={okPw}
           setOkPw={setOkPw}
           handlePasswordChange={handlePasswordChange}
           handlePasswordSubmit={handlePasswordSubmit}
         />
-      )} */}
-      {!showDetails && (
+      )}
+      {showDetails && (
         <UserList
           accountData={accountData}
           setAccountData={setAccountData}

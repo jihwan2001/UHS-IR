@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom"; // 🔹 useNavigate 추가
 import axios from "axios";
 import RMcss from "./RMcss";
 import RMBackBtn from "./RMBackBtn";
@@ -18,6 +19,7 @@ interface File {
 const today = new Date().toISOString().split("T")[0].replace(/-/g, ".");
 
 const ReportManagement = () => {
+  const navigate = useNavigate(); // 🔹 useNavigate 선언
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [folders, setFolders] = useState<Folder[]>([]);
   const [files, setFiles] = useState<File[]>([]);
@@ -26,7 +28,7 @@ const ReportManagement = () => {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  // 외부 클릭 시 드롭다운 닫기
+  // 🔹 외부 클릭 시 드롭다운 닫기
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -43,7 +45,7 @@ const ReportManagement = () => {
     };
   }, []);
 
-  // 폴더 및 파일 데이터를 가져오는 useEffect
+  // 🔹 폴더 및 파일 데이터를 가져오는 useEffect
   useEffect(() => {
     const fetchFoldersAndFiles = async () => {
       try {
@@ -67,7 +69,7 @@ const ReportManagement = () => {
     fetchFoldersAndFiles();
   }, [parentDirId]); // parentDirId가 변경될 때마다 실행
 
-  // 폴더 생성 버튼 클릭 시 POST 요청
+  // 🔹 폴더 생성 버튼 클릭 시 POST 요청
   const handleAddFolder = async (folderName: string) => {
     try {
       const response = await axios.post(
@@ -79,23 +81,21 @@ const ReportManagement = () => {
         }
       );
 
-      // 폴더 목록 상태 업데이트
       alert("폴더 업로드 성공");
       setFolders((prev) => [...prev, response.data]);
     } catch (error) {
       alert("폴더 업로드 실패");
-
       console.error("폴더 생성 중 오류 발생:", error);
     }
   };
 
-  // 파일 업로드 버튼 클릭 시 파일 선택기 열기
+  // 🔹 파일 업로드 버튼 클릭 시 파일 선택기 열기
   const handleFileUploadClick = () => {
     fileInputRef.current?.click();
     setDropdownOpen(false);
   };
 
-  // 파일 업로드 로직
+  // 🔹 파일 업로드 로직
   const handleFileUpload = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -103,12 +103,12 @@ const ReportManagement = () => {
       const file = event.target.files[0];
       const formData = new FormData();
       formData.append("files", file);
-      formData.append("userId", "1"); // 사용자 ID
-      formData.append("dir_id", parentDirId.toString()); // 현재 디렉터리 ID
+      formData.append("userId", "1");
+      formData.append("dir_id", parentDirId.toString());
       formData.append(
         "dir_parent_id",
         parentDirId === 0 ? "" : parentDirId.toString()
-      ); // 상위 디렉터리 ID
+      );
 
       try {
         const response = await axios.post(
@@ -123,8 +123,6 @@ const ReportManagement = () => {
 
         alert("파일 업로드 성공!");
         console.log("업로드 결과:", response.data);
-
-        // 파일 업로드 후 UI 업데이트 로직 추가 필요 시 여기에 작성
       } catch (error: any) {
         const errorMessage =
           error.response?.data?.message || "파일 업로드 실패!";
@@ -188,7 +186,7 @@ const ReportManagement = () => {
           <RMcss.ContentTitle flexValue={1}>📁</RMcss.ContentTitle>
           <RMcss.ContentDetails
             flexValue={3}
-            onClick={() => setParentDirId(folder.dir_id)} // 클릭 시 하위 폴더로 이동
+            onClick={() => setParentDirId(folder.dir_id)}
           >
             {folder.dir_name}
           </RMcss.ContentDetails>
@@ -198,7 +196,14 @@ const ReportManagement = () => {
 
       {/* 파일 리스트 출력 */}
       {files.map((file, index) => (
-        <RMcss.ContentsContainer key={index}>
+        <RMcss.ContentsContainer
+          key={index}
+          onClick={() =>
+            navigate("/adminPage/ReportManagementPdf", {
+              state: { file, parentDirId },
+            })
+          }
+        >
           <RMcss.ContentTitle flexValue={1}>📄</RMcss.ContentTitle>
           <RMcss.ContentDetails flexValue={3}>
             {file.file_name}

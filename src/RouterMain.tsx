@@ -4,7 +4,6 @@ import AdminPage from "./adminPages/AdminPage";
 import EnrollmentStatus from "./adminPages/first/EnrollmentStatus";
 import Footer from "./Footer";
 import UserPermissions from "./adminPages/fifth/UserPermissions";
-import WebsiteNoticeSettings from "./adminPages/fourth/WebsiteNoticeSettings";
 import AcademicPerformance from "./adminPages/second/AcademicPerformance";
 import CompetitionResults from "./adminPages/second/CompetitionResults";
 import ProgramParticipation from "./adminPages/second/ProgramParticipation";
@@ -26,6 +25,8 @@ import StudentsRate from "./navBarsDropDown/tabsStudentDb/StudentsRate";
 import Research from "./navBarsDropDown/tabsTeacherDb/Research";
 import TeacherPerStu from "./navBarsDropDown/tabsTeacherDb/TeacherPerStu";
 import ReportManagementPdf from "./adminPages/third/ReportManagementPdf";
+import ReportPdfHistory from "./adminPages/third/ReportPdfHistory";
+import ChatPage from "./adminPages/fourth/ChatPage";
 
 function RouterMain() {
   const location = useLocation();
@@ -39,7 +40,7 @@ function RouterMain() {
       <Routes>
         {/* 관리자 페이지 */}
         <Route path="/adminPage" element={<AdminPage />}>
-          {/* 기본 라우트로 EnrollmentStatus 설정 */}
+          {/* 기본 관리자 페이지 */}
           <Route index element={<EnrollmentStatus />} />
           <Route path="EnrollmentStatus" element={<EnrollmentStatus />} />
 
@@ -58,18 +59,15 @@ function RouterMain() {
           />
           <Route path="ScheduleManagement" element={<ScheduleManagement />} />
           <Route path="ReportManagement" element={<ReportManagement />} />
-          <Route
-            path="ReportManagement/pdf-viewer"
-            element={<ReportManagementPdf />}
-          />
+          <Route path="ReportManagementPdf" element={<ReportManagementPdf />} />
 
-          <Route
-            path="WebsiteNoticeSettings"
-            element={<WebsiteNoticeSettings />}
-          />
+          {/* 🚀 `ReportPdfHistory`도 `adminPage` 하위에 위치하도록 변경 */}
+          <Route path="ReportPdfHistory" element={<ReportPdfHistory />} />
 
+          <Route path="ChatPage" element={<ChatPage />} />
           <Route path="UserPermissions" element={<UserPermissions />} />
         </Route>
+
         {/* 일반 페이지 */}
         <Route path="/introduce/Goal" element={<Goal />} />
         <Route path="/introduce/organChart" element={<OrganChart />} />

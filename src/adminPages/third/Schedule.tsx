@@ -34,16 +34,14 @@ const Schedule = () => {
 
       const formattedEvents = response.data.map((item: any) => {
         const endDate = new Date(item.schedulEventEndDate);
-        endDate.setDate(endDate.getDate() + 1); // ✅ 종료 날짜 하루 추가
+        endDate.setDate(endDate.getDate() + 1);
 
         return {
           id: item.schedulId.toString(),
           title: item.schedulTitle,
           start: item.schedulEventStartDate,
-          end: endDate.toISOString().split("T")[0], // yyyy-MM-dd 형식 변환
-          description: item.boardId
-            ? `공지사항 ID: ${item.description}`
-            : "설명이 없습니다.",
+          end: endDate.toISOString().split("T")[0],
+          description: item.description || "설명이 없습니다.", // ✅ 백엔드에서 `boardTitle`을 `description`으로 변환하여 받음
         };
       });
 
@@ -109,15 +107,12 @@ const Schedule = () => {
 
   // 저장 핸들러 (수정 및 새 일정 추가)
   const handleSaveEvent = async (newEvent: EventType) => {
-    // 종료일을 하루 뒤로 조정 (FullCalendar용)
     const adjustedEnd = new Date(newEvent.end);
     adjustedEnd.setDate(adjustedEnd.getDate() + 1);
-
-    // const formattedEnd = new Date(newEvent.end).toISOString().split("T")[0]; // yyyy-MM-dd 형식
     const formattedEnd = adjustedEnd.toISOString().split("T")[0];
 
     if (newEvent.id) {
-      // 기존 이벤트 수정
+      // ✅ 기존 이벤트 수정
       try {
         await axios.put(
           `http://localhost:3000/api/schedul/${newEvent.id}/update`,
@@ -125,11 +120,7 @@ const Schedule = () => {
             schedulTitle: newEvent.title,
             schedulEventStartDate: newEvent.start,
             schedulEventEndDate: newEvent.end,
-            boardId:
-              typeof newEvent.description === "number"
-                ? newEvent.description
-                : null, // 연결 공지사항 ID
-            // schedulDate: newEvent.start, // 이건 머임?
+            description: newEvent.description, // ✅ `boardTitle`을 description으로 보내기
           }
         );
 
@@ -142,37 +133,39 @@ const Schedule = () => {
         );
         alert("일정이 수정되었습니다.");
       } catch (error) {
-        console.error("일정 수정 실패:", error);
+        console.error("❌ 일정 수정 실패:", error);
         alert("일정 수정 중 오류가 발생했습니다.");
       }
     } else {
-      // 새 이벤트 추가
+      // ✅ 새 이벤트 추가
       try {
         const response = await axios.post(
           "http://localhost:3000/api/schedul/create",
           {
             schedulTitle: newEvent.title,
-            schedulEventStartDate: newEvent.start, // ✅ 올바른 필드 사용
-            schedulEventEndDate: newEvent.end, //formattedEnd,      // ✅ 올바른 필드 사용
-            boardId:
-              typeof newEvent.description === "number"
-                ? newEvent.description
-                : null,
+            schedulEventStartDate: newEvent.start,
+            schedulEventEndDate: newEvent.end,
+            description: newEvent.description, // ✅ `boardTitle`을 description으로 보내기
           }
         );
+
+        console.log("✅ 서버 응답 데이터:", response.data);
+
         const createdEvent = response.data;
-        console.log("일정 : ", createdEvent); // 수정
-        if (!createdEvent || !createdEvent.id) {
+
+        if (!createdEvent || !createdEvent.schedulId) {
           throw new Error("서버에서 생성된 일정 ID가 없습니다.");
         }
+
         setEvents((prevEvents) => [
           ...prevEvents,
           {
             ...newEvent,
-            id: createdEvent.id.toString(), // 서버에서 생성된 ID 사용
+            id: createdEvent.schedulId.toString(),
             end: formattedEnd,
           },
         ]);
+
         alert("새 일정이 추가되었습니다.");
       } catch (error) {
         console.error("❌ 새 일정 추가 실패:", error);
@@ -180,7 +173,6 @@ const Schedule = () => {
       }
     }
 
-    // 모달 닫기
     setCreateModalOpen(false);
     setSelectedEvent(null);
   };
@@ -241,12 +233,13 @@ const Schedule = () => {
                 setDeleteClicked={setDeleteClicked}
                 handleDeleteClick={handleDeleteClick}
                 setCreateModalOpen={setCreateModalOpen}
+                setModalOpen={setModalOpen} // ✅ 이제 정상적으로 동작
               />
             )}
           </>
         )}
       </Scss.Modal>
-      {deleteClick && <Scss.Overlay />}
+      {(deleteClick || isModalOpen || isCreateModalOpen) && <Scss.Overlay />}
 
       {/* 일정 추가/수정 모달 */}
       {isCreateModalOpen && (

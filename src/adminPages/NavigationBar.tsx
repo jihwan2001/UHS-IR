@@ -45,21 +45,25 @@ const MenuItem = styled.li<{ isActive: boolean }>`
 `;
 
 const NavigationBar = () => {
-  const navMenus = useRecoilValue(navMenuState); // Recoil 상태 구독
-  const location = useLocation(); // 현재 경로 가져오기
+  const navMenus = useRecoilValue(navMenuState);
+  const location = useLocation();
 
   return (
     <NavigationContainer>
       {navMenus.map((menu) => (
         <MenuCategory key={menu.title}>
-          {/* 제목 */}
           <MenuTitle>{menu.title}</MenuTitle>
 
-          {/* 메뉴 아이템 */}
           <MenuList>
             {menu.items.map((item, index) => {
-              const menuPath = `/adminPage/${menu.eng[index]}`; // 메뉴의 URL
-              const isActive = location.pathname === menuPath; // 현재 경로와 비교
+              const menuPath = `/adminPage/${menu.eng[index]}`;
+              const isActive =
+                location.pathname.startsWith(menuPath) || // 현재 경로가 menuPath로 시작하는 경우
+                (menu.eng[index] === "ReportManagement" &&
+                  location.pathname.startsWith(
+                    "/adminPage/ReportManagementPdf"
+                  )); // ReportManagementPdf도 포함
+
               return (
                 <MenuItem key={item} isActive={isActive}>
                   <Link to={menuPath}>{item}</Link>

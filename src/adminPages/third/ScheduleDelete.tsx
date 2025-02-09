@@ -7,6 +7,7 @@ interface ScheduleDeleteProps {
   setEvents: React.Dispatch<React.SetStateAction<any[]>>; // 이벤트 리스트 상태 업데이트
   setDeleteClicked: (value: boolean) => void; // 삭제 팝업 상태 관리
   setCreateModalOpen: (value: boolean) => void; // 모달 지우기
+  setModalOpen: (value: boolean) => void; // ✅ 모달 닫기 추가
   handleDeleteClick: () => void; // 취소 버튼 클릭 핸들러
 }
 
@@ -16,6 +17,7 @@ const ScheduleDelete: React.FC<ScheduleDeleteProps> = ({
   setDeleteClicked,
   handleDeleteClick,
   setCreateModalOpen,
+  setModalOpen, // ✅ 추가된 prop
 }) => {
   // 삭제 요청 함수
   const handleDelete = async () => {
@@ -30,9 +32,10 @@ const ScheduleDelete: React.FC<ScheduleDeleteProps> = ({
         prevEvents.filter((event) => event.id !== modalData.id)
       );
 
-      // 삭제 팝업 닫기
+      // ✅ 모달 닫기
       setDeleteClicked(false);
       setCreateModalOpen(false);
+      setModalOpen(false); // ✅ 추가: 삭제 후 모달 닫기
 
       alert("일정이 삭제되었습니다.");
     } catch (error) {

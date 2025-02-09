@@ -67,9 +67,9 @@ export const navMenuState = atom({
       ],
     },
     {
-      title: "홈페이지 공지 데이터",
-      items: ["공지데이터 설정"],
-      eng: ["WebsiteNoticeSettings"],
+      title: "AI 채팅",
+      items: ["AI 채팅"],
+      eng: ["ChatPage"],
     },
     {
       title: "사용자 권한",

@@ -239,6 +239,82 @@ const FolderButton = styled.button<{ color: string }>`
   }
 `;
 
+// ActionButton의 커스텀 속성을 정의하는 TypeScript 인터페이스
+interface ActionButtonProps {
+  color?: string;
+  hoverColor?: string;
+}
+
+// 버튼 컨테이너 스타일
+const PdfButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin: 20px 0;
+`;
+
+const PdfActionButtons = styled.div`
+  display: flex;
+  gap: 10px;
+  /* justify-content: space-evenly; */
+`;
+
+// 개별 버튼 스타일
+const PdfActionButton = styled.button<ActionButtonProps>`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px;
+  background-color: ${({ color }) => color || "#007bff"};
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: ${({ hoverColor }) => hoverColor || "#0056b3"};
+  }
+
+  img {
+    width: 18px;
+    height: 18px;
+  }
+`;
+
+const FileContainer = styled.div`
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  width: 100%;
+  font-family: Arial, sans-serif;
+`;
+
+const FileTitle = styled.h3`
+  margin: 0 10px 20px;
+  font-size: 20px;
+  color: #333;
+`;
+
+const FileDetails = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
+
+const DetailItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #666;
+`;
+
+const Icon = styled.span`
+  color: #333;
+`;
+
 export default {
   Header,
   Select,
@@ -266,4 +342,12 @@ export default {
   Input,
   FolderButtonContainer,
   FolderButton,
+  PdfButtonContainer,
+  PdfActionButtons,
+  PdfActionButton,
+  FileContainer,
+  FileTitle,
+  FileDetails,
+  DetailItem,
+  Icon,
 };

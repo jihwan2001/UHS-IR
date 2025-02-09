@@ -69,29 +69,33 @@ const CurrentItem = styled.div`
 `;
 
 const Divider = styled.hr`
-  /* width: 100%; */
   width: 1000px;
-  max-width: 1300px; /* 고정 너비 설정 */
-  height: 2px; /* 선 두께 */
-  background-color: #ddd; /* 선 색상 */
-  border: none; /* 기본 테두리 제거 */
-  margin: 20px auto; /* 위아래 여백, 중앙 정렬 */
+  max-width: 1300px;
+  height: 2px;
+  background-color: #ddd;
+  border: none;
+  margin: 20px auto;
 `;
 
 function AdminPage() {
-  const navMenus = useRecoilValue(navMenuState); // Recoil 상태 구독
-  const location = useLocation(); // 현재 경로 가져오기
+  const navMenus = useRecoilValue(navMenuState);
+  const location = useLocation();
 
+  // 🔹 ReportManagementPdf에서도 "학사 보고서 관리" 유지
   const currentItem = navMenus
     .flatMap((menu) =>
       menu.eng.map((eng, index) =>
-        location.pathname.endsWith(eng) ? menu.items[index] : null
+        location.pathname.endsWith(eng) ||
+        (eng === "ReportManagement" &&
+          location.pathname.startsWith("/adminPage/ReportManagementPdf"))
+          ? menu.items[index]
+          : null
       )
     )
     .filter((item) => item !== null)[0];
+
   return (
     <>
-      {/* 상단 네비게이션 바 */}
       <TopNav>
         <Main>
           <MainLogo />
@@ -107,7 +111,7 @@ function AdminPage() {
         <BodyContent>
           {currentItem && <CurrentItem>{currentItem}</CurrentItem>}
           <Divider />
-          <Outlet /> {/* 클릭된 메뉴의 콘텐츠가 이 위치에 렌더링 */}{" "}
+          <Outlet /> {/* 클릭된 메뉴의 콘텐츠가 이 위치에 렌더링 */}
         </BodyContent>
       </Body>
     </>
