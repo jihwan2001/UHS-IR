@@ -60,9 +60,12 @@ const NavigationBar = () => {
               const isActive =
                 location.pathname.startsWith(menuPath) || // 현재 경로가 menuPath로 시작하는 경우
                 (menu.eng[index] === "ReportManagement" &&
-                  location.pathname.startsWith(
+                  (location.pathname.startsWith(
                     "/adminPage/ReportManagementPdf"
-                  )); // ReportManagementPdf도 포함
+                  ) ||
+                    location.pathname.startsWith(
+                      "/adminPage/ReportPdfHistory"
+                    )));
 
               return (
                 <MenuItem key={item} isActive={isActive}>

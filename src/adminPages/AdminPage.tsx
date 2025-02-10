@@ -81,13 +81,14 @@ function AdminPage() {
   const navMenus = useRecoilValue(navMenuState);
   const location = useLocation();
 
-  // 🔹 ReportManagementPdf에서도 "학사 보고서 관리" 유지
+  // 🔹 ReportManagementPdf와 ReportPdfHistory에서도 "학사 보고서 관리" 유지
   const currentItem = navMenus
     .flatMap((menu) =>
       menu.eng.map((eng, index) =>
         location.pathname.endsWith(eng) ||
         (eng === "ReportManagement" &&
-          location.pathname.startsWith("/adminPage/ReportManagementPdf"))
+          (location.pathname.startsWith("/adminPage/ReportManagementPdf") ||
+            location.pathname.startsWith("/adminPage/ReportPdfHistory")))
           ? menu.items[index]
           : null
       )

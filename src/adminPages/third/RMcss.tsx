@@ -50,14 +50,14 @@ const InfoDate = styled.div<{ flexValue?: number }>`
   font-weight: bold;
 `;
 
-const ContentsContainer = styled.div`
+const ContentsContainer = styled.div<{ cursorValue?: string }>`
   border: 1px solid #ddd;
   border-left: 0;
   border-right: 0;
   padding: 15px;
   display: flex;
   align-items: center;
-  cursor: pointer;
+  cursor: ${({ cursorValue }) => cursorValue || "pointer"};
 `;
 
 const ContentTitle = styled.div<{ flexValue?: number }>`
@@ -69,12 +69,20 @@ const ContentDetails = styled.div<{ flexValue?: number }>`
   flex: ${({ flexValue }) => flexValue || 1};
   /* text-align: center; */
   font-size: 14px;
+  height: 16px;
+  -ms-overflow-style: none; /*IE, Edge*/
+  scrollbar-width: none; /*Firefox*/
+  overflow: auto;
 `;
 
 const ContentDate = styled.div<{ flexValue?: number }>`
   flex: ${({ flexValue }) => flexValue || 1};
   text-align: center;
   font-size: 14px;
+  height: 16px;
+  -ms-overflow-style: none; /*IE, Edge*/
+  scrollbar-width: none; /*Firefox*/
+  overflow-y: scroll;
 `;
 
 const Pagination = styled.div`

@@ -1,6 +1,7 @@
 import React from "react";
 import back from "../../img/back.png";
 import RMcss from "./RMcss";
+import { useNavigate } from "react-router-dom";
 
 interface BackButtonProps {
   parentDirId: number; // 현재 디렉토리 ID (null 가능)
