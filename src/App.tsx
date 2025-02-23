@@ -53,7 +53,7 @@ body{
   /* width: 1200px; 고정된 너비 설정 */
   margin: 0 auto; /* 가운데 정렬 */
   overflow-x: hidden; /* 가로 스크롤 방지 */
-  height:1024px;
+  /* height:1024px; */
 }
 a{
   text-decoration:none;

@@ -1,8 +1,7 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import MainScreen from "./routes/MainScreen";
 import AdminPage from "./adminPages/AdminPage";
 import EnrollmentStatus from "./adminPages/first/EnrollmentStatus";
-import Footer from "./Footer";
+import { Footer } from "./entities/footer";
 import UserPermissions from "./adminPages/fifth/UserPermissions";
 import AcademicPerformance from "./adminPages/second/AcademicPerformance";
 import CompetitionResults from "./adminPages/second/CompetitionResults";
@@ -12,21 +11,20 @@ import ComplaintsManagement from "./adminPages/third/ComplaintsManagement";
 import Notices from "./adminPages/third/Notices";
 import ReportManagement from "./adminPages/third/ReportManagement";
 import ScheduleManagement from "./adminPages/third/ScheduleManagement";
-import Nav from "./Nav";
-import NoticesAdd from "./adminPages/third/NoticesAdd";
-import Goal from "./navBarsDropDown/tabsIntroduce/Goal";
-import OrganChart from "./navBarsDropDown/tabsIntroduce/OrganChart";
-import Road from "./navBarsDropDown/tabsIntroduce/Road";
-import Scholarship from "./navBarsDropDown/tabsManagementDb/Scholarship";
-import DropOutRate from "./navBarsDropDown/tabsStudentDb/DropOutRate";
-import EmploymentRate from "./navBarsDropDown/tabsStudentDb/EmploymentRate";
-import FreshStuRate from "./navBarsDropDown/tabsStudentDb/FreshStuRate";
-import StudentsRate from "./navBarsDropDown/tabsStudentDb/StudentsRate";
-import Research from "./navBarsDropDown/tabsTeacherDb/Research";
-import TeacherPerStu from "./navBarsDropDown/tabsTeacherDb/TeacherPerStu";
+
 import ReportManagementPdf from "./adminPages/third/ReportManagementPdf";
 import ReportPdfHistory from "./adminPages/third/ReportPdfHistory";
 import ChatPage from "./adminPages/fourth/ChatPage";
+import { Navbar } from "./widgets";
+import {
+  AnalysisReportsPage,
+  AnnouncementPage,
+  HomePage,
+  Inquiry,
+  IrOverviewPage,
+  LoginPage,
+  StatsYearbookPage,
+} from "./pages";
 
 function RouterMain() {
   const location = useLocation();
@@ -35,9 +33,17 @@ function RouterMain() {
   return (
     <>
       {/* Nav는 AdminPage가 아닐 때만 렌더링 */}
-      {!isAdminPage && <Nav />}
+      {!isAdminPage && <Navbar />}
 
       <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/loginPage" element={<LoginPage />} />
+        <Route path="/ir-overview" element={<IrOverviewPage />} />
+        <Route path="/stats-yearbook" element={<StatsYearbookPage />} />
+        <Route path="/analysis-reports" element={<AnalysisReportsPage />} />
+        <Route path="/announcement" element={<AnnouncementPage />} />
+        <Route path="/inquiry" element={<Inquiry />} />
+
         {/* 관리자 페이지 */}
         <Route path="/adminPage" element={<AdminPage />}>
           {/* 기본 관리자 페이지 */}
@@ -69,17 +75,6 @@ function RouterMain() {
         </Route>
 
         {/* 일반 페이지 */}
-        <Route path="/introduce/Goal" element={<Goal />} />
-        <Route path="/introduce/organChart" element={<OrganChart />} />
-        <Route path="/introduce/road" element={<Road />} />
-        <Route path="/studentDB/freshStuRate" element={<FreshStuRate />} />
-        <Route path="/studentDB/studentsRate" element={<StudentsRate />} />
-        <Route path="/studentDB/employmentRate" element={<EmploymentRate />} />
-        <Route path="/studentDB/dropOutRate" element={<DropOutRate />} />
-        <Route path="/teacherDB/Research" element={<Research />} />
-        <Route path="/teacherDB/teacherPerStu" element={<TeacherPerStu />} />
-        <Route path="/managementDB/scholarship" element={<Scholarship />} />
-        <Route path="/" element={<MainScreen />} />
       </Routes>
 
       <Footer />
