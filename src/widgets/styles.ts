@@ -18,6 +18,7 @@ export const Container = styled.nav`
 
 export const NavList = styled.ul`
   display: flex;
+  align-items: center;
   list-style: none;
   gap: 40px; /* 메뉴 간격을 더 넓게 조정 */
   padding: 0;

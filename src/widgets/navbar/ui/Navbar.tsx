@@ -1,7 +1,6 @@
 import { Container, NavList } from "../../styles";
 import { Logo } from "../../../shared/ui/Logo";
-import { DropdownMenu, LoginButton } from "../../../features";
-import { GotoAdminpage } from "../../../features/navbars/GotoAdminpage";
+import { DropdownMenu, GotoDatacenter, LoginButton } from "../../../features";
 
 export const Navbar = () => {
   return (
@@ -26,7 +25,7 @@ export const Navbar = () => {
             { label: "문의", link: "/inquiry" },
           ]}
         />
-        <GotoAdminpage />
+        <GotoDatacenter />
       </NavList>
       <LoginButton />
     </Container>

@@ -1,13 +1,15 @@
 import { useState } from "react";
+import { useLogin } from "../hooks";
 import { Form, Input, LoginButton } from "../styles";
 
 export const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login, loading, error, message } = useLogin();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("로그인 시도:", { email, password });
+    await login({ userAccount: email, userPw: password });
   };
 
   return (
@@ -25,7 +27,11 @@ export const LoginForm = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <LoginButton type="submit">접속하기</LoginButton>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {message && <p style={{ color: "green" }}>{message}</p>}
+      <LoginButton type="submit" disabled={loading}>
+        {loading ? "접속 중..." : "접속하기"}
+      </LoginButton>
     </Form>
   );
 };

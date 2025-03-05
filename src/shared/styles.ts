@@ -6,15 +6,18 @@ export const LogoWrapper = styled.div`
   align-items: center; /* 이미지와 텍스트 수직 정렬 */
   cursor: pointer;
 `;
-
-export const LogoImage = styled.img`
-  width: 32px;
-  height: 32px;
+interface LogoProps {
+  fontSize?: string; // 선택적으로 fontSize를 받을 수 있도록 설정
+  logoSize?: string;
+}
+export const LogoImage = styled.img<LogoProps>`
+  width: ${(props) => props.logoSize || "2rem"};
+  height: ${(props) => props.logoSize || "2rem"};
   margin-right: 8px; /* 이미지와 텍스트 간격 */
 `;
 
-export const LogoText = styled.p`
-  font-size: 18px;
+export const LogoText = styled.p<LogoProps>`
+  font-size: ${(props) => props.fontSize || "1.125rem"};
   font-weight: bold;
   color: #0f2280;
   margin: 0;
@@ -130,5 +133,85 @@ export const DropDownItem = styled(Link)<{ $disabled?: boolean }>`
       $disabled ? "transparent" : "#f1f1f1"}; // 비활성화 시 hover 효과 제거
     color: ${({ $disabled }) => ($disabled ? "#ccc" : "#0f2280")};
     font-weight: ${({ $disabled }) => ($disabled ? "normal" : "bold")};
+  }
+`;
+
+export const LineImg = styled.img<{ heightSize: number }>`
+  width: 1px;
+  height: ${(prop) => `${prop.heightSize}px`};
+  margin: 0; // 좌우 간격
+  display: block;
+`;
+
+// Form 관련
+export const StyledInput = styled.input`
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+`;
+
+export const StyledTextArea = styled.textarea`
+  width: 100%;
+  height: 150px;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+`;
+export const BackButton = styled.button`
+  background: #ccc;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.125rem;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  &:hover {
+    background: #b3b3b3;
+  }
+`;
+
+//  sortDropdown
+export const DropdownContainer = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+export const DropdownButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 1.125rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`;
+
+export const DropdownList = styled.ul`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  list-style: none;
+  padding: 5px 0;
+  width: 120px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+`;
+
+export const DropdownItem = styled.li`
+  padding: 8px 10px;
+  font-size: 1.125rem;
+  cursor: pointer;
+  &:hover {
+    background: #f1f1f1;
   }
 `;

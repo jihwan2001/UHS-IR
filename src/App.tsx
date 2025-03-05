@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import RouterMain from "./RouterMain";
+import "pretendard/dist/web/static/pretendard.css";
 
 const GlobalStlye = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -49,7 +50,8 @@ table {
   box-sizing: border-box;
 }
 body{
-  font-family:'Source Sans Pro', sans-serif;
+  /* font-family:'Source Sans Pro', sans-serif; */
+  font-family: 'Pretendard', sans-serif;
   /* width: 1200px; 고정된 너비 설정 */
   margin: 0 auto; /* 가운데 정렬 */
   overflow-x: hidden; /* 가로 스크롤 방지 */

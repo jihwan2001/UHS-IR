@@ -1,5 +1,5 @@
+import { Card } from "../../../shared";
 import { StatisticsContainer, StatisticsHeader } from "../../../shared/styles";
-import { Card } from "../../../shared/ui/Card";
 
 export const Statistics = () => {
   return (

@@ -1,0 +1,9 @@
+import { useParams } from "react-router-dom";
+import { NoticesMain } from "../../../widgets";
+import { NoticesAddPage } from "./NoticesAddPage";
+
+export const Notices = () => {
+  const { id, subId } = useParams<{ id: string; subId?: string }>(); // `subId`는 `add` 경로를 위한 것
+
+  return <>{subId === "add" ? <NoticesAddPage /> : <NoticesMain />}</>;
+};

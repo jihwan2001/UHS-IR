@@ -5,3 +5,7 @@ export { Statistics } from "./statistics/ui/Statistics";
 export { SmallBanner } from "./smallBanner/ui/SmallBanner";
 export { AnnouncementList } from "./announcement/AnnouncementList";
 export { InquiryTotal } from "./inquiry/InquiryTotal";
+export { Sidebar } from "./datacenterNavbar/Sidebar";
+export { NoticesMain } from "./notices/NoticesMain"; // notice 페이지
+export { NoticesAddForm } from "./notices/NoticesAddForm";
+export { NoticesDetailForm } from "./notices/NoticesDetailForm";

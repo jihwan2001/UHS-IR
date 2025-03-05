@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import linkIcon from "../../img/linkIcon.png";
-import { AdContainer, Slash } from "./styles";
+import { AdContainer } from "./styles";
+import { Line } from "../../shared";
 
-export const GotoAdminpage = () => {
+export const GotoDatacenter = () => {
   return (
     <>
-      <Slash>|</Slash>
-      <Link to={"/adminPage"}>
+      <Line heightSize={24} />
+      <Link to={"/datacenter"}>
         <AdContainer>
           <div>데이터 센터</div> &nbsp;
           <img src={linkIcon} alt="link" />
