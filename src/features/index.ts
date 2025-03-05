@@ -32,3 +32,4 @@ export { NoticesHeader } from "./notices/NoticesHeader";
 export { NoticesRow } from "./notices/NoticesRow";
 export { FormFileUpload } from "./notices/FormFileUpload";
 export { BulkActionBar } from "./notices/BulkActionBar";
+export { NoticesInfor } from "./notices/NoticesInfor";
