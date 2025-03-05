@@ -13,7 +13,7 @@ export const NoticesAddForm = () => {
     boardDescription: "",
     boardDate: new Date().toISOString().split("T")[0], // 오늘 날짜 기본값
     isPinned: false,
-    user: "Admin", // 기본값, 사용자 정보 필요 시 변경
+    user: "Admin", // 기본값 (추후 사용자 정보 필요 시 변경 가능)
   });
   const [files, setFiles] = useState<File[]>([]);
 
@@ -39,9 +39,9 @@ export const NoticesAddForm = () => {
     formDataToSend.append("boardDate", formData.boardDate);
     formDataToSend.append("user", formData.user);
 
-    // ✅ 모든 파일을 FormData에 추가
-    files.forEach((file, index) => {
-      formDataToSend.append(`files`, file);
+    // ✅ 여러 개의 파일 추가
+    files.forEach((file) => {
+      formDataToSend.append("files", file);
     });
 
     try {
@@ -54,11 +54,11 @@ export const NoticesAddForm = () => {
       );
 
       console.log("공지사항 추가 성공:", response.data);
-      alert("완료되었습니다.");
-      navigate("/datacenter");
+      alert("공지사항이 성공적으로 추가되었습니다.");
+      navigate("/datacenter"); // ✅ 추가 후 목록으로 이동
     } catch (error) {
       console.error("공지사항 추가 실패:", error);
-      alert("실패했습니다.");
+      alert("공지사항 추가에 실패했습니다.");
     }
   };
 

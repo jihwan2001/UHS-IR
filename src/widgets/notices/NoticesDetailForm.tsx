@@ -12,50 +12,34 @@ export const NoticesDetailForm = () => {
 
   useEffect(() => {
     if (location.state) {
-      setNoticeData(location.state);
+      setNoticeData(location.state); // ✅ 현재 state에서 데이터 가져오기
     }
   }, [location.state]);
 
   return (
     <>
-      {/* ✅ noticeData를 NoticesInfor에 props로 전달 */}
+      {/* ✅ 공지사항 정보 표시 */}
       <NoticesInfor notice={noticeData} />
       <FormContainer>
         <Label>제목</Label>
         <FormTitle
-          name="title"
-          value={noticeData?.title || ""}
-          onChange={(e) =>
-            setNoticeData((prev) =>
-              prev ? { ...prev, title: e.target.value } : null
-            )
-          }
+          name="boardTitle"
+          value={noticeData?.boardTitle || ""}
           placeholder="제목을 입력해주세요."
         />
         <Label>파일 첨부</Label>
-        <FormFileUpload onFileSelect={setFiles} />
+        <FormFileUpload onFileSelect={setFiles} /> {/* 파일 업로드 비활성화 */}
         <Label>내용</Label>
         <FormContents
-          name="fixed"
-          value={noticeData?.fixed || ""}
-          onChange={(e) =>
-            setNoticeData((prev) =>
-              prev ? { ...prev, fixed: e.target.value } : null
-            )
-          }
+          name="boardDescription"
+          value={noticeData?.boardDescription || ""}
           placeholder="내용을 입력해주세요."
         />
       </FormContainer>
+
       <BtnGroup>
         <FormBackBtn>목록</FormBackBtn>
-        <SubmitButton
-          type="submit"
-          onClick={() => {
-            alert("ㅈㅈ");
-          }}
-        >
-          수정사항 적용
-        </SubmitButton>
+        <SubmitButton type="submit">수정사항 적용</SubmitButton>
       </BtnGroup>
     </>
   );

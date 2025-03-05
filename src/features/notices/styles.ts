@@ -120,3 +120,23 @@ export const ActionButton = styled.button`
 export const Contents = styled.span`
   cursor: pointer;
 `;
+
+export const InfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 1.125rem;
+  color: #333;
+  margin-bottom: 1rem;
+`;
+
+export const InfoItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`;
+
+export const Icon = styled.img`
+  width: 1.125rem;
+  height: 1.125rem;
+`;
