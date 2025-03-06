@@ -1,15 +1,26 @@
 import { useState } from "react";
-import { BulkActionBar, NoticesAddBtn, NoticesTable } from "../../features";
+import {
+  BulkActionBar,
+  NoticesAddBtn,
+  NoticesTable,
+  SearchBar,
+} from "../../features";
 import { Line, SortDropdown } from "../../shared";
-import { Header, NoticeContainer } from "./styles";
+import { Header, HeaderLeft, HeaderRight, NoticeContainer } from "./styles";
+import { useNoticesDelete } from "./hooks/NoticesDeleteHooks";
+import { useNoticePin } from "./hooks/NoticesPinHooks";
 
 export const NoticesMain = () => {
+  const { selectedIds, setSelectedIds, handleDelete } = useNoticesDelete(); // ✅ 삭제 기능 가져오기
+  const { handlePinToggle, loading } = useNoticePin(); // ✅ 고정 기능 추가
+
   const [isAnyChecked, setIsAnyChecked] = useState(false);
   const [isAllChecked, setIsAllChecked] = useState(false);
+
   const handleSortChange = (sort: string) => {
     console.log("선택된 정렬 옵션:", sort);
-    // 여기에서 데이터를 정렬하는 로직을 추가할 수 있음
   };
+
   const handleSelectAll = () => {
     setIsAllChecked((prev) => !prev);
   };
@@ -18,18 +29,27 @@ export const NoticesMain = () => {
     <>
       <NoticeContainer>
         <Header>
-          <NoticesAddBtn />
-          <Line heightSize={22} />
-          <BulkActionBar
-            isAnyChecked={isAnyChecked}
-            onSelectAll={handleSelectAll}
-          />
-          <Line heightSize={22} />
-          <SortDropdown onSortChange={handleSortChange} />
+          <HeaderLeft>
+            <NoticesAddBtn />
+            <Line heightSize={22} />
+            <BulkActionBar
+              isAnyChecked={isAnyChecked}
+              onSelectAll={handleSelectAll}
+              onDelete={handleDelete} // ✅ 삭제 기능 연결
+              onPin={(isPinned) => handlePinToggle(selectedIds, isPinned)} // ✅ 고정/해제 기능 연결
+            />
+            <Line heightSize={22} />
+            <SortDropdown onSortChange={handleSortChange} />
+          </HeaderLeft>
+          <HeaderRight>
+            <SearchBar />
+          </HeaderRight>
         </Header>
+
         <NoticesTable
           isAllChecked={isAllChecked}
           setIsAnyChecked={setIsAnyChecked}
+          setSelectedIds={setSelectedIds} // ✅ 선택된 ID 저장
         />
       </NoticeContainer>
     </>

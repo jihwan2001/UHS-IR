@@ -3,12 +3,12 @@ import { NoticesHeader } from "./NoticesHeader";
 import { NoticesRow } from "./NoticesRow";
 import { TableContainer, StyledTable } from "./styles";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { NoticesTableProps, NoticeItem } from "./model";
 
 export const NoticesTable = ({
   isAllChecked,
   setIsAnyChecked,
+  setSelectedIds, // ✅ 추가
 }: NoticesTableProps) => {
   const [notices, setNotices] = useState<NoticeItem[]>([]);
   const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>(
@@ -16,33 +16,20 @@ export const NoticesTable = ({
   );
   const navigate = useNavigate();
 
-  // ✅ API 데이터 불러오기
-  useEffect(() => {
-    const fetchNotices = async () => {
-      try {
-        const response = await axios.get<NoticeItem[]>(
-          "http://localhost:8080/api/board/list"
-        );
-
-        setNotices(response.data); // ✅ API 응답 그대로 저장
-      } catch (error) {
-        console.error("공지사항 목록 불러오기 오류:", error);
-      }
-    };
-
-    fetchNotices();
-  }, []);
-
-  const handleRowClick = (item: NoticeItem) => {
-    navigate(`/datacenter/${item.id}/detail`, { state: item });
-  };
-
   const handleCheckboxChange = (id: number) => {
     setCheckedItems((prev) => {
       const updated = { ...prev, [id]: !prev[id] };
-      setIsAnyChecked(Object.values(updated).some((checked) => checked));
+      const selected = Object.keys(updated)
+        .filter((key) => updated[Number(key)])
+        .map(Number);
+      setSelectedIds(selected); // ✅ 선택된 ID 업데이트
+      setIsAnyChecked(selected.length > 0);
       return updated;
     });
+  };
+
+  const handleRowClick = (item: NoticeItem) => {
+    navigate(`/datacenter/13/detail/${item.id}`, { state: item }); // ✅ 동적 경로 수정
   };
 
   return (
@@ -56,7 +43,7 @@ export const NoticesTable = ({
               item={item}
               isChecked={checkedItems[item.id] || false}
               onCheckboxChange={() => handleCheckboxChange(item.id)}
-              onRowClick={() => handleRowClick(item)}
+              onRowClick={() => handleRowClick(item)} // ✅ 클릭 시 데이터 전달
             />
           ))}
         </tbody>

@@ -5,7 +5,7 @@ interface NoticesRowProps {
   item: NoticeItem;
   isChecked: boolean;
   onCheckboxChange: () => void;
-  onRowClick: () => void;
+  onRowClick: () => void; // ✅ 클릭 이벤트 추가
 }
 
 export const NoticesRow = ({
@@ -15,25 +15,23 @@ export const NoticesRow = ({
   onRowClick,
 }: NoticesRowProps) => {
   return (
-    <tr>
+    <tr onClick={onRowClick}>
+      {" "}
+      {/* ✅ 행을 클릭하면 실행 */}
       <StyledTd>
         <StyledCheckbox
           type="checkbox"
           checked={isChecked}
           onChange={onCheckboxChange}
+          onClick={(e) => e.stopPropagation()} // ✅ 체크박스 클릭 시 row 클릭 방지
         />
       </StyledTd>
-      <StyledTd onClick={onRowClick}>{item.id}</StyledTd> {/* ID 사용 */}
-      <StyledTd onClick={onRowClick}>{item.isPinned ? "O" : "X"}</StyledTd>{" "}
-      {/* 고정 여부 */}
-      <TitleTd onClick={onRowClick}>{item.boardTitle}</TitleTd> {/* 제목 */}
-      <StyledTd onClick={onRowClick}>{`User ${item.user}`}</StyledTd>{" "}
-      {/* 작성자 */}
-      <StyledTd onClick={onRowClick}>{item.boardDate}</StyledTd> {/* 날짜 */}
-      <StyledTd onClick={onRowClick}>
-        {item.viewCount.toLocaleString()}
-      </StyledTd>{" "}
-      {/* 조회수 */}
+      <StyledTd>{item.id}</StyledTd>
+      <StyledTd>{item.isPinned ? "O" : "X"}</StyledTd>
+      <TitleTd>{item.boardTitle}</TitleTd>
+      <StyledTd>{`User ${item.user}`}</StyledTd>
+      <StyledTd>{item.boardDate}</StyledTd>
+      <StyledTd>{item.viewCount.toLocaleString()}</StyledTd>
     </tr>
   );
 };

@@ -4,10 +4,22 @@ export const NoticeContainer = styled.div``;
 export const Header = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between; /* ✅ 요소 간 간격 조정 */
   margin-bottom: 1.5rem;
   img {
     margin: 0 30px;
   }
+`;
+
+export const HeaderLeft = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px; /* ✅ 요소 간격 조정 */
+`;
+
+export const HeaderRight = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const FormContainer = styled.form`

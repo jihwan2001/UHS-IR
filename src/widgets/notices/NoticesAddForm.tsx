@@ -4,32 +4,26 @@ import axios from "axios";
 import { FormFileUpload } from "../../features";
 import { FormBackBtn, FormContents, FormTitle } from "../../shared";
 import { BtnGroup, FormContainer, Label, SubmitButton } from "./styles";
-import { NoticeAddRequest } from "./model";
+import { NoticesAddRequest } from "./model";
 
 export const NoticesAddForm = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState<NoticeAddRequest>({
+  const [formData, setFormData] = useState<NoticesAddRequest>({
     boardTitle: "",
     boardDescription: "",
-    boardDate: new Date().toISOString().split("T")[0], // 오늘 날짜 기본값
+    boardDate: new Date().toISOString().split("T")[0],
     isPinned: false,
-    user: "Admin", // 기본값 (추후 사용자 정보 필요 시 변경 가능)
+    user: "Admin", // ✅ user 기본값 추가
   });
+
   const [files, setFiles] = useState<File[]>([]);
 
-  // 입력값 변경 핸들러
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 파일 변경 핸들러
-  const handleFileChange = (selectedFiles: File[]) => {
-    setFiles(selectedFiles);
-  };
-
-  // ✅ 공지사항 추가 API 호출
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -37,25 +31,19 @@ export const NoticesAddForm = () => {
     formDataToSend.append("boardTitle", formData.boardTitle);
     formDataToSend.append("boardDescription", formData.boardDescription);
     formDataToSend.append("boardDate", formData.boardDate);
-    formDataToSend.append("user", formData.user);
+    formDataToSend.append("user", formData.user || ""); // ✅ undefined 방지
 
-    // ✅ 여러 개의 파일 추가
     files.forEach((file) => {
       formDataToSend.append("files", file);
     });
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/board/add",
-        formDataToSend,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      await axios.post("http://localhost:8080/api/board/add", formDataToSend, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-      console.log("공지사항 추가 성공:", response.data);
       alert("공지사항이 성공적으로 추가되었습니다.");
-      navigate("/datacenter"); // ✅ 추가 후 목록으로 이동
+      navigate("/datacenter");
     } catch (error) {
       console.error("공지사항 추가 실패:", error);
       alert("공지사항 추가에 실패했습니다.");
@@ -67,21 +55,19 @@ export const NoticesAddForm = () => {
       <FormContainer>
         <Label>제목</Label>
         <FormTitle
-          name="boardTitle"
           value={formData.boardTitle}
           onChange={handleChange}
-          placeholder="제목을 입력해주세요."
+          placeholder={"제목을 입력해 주세요"}
         />
 
         <Label>파일 첨부</Label>
-        <FormFileUpload onFileSelect={handleFileChange} />
+        <FormFileUpload onFileSelect={setFiles} />
 
         <Label>내용</Label>
         <FormContents
-          name="boardDescription"
           value={formData.boardDescription}
           onChange={handleChange}
-          placeholder="내용을 입력해주세요."
+          placeholder={"내용을 입력해 주세요"}
         />
       </FormContainer>
 
