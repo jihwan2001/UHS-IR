@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const AddBox = styled.button`
@@ -26,7 +25,7 @@ export const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 16px;
+  font-size: 1.125rem;
   table-layout: fixed;
 `;
 
@@ -53,8 +52,8 @@ export const TitleTd = styled(StyledTd)`
   text-overflow: ellipsis;
 `;
 export const StyledCheckbox = styled.input`
-  width: 16px;
-  height: 16px;
+  width: 1rem;
+  height: 1rem;
 `;
 
 // form 관련

@@ -8,6 +8,7 @@ export const LoginButton = () => {
     <ButtonWrapper onClick={() => navigate("/loginPage")}>
       {/* login은 나중에 로그인을 하면 사용자 이름으로 바뀌 도록 설정 하기 */}
       <span>Login</span>
+      {/* <span>학생 김태빈</span> */}
       <Icon src={loginIcon} alt="Login" />
     </ButtonWrapper>
   );

@@ -25,11 +25,16 @@ export { AnnouncementBackBtn } from "./announcement/AnnouncementBackBtn";
 export { InquiryReception } from "./inquiry/InquiryReception";
 export { InquiryFnQ } from "./inquiry/InquiryFnQ";
 
+// inquiry페이지 관련 친구들
+export { InquiryBulkActionBar } from "./inquiry/InquiryBulkActionBar";
+export { InquiryHeader } from "./inquiry/InquiryHeader";
+export { InquiryRow } from "./inquiry/InquiryRow";
+
 // notice페이지 관련 친구들
 export { NoticesAddBtn } from "./notices/NoticesAddBtn";
 export { NoticesTable } from "./notices/NoticesTable";
 export { NoticesHeader } from "./notices/NoticesHeader";
 export { NoticesRow } from "./notices/NoticesRow";
 export { FormFileUpload } from "./notices/FormFileUpload";
-export { BulkActionBar } from "./notices/BulkActionBar";
+export { NoticesBulkActionBar } from "./notices/NoticesBulkActionBar";
 export { NoticesInfor } from "./notices/NoticesInfor";

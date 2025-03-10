@@ -6,9 +6,8 @@ export const NoticesAddBtn = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (id) {
-      navigate(`/datacenter/${id}/add`); // ✅ 현재 id를 기반으로 add 페이지로 이동
-    }
+    const newPath = id === "13" ? `/datacenter/${id}/add` : `/datacenter/${id}`;
+    navigate(newPath); // ✅ id가 13일 때만 "/datacenter/:id/add"로 이동, 아니면 "/datacenter/:id"로 이동
   };
 
   return <AddBox onClick={handleClick}>공지사항 추가</AddBox>;

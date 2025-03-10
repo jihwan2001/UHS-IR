@@ -7,7 +7,7 @@ interface BulkActionBarProps {
   onPin: (isPinned: boolean) => void; // ✅ true → 고정, false → 해제
 }
 
-export const BulkActionBar = ({
+export const NoticesBulkActionBar = ({
   isAnyChecked,
   onSelectAll,
   onDelete,

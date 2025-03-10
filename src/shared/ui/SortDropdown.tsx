@@ -7,26 +7,29 @@ import {
 } from "../styles";
 import downArrow from "../../img/downArrow.png";
 
-const sortOptions = ["최신 순", "오래된 순", "고정된 것만"];
-
 interface SortDropdownProps {
-  onSortChange: (sort: string) => void;
+  sortOptions: string[]; // ✅ 옵션을 외부에서 전달
+  onSortChange: (sortIndex: number) => void;
 }
 
-export const SortDropdown = ({ onSortChange }: SortDropdownProps) => {
+export const SortDropdown = ({
+  sortOptions,
+  onSortChange,
+}: SortDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedSort, setSelectedSort] = useState(sortOptions[0]); // 기본값 "최신 순"
+  const [selectedSort, setSelectedSort] = useState(sortOptions[0]); // 기본값 첫 번째 옵션
 
   const handleSortChange = (sort: string) => {
+    const sortIndex = sortOptions.indexOf(sort); // 문자열을 인덱스로 변환
     setSelectedSort(sort);
-    onSortChange(sort);
-    setIsOpen(false); // 선택 후 드롭다운 닫기
+    onSortChange(sortIndex); // ✅ 숫자로 변환하여 전달
+    setIsOpen(false);
   };
 
   return (
     <DropdownContainer>
       <DropdownButton onClick={() => setIsOpen(!isOpen)}>
-        {selectedSort} <img src={downArrow} />
+        {selectedSort} <img src={downArrow} alt="down arrow" />
       </DropdownButton>
       {isOpen && (
         <DropdownList>

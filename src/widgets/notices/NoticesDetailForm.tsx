@@ -57,7 +57,8 @@ export const NoticesDetailForm = () => {
   }
 
   return (
-    <>
+    //onsubmit 해야해
+    <form>
       <NoticesInfor notice={noticeData} />
       <FormContainer>
         <Label>제목</Label>
@@ -81,6 +82,6 @@ export const NoticesDetailForm = () => {
           {loading ? "수정 중..." : "수정사항 적용"}
         </SubmitButton>
       </BtnGroup>
-    </>
+    </form>
   );
 };

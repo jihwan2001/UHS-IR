@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  BulkActionBar,
+  NoticesBulkActionBar,
   NoticesAddBtn,
   NoticesTable,
   SearchBar,
@@ -17,7 +17,7 @@ export const NoticesMain = () => {
   const [isAnyChecked, setIsAnyChecked] = useState(false);
   const [isAllChecked, setIsAllChecked] = useState(false);
 
-  const handleSortChange = (sort: string) => {
+  const handleSortChange = (sort: number) => {
     console.log("선택된 정렬 옵션:", sort);
   };
 
@@ -32,14 +32,17 @@ export const NoticesMain = () => {
           <HeaderLeft>
             <NoticesAddBtn />
             <Line heightSize={22} />
-            <BulkActionBar
+            <NoticesBulkActionBar
               isAnyChecked={isAnyChecked}
               onSelectAll={handleSelectAll}
               onDelete={handleDelete} // ✅ 삭제 기능 연결
               onPin={(isPinned) => handlePinToggle(selectedIds, isPinned)} // ✅ 고정/해제 기능 연결
             />
             <Line heightSize={22} />
-            <SortDropdown onSortChange={handleSortChange} />
+            <SortDropdown
+              sortOptions={["최신 순", "오래된 순", "고정된 것만"]} // ✅ 3가지 옵션 사용
+              onSortChange={handleSortChange}
+            />
           </HeaderLeft>
           <HeaderRight>
             <SearchBar />

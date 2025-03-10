@@ -16,7 +16,7 @@ export const LoginForm = () => {
     <Form onSubmit={handleSubmit}>
       <p> 로그인</p>
       <Input
-        type="email"
+        type="text"
         placeholder="학번 또는 교원 번호를 입력해주세요."
         value={email}
         onChange={(e) => setEmail(e.target.value)}
