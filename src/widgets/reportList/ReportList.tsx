@@ -15,7 +15,7 @@ export const ReportList = () => {
         <SearchBar />
       </FilterContainer>
       <ReportTable />
-      <Pagination />
+      {/* <Pagination /> */}
     </Container>
   );
 };

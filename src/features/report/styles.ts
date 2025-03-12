@@ -34,8 +34,21 @@ export const Header = styled(Row)`
   font-weight: 500;
 `;
 
-export const Column = styled.div<{ flexValue: number }>`
+export const Column = styled.div<{ flexValue: number; textPosition?: string }>`
   flex: ${({ flexValue }) => flexValue || 1};
 
-  text-align: left;
+  text-align: ${({ textPosition }) => textPosition || "center"};
+`;
+
+export const Notice = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0f2280;
+  font-size: 1.125rem;
+  font-weight: bold;
+  border: 2px solid #0f2280;
+  border-radius: 100px;
+  width: 4.375rem;
+  height: 2.188rem;
 `;

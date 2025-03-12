@@ -9,10 +9,13 @@ import { Line, SortDropdown } from "../../shared";
 import { Header, HeaderLeft, HeaderRight, NoticeContainer } from "./styles";
 import { useNoticesDelete } from "./hooks/NoticesDeleteHooks";
 import { useNoticePin } from "./hooks/NoticesPinHooks";
+import { useNoticesFetch } from "./hooks/NoticesBoardHooks";
 
 export const NoticesMain = () => {
-  const { selectedIds, setSelectedIds, handleDelete } = useNoticesDelete(); // ✅ 삭제 기능 가져오기
-  const { handlePinToggle, loading } = useNoticePin(); // ✅ 고정 기능 추가
+  const { notices, fetchNotices, loading } = useNoticesFetch(); // ✅ 공지사항 목록 가져오기
+  const { selectedNotices, setSelectedNotices, handleDelete } =
+    useNoticesDelete();
+  const { handlePinToggle } = useNoticePin(fetchNotices); // ✅ fetchNotices 전달
 
   const [isAnyChecked, setIsAnyChecked] = useState(false);
   const [isAllChecked, setIsAllChecked] = useState(false);
@@ -26,35 +29,33 @@ export const NoticesMain = () => {
   };
 
   return (
-    <>
-      <NoticeContainer>
-        <Header>
-          <HeaderLeft>
-            <NoticesAddBtn />
-            <Line heightSize={22} />
-            <NoticesBulkActionBar
-              isAnyChecked={isAnyChecked}
-              onSelectAll={handleSelectAll}
-              onDelete={handleDelete} // ✅ 삭제 기능 연결
-              onPin={(isPinned) => handlePinToggle(selectedIds, isPinned)} // ✅ 고정/해제 기능 연결
-            />
-            <Line heightSize={22} />
-            <SortDropdown
-              sortOptions={["최신 순", "오래된 순", "고정된 것만"]} // ✅ 3가지 옵션 사용
-              onSortChange={handleSortChange}
-            />
-          </HeaderLeft>
-          <HeaderRight>
-            <SearchBar />
-          </HeaderRight>
-        </Header>
+    <NoticeContainer>
+      <Header>
+        <HeaderLeft>
+          <NoticesAddBtn />
+          <Line heightSize={22} />
+          <NoticesBulkActionBar
+            isAnyChecked={isAnyChecked}
+            onSelectAll={handleSelectAll}
+            onDelete={handleDelete}
+            onPin={() => handlePinToggle(selectedNotices)}
+          />
+          <Line heightSize={22} />
+          <SortDropdown
+            sortOptions={["최신 순", "오래된 순", "고정된 것만"]}
+            onSortChange={handleSortChange}
+          />
+        </HeaderLeft>
+        <HeaderRight>
+          <SearchBar />
+        </HeaderRight>
+      </Header>
 
-        <NoticesTable
-          isAllChecked={isAllChecked}
-          setIsAnyChecked={setIsAnyChecked}
-          setSelectedIds={setSelectedIds} // ✅ 선택된 ID 저장
-        />
-      </NoticeContainer>
-    </>
+      <NoticesTable
+        isAllChecked={isAllChecked}
+        setIsAnyChecked={setIsAnyChecked}
+        setSelectedNotices={setSelectedNotices}
+      />
+    </NoticeContainer>
   );
 };

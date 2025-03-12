@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const FilePin = async (id: number, isPinned: boolean) => {
+export const FilePin = async (boardId: number, isPinned: boolean) => {
   try {
     const response = await axios.put(
-      `http://localhost:8080/api/pin/${id}`,
+      `http://localhost:8080/api/board/pin/${boardId}`,
       { isPinned } // ✅ API에 `isPinned` 값 전달
     );
     console.log("고정 상태 변경 성공:", response.data);

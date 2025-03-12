@@ -3,10 +3,10 @@ import {
   AnnouncementContents,
   AnnouncementFiles,
 } from "../../features";
-import { Announcement } from "../../entities/announcement/model";
+import { BoardDataProps } from "../../features/announcement/types";
 
 interface AnnouncementProps {
-  report: Announcement;
+  report: BoardDataProps;
   setContentsClick: (value: boolean) => void;
 }
 

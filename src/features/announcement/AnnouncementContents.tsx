@@ -1,15 +1,15 @@
 import { Container } from "./styles";
-import { Announcement } from "../../entities/announcement/model";
+import { BoardDataProps } from "./types";
 
 interface AnnouncementProps {
-  report: Announcement;
+  report: BoardDataProps;
 }
 
 export const AnnouncementContents = ({ report }: AnnouncementProps) => {
   return (
     <Container>
-      <h1>{report.title}</h1>
-      <p>작성일: {report.date}</p>
+      <h1>{report.boardTitle}</h1>
+      <p>작성일: {report.boardDate}</p>
     </Container>
   );
 };

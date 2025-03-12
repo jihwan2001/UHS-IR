@@ -16,11 +16,11 @@ export const NoticesInfor = ({ notice }: NoticesInforProps) => {
     <InfoContainer>
       <InfoItem>
         <Icon src={sharpIcon} alt="id" />
-        <span>{notice.id}</span> {/* ✅ 기존 number → id로 변경 */}
+        <span>{notice.boardId}</span> {/* ✅ 기존 number → id로 변경 */}
       </InfoItem>
       <InfoItem>
         <Icon src={personIcon} alt="author" />
-        <span>{notice.user}</span> {/* ✅ user 값 표시 */}
+        <span>{notice.userName}</span> {/* ✅ user 값 표시 */}
       </InfoItem>
       <InfoItem>
         <Icon src={dateIcon} alt="date" />

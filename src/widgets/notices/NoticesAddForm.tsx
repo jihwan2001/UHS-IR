@@ -13,7 +13,7 @@ export const NoticesAddForm = () => {
     boardDescription: "",
     boardDate: new Date().toISOString().split("T")[0],
     isPinned: false,
-    user: "Admin", // ✅ user 기본값 추가
+    userName: "Admin", // ✅ user 기본값 추가
   });
 
   const [files, setFiles] = useState<File[]>([]);
@@ -27,11 +27,20 @@ export const NoticesAddForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // ✅ DTO 데이터를 JSON 문자열로 변환
+    const dtoData = {
+      boardTitle: formData.boardTitle,
+      boardDescription: formData.boardDescription,
+      boardDate: formData.boardDate,
+      isPinned: formData.isPinned,
+      userId: 3,
+    };
+
     const formDataToSend = new FormData();
-    formDataToSend.append("boardTitle", formData.boardTitle);
-    formDataToSend.append("boardDescription", formData.boardDescription);
-    formDataToSend.append("boardDate", formData.boardDate);
-    formDataToSend.append("user", formData.user || ""); // ✅ undefined 방지
+    formDataToSend.append(
+      "dto",
+      new Blob([JSON.stringify(dtoData)], { type: "application/json" })
+    ); // ✅ JSON 데이터 추가
 
     files.forEach((file) => {
       formDataToSend.append("files", file);
@@ -55,6 +64,7 @@ export const NoticesAddForm = () => {
       <FormContainer>
         <Label>제목</Label>
         <FormTitle
+          name="boardTitle"
           value={formData.boardTitle}
           onChange={handleChange}
           placeholder={"제목을 입력해 주세요"}
@@ -65,6 +75,7 @@ export const NoticesAddForm = () => {
 
         <Label>내용</Label>
         <FormContents
+          name="boardDescription"
           value={formData.boardDescription}
           onChange={handleChange}
           placeholder={"내용을 입력해 주세요"}

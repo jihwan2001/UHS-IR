@@ -4,7 +4,7 @@ interface BulkActionBarProps {
   isAnyChecked: boolean;
   onSelectAll: () => void;
   onDelete: () => void;
-  onPin: (isPinned: boolean) => void; // ✅ true → 고정, false → 해제
+  onPin: () => void; // ✅ 변경: 매개변수 없이 실행
 }
 
 export const NoticesBulkActionBar = ({
@@ -19,11 +19,8 @@ export const NoticesBulkActionBar = ({
       <ActionButton onClick={onDelete} disabled={!isAnyChecked}>
         삭제
       </ActionButton>
-      <ActionButton onClick={() => onPin(true)} disabled={!isAnyChecked}>
-        고정
-      </ActionButton>
-      <ActionButton onClick={() => onPin(false)} disabled={!isAnyChecked}>
-        해제
+      <ActionButton onClick={onPin} disabled={!isAnyChecked}>
+        고정/해제
       </ActionButton>
     </ActionBar>
   );

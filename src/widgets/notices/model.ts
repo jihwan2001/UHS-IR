@@ -9,13 +9,14 @@ export interface NoticeBase {
   fileId?: number; // 첨부파일 ID (선택 사항)
   fileName?: string; // 첨부파일 이름 (선택 사항)
   fileSize?: number; // 첨부파일 크기 (선택 사항)
+  files?: { fileId: number; fileName: string }[];
 }
 
 // ✅ 공지사항 조회 API에서 사용하는 인터페이스
 export interface NoticeItem extends NoticeBase {
-  id: number; // 공지사항 ID
+  boardId: number; // 공지사항 ID
   userId: number; // 작성자 ID
-  user: string; // 작성자 이름
+  userName: string; // 작성자 이름
   viewCount: number; // 조회수
 }
 
@@ -23,9 +24,10 @@ export interface NoticeItem extends NoticeBase {
 export interface NoticesDetailRequest extends NoticeBase {
   userId: number; // 수정할 작성자 ID (필수)
   fileIds: number[]; // 유지할 파일 ID 목록
+  files?: { fileId: number; fileName: string }[];
 }
 
 // ✅ 공지사항 추가 API 요청 데이터 인터페이스
 export interface NoticesAddRequest extends NoticeBase {
-  user: string; // 작성자 이름
+  userName: string; // 작성자 이름
 }

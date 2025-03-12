@@ -161,7 +161,7 @@ export const StyledTextArea = styled.textarea`
   border-radius: 5px;
   resize: none;
 `;
-export const BackButton = styled.button`
+export const BackButton = styled.div`
   background: #ccc;
   color: black;
   border: none;
