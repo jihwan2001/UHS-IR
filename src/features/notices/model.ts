@@ -5,11 +5,12 @@ export interface SelectedNotice {
 }
 
 export interface NoticesTableProps {
+  notices: NoticeItem[]; // ✅ notices 추가
   isAllChecked: boolean;
   setIsAnyChecked: (checked: boolean) => void;
-  setSelectedNotices: (notices: SelectedNotice[]) => void; // ✅ 선택된 공지 객체 저장
+  setSelectedNotices: (notices: SelectedNotice[]) => void;
+  searchQuery?: string;
 }
-
 export interface NoticeItem {
   boardId: number;
   boardTitle: string; // 제목
