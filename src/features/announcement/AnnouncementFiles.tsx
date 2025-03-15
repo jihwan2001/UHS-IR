@@ -1,19 +1,34 @@
 import { FileContainer, FileContents } from "./styles";
 
-export const AnnouncementFiles = () => {
+interface FileProps {
+  files: { fileId: number; fileName: string }[];
+}
+
+export const AnnouncementFiles = ({ files }: FileProps) => {
+  const handleDownload = async (fileId: number, fileName: string) => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/main/board/files/download/${fileId}`);
+      if (!response.ok) throw new Error("파일 다운로드 실패");
+      
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch (error) {
+      console.error("다운로드 오류:", error);
+    }
+  };
   return (
-    <>
-      <FileContainer>
-        <FileContents>
-          2025년 글로벌 스타트업 페스티벌(COMEUP) 주관기관 모집공고문.hwp
+    <FileContainer>
+      {files.map((file) => (
+        <FileContents key={file.fileId} onClick={() => handleDownload(file.fileId, file.fileName)}>
+          {file.fileName}
         </FileContents>
-        <FileContents>
-          2025년 글로벌 스타트업 페스티벌(COMEUP) 주관기관 모집공고문.hwp
-        </FileContents>
-        <FileContents>
-          2025년 글로벌 스타트업 페스티벌(COMEUP) 주관기관 모집공고문.hwp
-        </FileContents>
-      </FileContainer>
-    </>
+      ))}
+    </FileContainer>
   );
 };

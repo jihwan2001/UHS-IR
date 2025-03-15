@@ -24,3 +24,13 @@ export const StyledInput = styled.input`
   height: 100%;
   font-size: 16px;
 `;
+export const SearchButton = styled.button`
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
