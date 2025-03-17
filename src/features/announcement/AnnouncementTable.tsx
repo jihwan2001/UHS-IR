@@ -2,7 +2,7 @@ import { Pagination } from "../pagination/Pagination";
 import axios from "axios"; // ✅ Axios 사용
 import { TableContainer, Header, Column, Row, Notice } from "../report/styles";
 import { useBoardData } from "./hooks/useBoardData";
-import { BoardDataProps } from "./types";
+import { BoardDataProps } from "../announcement/types"
 import { useEffect, useState } from "react";
 
 interface BtnClickProps {
