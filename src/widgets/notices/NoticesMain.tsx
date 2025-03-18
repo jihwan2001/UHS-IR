@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../api/axiosConfig"; 
+
 import {
   NoticesBulkActionBar,
   NoticesAddBtn,
@@ -21,41 +22,45 @@ export const NoticesMain = () => {
   const [loading, setLoading] = useState(false);
 
   const fetchNotices = async () => {
+    
     setLoading(true);
     try {
-      let response;
-      if (!searchTerm.trim()) {
-        response = await axios.get(`http://localhost:8080/api/board/list`, {
-          params: { page, size: pageSize, sortType }
-        });
-      } else {
-        // 🔹 검색어가 있을 때 검색 API 호출
-        response = await axios.get(`http://localhost:8080/api/board/search`, {
-          params: { keyword: searchTerm, page, size: pageSize, sortType }
-        });
-      }
+        let response;
+        if (!searchTerm.trim()) {
+            response = await axios.get(`http://localhost:8080/api/board/list`, {
+                params: { page, size: pageSize, sortType },
+                withCredentials: true // ✅ 세션 유지 추가
+            });
+        } else {
+            response = await axios.get(`http://localhost:8080/api/board/search`, {
+                params: { keyword: searchTerm, page, size: pageSize, sortType },
+                withCredentials: true // ✅ 검색 요청에도 세션 유지 추가
+            });
+        }
 
-      console.log("📌 API 응답 데이터:", response.data);
-      setNotices(response.data?.content || response.data || []);
+        console.log("📌 API 응답 데이터:", response.data);
+        setNotices(response.data?.content || response.data || []);
     } catch (error) {
-      console.error("공지사항 목록 불러오기 오류:", error);
-      setNotices([]);
+        console.error("📌 공지사항 목록 불러오기 오류:", error);
+        setNotices([]);
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
+const {handlePinToggle} = useNoticePin(fetchNotices);
+
 
   // 🔹 검색 실행 함수
   const handleSearch = (query: string) => {
     console.log("🔍 검색 실행:", query);
 
     if (!query.trim()) {
-      localStorage.removeItem("searchTerm"); // ✅ 검색어가 없으면 `localStorage`에서 삭제
+      sessionStorage.removeItem("searchTerm"); // ✅ 검색어가 없으면 `localStorage`에서 삭제
       setSearchTerm(""); // ✅ 검색어를 초기화
       setPage(1);
       fetchNotices();
     } else {
-      localStorage.setItem("searchTerm", query);
+      sessionStorage.setItem("searchTerm", query);
       setSearchTerm(query);
     }
 
@@ -70,7 +75,7 @@ export const NoticesMain = () => {
 
   // 🔹 페이지 로드 시 & 검색어, 정렬 변경 시 API 호출
   useEffect(() => {
-    localStorage.clear(); // ✅ 모든 localStorage 데이터 삭제
+    sessionStorage.clear(); // ✅ 모든 localStorage 데이터 삭제
     fetchNotices();
   }, [searchTerm, page, sortType]);
 
@@ -84,7 +89,7 @@ export const NoticesMain = () => {
             isAnyChecked={selectedNotices.length > 0}
             onSelectAll={() => {}}
             onDelete={handleDelete}
-            onPin={() => {}}
+            onPin={() => handlePinToggle(selectedNotices)}
           />
           <Line heightSize={22} />
           <SortDropdown

@@ -1,29 +1,29 @@
-import React, { useState } from "react";
 import { Button, Container, Input, TextArea, Title } from "./styles";
+import { usePostInquiry } from "./hooks/PostInquiry";
 
 export const InquiryReception = () => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-
-  const handleSubmit = () => {
-    alert(`제목: ${title}\n내용: ${content}`);
-  };
-
+  const {
+    complainTitle,
+    setComplainTitle,
+    complainDescription,
+    setComplainDescription,
+    postInquiry,
+  } = usePostInquiry();
   return (
     <Container>
       <Title>문의 접수</Title>
       <Input
         type="text"
         placeholder="문의 제목"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        value={complainTitle}
+        onChange={(e) => setComplainTitle(e.target.value)}
       />
       <TextArea
         placeholder="문의 내용"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
+        value={complainDescription}
+        onChange={(e) => setComplainDescription(e.target.value)}
       />
-      <Button onClick={handleSubmit}>접수하기</Button>
+      <Button onClick={postInquiry}>접수하기</Button>
     </Container>
   );
 };

@@ -11,7 +11,7 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    const savedSearchTerm = localStorage.getItem("searchTerm");
+    const savedSearchTerm = sessionStorage.getItem("searchTerm");
     if (savedSearchTerm) {
       setSearchTerm(savedSearchTerm);
     }
@@ -22,9 +22,9 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
     if (onSearch) {
       console.log(`🔍 검색 실행: ${searchTerm.trim() || "검색어 없음"}`); // ✅ 검색어 없을 때도 실행
       if (searchTerm.trim() === "") {
-        localStorage.removeItem("searchTerm"); // ✅ 검색어 없을 때 삭제
+        sessionStorage.removeItem("searchTerm"); // ✅ 검색어 없을 때 삭제
       } else {
-        localStorage.setItem("searchTerm", searchTerm.trim());
+        sessionStorage.setItem("searchTerm", searchTerm.trim());
       }
       onSearch(searchTerm.trim());
     }

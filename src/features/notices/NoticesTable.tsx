@@ -37,7 +37,7 @@ export const NoticesTable = ({
   };
 
   const handleRowClick = (item: NoticeItem) => {
-    navigate(`/datacenter/detail/${item.boardId}`, { state: item });
+    navigate(`/datacenter/13/detail`, { state: item });
   };
 
   useEffect(() => {
@@ -54,9 +54,9 @@ export const NoticesTable = ({
               <NoticesRow
                 key={item.boardId}
                 item={item}
-                isChecked={false}
-                onCheckboxChange={() => {}}
-                onRowClick={() => navigate(`/datacenter/detail/${item.boardId}`, { state: item })}
+                isChecked={checkedItems[item.boardId] || false} // ✅ 체크된 상태 반영
+                onCheckboxChange={() => handleCheckboxChange(item)}
+                onRowClick={()=>handleRowClick(item)}
                 />
             ))}
           </tbody>

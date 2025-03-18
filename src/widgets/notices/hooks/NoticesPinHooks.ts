@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FilePin } from "../../../features/notices/hooks/FilePin";
 
-export const useNoticePin = (fetchNotices: () => void) => {
+export const useNoticePin = (fetchNotices: () => void) => { // ✅ fetchNotices 인자 추가
   const [loading, setLoading] = useState(false);
 
   const handlePinToggle = async (

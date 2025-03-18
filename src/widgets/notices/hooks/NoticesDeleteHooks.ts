@@ -18,6 +18,7 @@ export const useNoticesDelete = () => {
           selectedNotices.map((notice) => FileDelete(notice.id))
         );
         alert("삭제가 완료되었습니다.");
+        window.location.reload();
         setSelectedNotices([]); // ✅ 선택 초기화
       } catch (error) {
         console.error("삭제 오류:", error);

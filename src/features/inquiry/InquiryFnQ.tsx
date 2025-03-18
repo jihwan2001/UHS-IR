@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { FAQs } from "../../entities/inquiry/FAQs";
 import { Container, Title, FAQItem, Question, Answer } from "./styles";
 

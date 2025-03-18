@@ -20,10 +20,10 @@ export const AnnouncementTable = ({ setContentsClick, setSelectedReport, sortTyp
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    let apiUrl = `http://localhost:8080/api/board/list?pageNum=${pageNumber}&pageSize=10&sortType=${sortType}`;
+    let apiUrl = `http://localhost:8080/api/main/board/list?pageNum=${pageNumber}&pageSize=10&sortType=${sortType}`;
   
     if (searchKeyword.trim()) {
-      apiUrl = `http://localhost:8080/api/board/search?keyword=${encodeURIComponent(searchKeyword)}`;
+      apiUrl = `http://localhost:8080/api/main/board/search?keyword=${encodeURIComponent(searchKeyword)}`;
     }
   
     axios.get(apiUrl, { headers: { "Accept": "application/json" } })
