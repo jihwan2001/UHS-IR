@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import search from "../../img/find.png";
-import { SearchContainer, SearchIcon, StyledInput, SearchButton } from "./styles";
+import {
+  SearchContainer,
+  SearchIcon,
+  StyledInput,
+  SearchButton,
+} from "./styles";
 
 interface SearchBarProps {
   onSearch?: (query: string) => void;
@@ -11,7 +16,7 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    const savedSearchTerm = sessionStorage.getItem("searchTerm");
+    const savedSearchTerm = localStorage.getItem("searchTerm");
     if (savedSearchTerm) {
       setSearchTerm(savedSearchTerm);
     }
@@ -22,9 +27,9 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
     if (onSearch) {
       console.log(`🔍 검색 실행: ${searchTerm.trim() || "검색어 없음"}`); // ✅ 검색어 없을 때도 실행
       if (searchTerm.trim() === "") {
-        sessionStorage.removeItem("searchTerm"); // ✅ 검색어 없을 때 삭제
+        localStorage.removeItem("searchTerm"); // ✅ 검색어 없을 때 삭제
       } else {
-        sessionStorage.setItem("searchTerm", searchTerm.trim());
+        localStorage.setItem("searchTerm", searchTerm.trim());
       }
       onSearch(searchTerm.trim());
     }
@@ -38,19 +43,21 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
   };
 
   return (
-    <SearchContainer isFocused={isFocused}>
-      <SearchIcon src={search} alt="search-icon" />
-      <StyledInput
-        type="text"
-        placeholder="검색어 입력"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        onKeyPress={handleKeyPress} // ✅ Enter 키 이벤트 처리
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-      />
+    <>
+      <SearchContainer isFocused={isFocused}>
+        <SearchIcon src={search} alt="search-icon" />
+        <StyledInput
+          type="text"
+          placeholder="검색어 입력"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyPress={handleKeyPress} // ✅ Enter 키 이벤트 처리
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+        />
+      </SearchContainer>
       {/* 🔹 검색 버튼 추가 */}
       <SearchButton onClick={handleSearch}>검색</SearchButton>
-    </SearchContainer>
+    </>
   );
 };

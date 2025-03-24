@@ -13,7 +13,8 @@ export const NoticesAddForm = () => {
     boardDescription: "",
     boardDate: new Date().toISOString().split("T")[0],
     isPinned: false,
-    userName: "Admin", // ✅ user 기본값 추가
+    userId: undefined,
+    userName:"",
   });
 
   const [files, setFiles] = useState<File[]>([]);
@@ -33,7 +34,8 @@ export const NoticesAddForm = () => {
       boardDescription: formData.boardDescription,
       boardDate: formData.boardDate,
       isPinned: formData.isPinned,
-      userId: 3,
+      userId: formData.userId,
+      userName: formData.userName,
     };
 
     const formDataToSend = new FormData();

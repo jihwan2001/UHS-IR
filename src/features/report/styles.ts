@@ -35,8 +35,10 @@ export const Header = styled(Row)`
 `;
 
 export const Column = styled.div<{ flexValue: number; textPosition?: string }>`
+display:flex;
+justify-content:center;
   flex: ${({ flexValue }) => flexValue || 1};
-
+align-items:center;
   text-align: ${({ textPosition }) => textPosition || "center"};
 `;
 

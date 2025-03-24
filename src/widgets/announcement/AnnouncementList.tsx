@@ -42,6 +42,9 @@ export const AnnouncementList = () => {
         <>
           <FilterContainer>
             <SearchBar onSearch={handleSearch} />
+            &nbsp;
+            &nbsp;
+            &nbsp;
             <SortDropdown
               sortOptions={["최신순", "오래된 순", "고정된 것만"]} // ✅ Notices와 동일한 정렬 옵션 사용
               onSortChange={(index) => setSortType(["latest", "oldest", "pinned"][index])}

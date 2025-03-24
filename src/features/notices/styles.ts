@@ -102,17 +102,23 @@ export const ActionBar = styled.div`
   align-items: center;
   gap: 1rem;
 `;
+
 export const ActionButton = styled.button`
   background: none;
   border: none;
   font-size: 1.125rem;
   cursor: pointer;
-  color: black;
+  padding: 10px 15px;
+  transition: color 0.3s ease-in-out, font-weight 0.3s ease-in-out;
 
-  &:disabled {
+  &.active {
+    color: black;
+    font-weight: bold;
+  }
+
+  &.inactive {
     color: #b8b8b8;
-    cursor: default;
-    pointer-events: none; /* 클릭 방지 */
+    font-weight: normal;
   }
 `;
 

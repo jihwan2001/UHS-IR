@@ -14,6 +14,7 @@ export const Header = styled.h1`
 
 export const FilterContainer = styled.div`
   display: flex;
+  align-items:center;
   width: 100%;
   margin-bottom: 16px;
 `;

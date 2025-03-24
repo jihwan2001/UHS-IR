@@ -28,6 +28,7 @@ export const Navbar = () => {
         <GotoDatacenter />
       </NavList>
       <LoginButton />
+      {/*logout*/}
     </Container>
   );
 };

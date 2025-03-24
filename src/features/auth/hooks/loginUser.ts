@@ -15,8 +15,7 @@ export const loginUser = async (
     );
     localStorage.setItem("user", JSON.stringify(response.data)); // ✅ 유저 정보 저장
 
-    // window.location.href = "/"; // 홈페이지로 이동
-
+    window.location.href = "/"; // 홈페이지로 이동
     return response.data;   
   } catch (error) {
     let errorMessage = "네트워크 오류가 발생했습니다.";
