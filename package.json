@@ -39,6 +39,7 @@
     "react-router-dom": "^6.24.1",
     "react-scripts": "5.0.1",
     "react-type-animation": "^3.2.0",
+    "recharts": "^2.15.1",
     "recoil": "^0.7.7",
     "sass": "^1.85.1",
     "sass-loader": "^16.0.4",
