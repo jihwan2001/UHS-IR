@@ -16,10 +16,17 @@ export const DonutChartBox = ({
   description,
   key,
 }: DonutChartProps) => {
-  const data = [
-    { name: "만족", value: key === "등록금 대비 교육비" ? 100 : percent },
-    { name: "기타", value: key === "등록금 대비 교육비" ? 0 : 100 - percent },
-  ];
+  const isTuitionRate = key === "등록금 대비 교육비";
+
+  const data = isTuitionRate
+    ? [
+        { name: "만족", value: 100 },
+        { name: "기타", value: 0 },
+      ]
+    : [
+        { name: "만족", value: percent },
+        { name: "기타", value: 100 - percent },
+      ];
 
   return (
     <BusinessBox title={title}>
