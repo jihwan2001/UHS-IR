@@ -28,7 +28,14 @@ export const StudentPerformanceGroup = () => {
   return (
     <>
       <GroupNameBox>학생 성과 그룹</GroupNameBox>
-      <div style={{ display: "flex", gap: 12 }}>
+      <div
+        style={{
+          display: "flex",
+          gap: 12,
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+        }}
+      >
         {Object.entries(grouped).map(([chartKey, dataArr]) => {
           if (chartKey === "2022년도 학생 만족도 조사") {
             const percent = dataArr[0]?.value ?? 0;

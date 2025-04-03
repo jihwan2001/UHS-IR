@@ -28,7 +28,14 @@ export const EducationCapabilityGroup = () => {
   return (
     <>
       <GroupNameBox>교육 역량 그룹</GroupNameBox>
-      <div style={{ display: "flex", gap: 12 }}>
+      <div
+        style={{
+          display: "flex",
+          gap: 12,
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+        }}
+      >
         {Object.entries(grouped).map(([chartKey, dataArr]) => {
           const color = colorMap[chartKey] || "#28a745";
 

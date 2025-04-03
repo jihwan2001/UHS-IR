@@ -26,7 +26,14 @@ export const FinanceGroup = () => {
   return (
     <>
       <GroupNameBox>재정 상태 그룹</GroupNameBox>
-      <div style={{ display: "flex", gap: 12 }}>
+      <div
+        style={{
+          display: "flex",
+          gap: 12,
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+        }}
+      >
         {Object.entries(groupByChartKey(data)).map(([chartKey, dataArr]) => {
           const color = colorMap[chartKey] || "#28a745";
 

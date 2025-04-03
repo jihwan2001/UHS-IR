@@ -1,6 +1,16 @@
-// 점 스타일 컴포넌트 그대로 유지
-export const CustomDot = (props: { cx: any; cy: any; value: any }) => {
-  const { cx, cy, value } = props;
+export const CustomDot = (props: {
+  cx: number;
+  cy: number;
+  payload: { value: number };
+}) => {
+  const { cx, cy, payload } = props;
+
+  const value = payload?.value;
+  if (cx === undefined || cy === undefined || value === undefined) return null;
+
+  const parsedValue = Number(value);
+  if (isNaN(parsedValue)) return null;
+
   return (
     <g>
       <circle
@@ -12,14 +22,25 @@ export const CustomDot = (props: { cx: any; cy: any; value: any }) => {
         strokeWidth={2}
       />
       <text x={cx} y={cy - 10} textAnchor="middle" fontSize="14px" fill="#333">
-        {value}
+        {parsedValue.toFixed(2).replace(/\.?0+$/, "")}
       </text>
     </g>
   );
 };
 
-export const CustomDotRed = (props: { cx: any; cy: any; value: any }) => {
-  const { cx, cy, value } = props;
+export const CustomDotRed = (props: {
+  cx: number;
+  cy: number;
+  payload: { value: number };
+}) => {
+  const { cx, cy, payload } = props;
+
+  const value = payload?.value;
+  if (cx === undefined || cy === undefined || value === undefined) return null;
+
+  const parsedValue = Number(value);
+  if (isNaN(parsedValue)) return null;
+
   return (
     <g>
       <circle
@@ -31,7 +52,7 @@ export const CustomDotRed = (props: { cx: any; cy: any; value: any }) => {
         strokeWidth={2}
       />
       <text x={cx} y={cy - 10} textAnchor="middle" fontSize="14px" fill="#333">
-        {value}%
+        {`${parsedValue.toFixed(2).replace(/\.?0+$/, "")}%`}
       </text>
     </g>
   );

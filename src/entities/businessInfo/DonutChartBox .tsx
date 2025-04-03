@@ -1,47 +1,84 @@
 import { PieChart, Pie, Cell } from "recharts";
+import { BusinessBox } from "./BusinessBox";
+
+type DonutChartProps = {
+  title: string;
+  percent: number;
+  color: string;
+  description?: string;
+  key?: string;
+};
 
 export const DonutChartBox = ({
   title,
   percent,
   color,
   description,
-}: {
-  title: string;
-  percent: number;
-  color: string;
-  description?: string;
-}) => {
+  key,
+}: DonutChartProps) => {
   const data = [
-    { name: "만족", value: percent },
-    { name: "기타", value: 100 - percent },
+    { name: "만족", value: key === "등록금 대비 교육비" ? 100 : percent },
+    { name: "기타", value: key === "등록금 대비 교육비" ? 0 : 100 - percent },
   ];
 
   return (
-    <div style={{ width: 200, textAlign: "center" }}>
-      <h4>{title}</h4>
-      <PieChart width={200} height={200}>
-        <Pie
-          data={data}
-          dataKey="value"
-          innerRadius={60}
-          outerRadius={80}
-          startAngle={90}
-          endAngle={-270}
-        >
-          {data.map((entry, index) => (
-            <Cell
-              key={`cell-${index}`}
-              fill={index === 0 ? color : "#e9ecef"}
-            />
-          ))}
-        </Pie>
-      </PieChart>
-      <div style={{ fontSize: "1.2rem", fontWeight: "bold" }}>{percent}%</div>
-      {description && (
-        <div style={{ fontSize: "0.85rem", color: "#6c757d" }}>
-          {description}
+    <BusinessBox title={title}>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center", // 👈 차트와 텍스트를 수직 중앙 정렬
+        }}
+      >
+        <div style={{ position: "relative", width: 200, height: 200 }}>
+          <PieChart width={200} height={200}>
+            <Pie
+              data={data}
+              dataKey="value"
+              innerRadius={60}
+              outerRadius={80}
+              startAngle={90}
+              endAngle={-270}
+            >
+              {data.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={index === 0 ? color : "#e9ecef"}
+                />
+              ))}
+            </Pie>
+          </PieChart>
+
+          {/* 퍼센트 중앙 텍스트 */}
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              fontSize: "1.2rem",
+              fontWeight: "bold",
+            }}
+          >
+            {percent}%
+          </div>
         </div>
-      )}
-    </div>
+
+        {/* 설명 */}
+        {description && (
+          <div
+            style={{
+              fontSize: "0.85rem",
+              color: "#6c757d",
+              textAlign: "center",
+            }}
+          >
+            {description}
+          </div>
+        )}
+      </div>
+    </BusinessBox>
   );
 };

@@ -18,6 +18,7 @@ export const useAuth = () => {
           setAuth({
             isAuthenticated: true,
             username: res.data.username,
+            userPosition: res.data.userPosition,
           });
         }
       } catch (error) {
@@ -25,6 +26,7 @@ export const useAuth = () => {
         setAuth({
           isAuthenticated: false,
           username: null,
+          userPosition: null,
         });
       }
     };
