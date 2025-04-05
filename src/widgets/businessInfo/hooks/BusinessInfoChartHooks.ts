@@ -39,7 +39,7 @@ export const useChartData = (aiNavs: string[]) => {
     };
 
     fetchAll();
-  }, [aiNavs]);
+  }, [aiNavs.join(",")]);
 
   return { chartData, loading, error };
 };

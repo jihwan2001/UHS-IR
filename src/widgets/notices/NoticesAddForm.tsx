@@ -1,22 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FormFileUpload } from "../../features";
 import { FormBackBtn, FormContents, FormTitle } from "../../shared";
 import { BtnGroup, FormContainer, Label, SubmitButton } from "./styles";
 import { NoticesAddRequest } from "./model";
+import { useRecoilValue } from "recoil";
+import { authState } from "../../authAtom";
 
 export const NoticesAddForm = () => {
   const navigate = useNavigate();
+  const auth = useRecoilValue(authState);
   const [formData, setFormData] = useState<NoticesAddRequest>({
     boardTitle: "",
     boardDescription: "",
     boardDate: new Date().toISOString().split("T")[0],
     isPinned: false,
-    userId: undefined,
-    userName:"",
+    userAccount: auth.userAccount,
+    userName: auth.username,
   });
-
   const [files, setFiles] = useState<File[]>([]);
 
   const handleChange = (
@@ -27,6 +29,7 @@ export const NoticesAddForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("🚀 서버 전송 직전 formData:", formData);
 
     // ✅ DTO 데이터를 JSON 문자열로 변환
     const dtoData = {
@@ -34,7 +37,7 @@ export const NoticesAddForm = () => {
       boardDescription: formData.boardDescription,
       boardDate: formData.boardDate,
       isPinned: formData.isPinned,
-      userId: formData.userId,
+      userAccount: formData.userAccount,
       userName: formData.userName,
     };
 
@@ -60,6 +63,16 @@ export const NoticesAddForm = () => {
       alert("공지사항 추가에 실패했습니다.");
     }
   };
+
+  useEffect(() => {
+    if (auth?.userAccount) {
+      setFormData((prev) => ({
+        ...prev,
+        userAccount: auth.userAccount,
+        userName: auth.username,
+      }));
+    }
+  }, [auth]);
 
   return (
     <form onSubmit={handleSubmit}>

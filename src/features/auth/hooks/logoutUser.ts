@@ -12,7 +12,12 @@ export const useLogout = () => {
         {},
         { withCredentials: true }
       );
-      setAuth({ isAuthenticated: false, username: null, userPosition: null }); // ✅ 로그인 상태 초기화
+      setAuth({
+        isAuthenticated: false,
+        username: null,
+        userAccount: null,
+        userPosition: null,
+      }); // ✅ 로그인 상태 초기화
       window.location.reload(); // ✅ 새로고침하여 UI 업데이트
       localStorage.clear();
     } catch (error) {
