@@ -11,11 +11,15 @@ import {
 } from "../notices/styles";
 
 import axios from "axios";
+import { useUserRole } from "../../shared/utils/userRoleUtil";
+import { useRecoilValue } from "recoil";
+import { authState } from "../../authAtom";
 
 export const InquiryUnClearForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const item = location.state as ComplainItem;
+  const { username } = useRecoilValue(authState); // ✅ 로그인 상태 가져오기
 
   // 상태
   const [answer, setAnswer] = useState("");
@@ -26,11 +30,11 @@ export const InquiryUnClearForm = () => {
     try {
       await axios.put(`/api/complain/${item.complainId}/reply`, {
         reply: answer,
-        handlerName: "처리자이름", // 로그인 사용자 이름 사용 시 수정 필요
+        handlerName: username,
       });
 
-      alert("답변이 등록되었습니다.");
-      navigate("/inquiries");
+      alert("처리되었습니다.");
+      navigate("/datacenter/14");
     } catch (err) {
       alert("답변 등록 실패");
       console.error(err);
@@ -61,9 +65,7 @@ export const InquiryUnClearForm = () => {
       </FormContainer>
 
       <BtnGroup>
-        <FormBackBtn>
-          목록
-        </FormBackBtn>
+        <FormBackBtn>목록</FormBackBtn>
         <SubmitButton type="submit">처리</SubmitButton>
       </BtnGroup>
     </form>
