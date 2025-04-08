@@ -15,7 +15,7 @@ import ScheduleManagement from "./adminPages/third/ScheduleManagement";
 import ReportManagementPdf from "./adminPages/third/ReportManagementPdf";
 import ReportPdfHistory from "./adminPages/third/ReportPdfHistory";
 import ChatPage from "./adminPages/fourth/ChatPage";
-import { Navbar } from "./widgets";
+import { InquiryClearForm, InquiryUnClearForm, Navbar } from "./widgets";
 import {
   AnalysisReportsPage,
   AnnouncementPage,
@@ -55,6 +55,8 @@ function RouterMain() {
           <Route path="/datacenter" element={<DataMainPage />}>
             <Route index element={<DataCenter />} />
             <Route path=":id/*" element={<DataCenter />} />{" "}
+            <Route path="/clearPage" element={<InquiryClearForm />} />
+            <Route path="/unClearPage" element={<InquiryUnClearForm />} />{" "}
             {/* ✅ *을 사용해 하위 경로도 감지 */}
           </Route>
         </Route>

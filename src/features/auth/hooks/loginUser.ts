@@ -13,10 +13,17 @@ export const loginUser = async (
         headers: { "Content-Type": "application/json" },
       }
     );
-    localStorage.setItem("user", JSON.stringify(response.data)); // ✅ 유저 정보 저장
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        userId: response.data.userId,
+        userAccount: response.data.userAccount,
+        userName: response.data.userName,
+      })
+    ); // ✅ 유저 정보 저장
 
     window.location.href = "/"; // 홈페이지로 이동
-    return response.data;   
+    return response.data;
   } catch (error) {
     let errorMessage = "네트워크 오류가 발생했습니다.";
 

@@ -30,5 +30,6 @@ export interface NoticesDetailRequest extends NoticeBase {
 // ✅ 공지사항 추가 API 요청 데이터 인터페이스
 export interface NoticesAddRequest extends NoticeBase {
   userId?: number; // 작성자 ID
+  userAccount: number;
   userName: string;
 }

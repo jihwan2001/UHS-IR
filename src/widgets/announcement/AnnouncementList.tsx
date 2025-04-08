@@ -11,12 +11,14 @@ export const AnnouncementList = () => {
     null
   );
   const [sortType, setSortType] = useState("latest"); // 🔹 정렬 방식 상태 추가
-  const [searchKeyword, setSearchKeyword] = useState(localStorage.getItem("searchTerm") || "");
+  const [searchKeyword, setSearchKeyword] = useState(
+    localStorage.getItem("searchTerm") || ""
+  );
   const [pageNumber, setPageNumber] = useState(1); // ✅ 페이지 상태 추가
-  
+
   const handleSearch = (query: string) => {
     console.log("🔍 검색 실행:", query);
-  
+
     if (!query.trim()) {
       localStorage.removeItem("searchTerm");
       setSearchKeyword(""); // ✅ 검색어 초기화
@@ -26,7 +28,6 @@ export const AnnouncementList = () => {
       setSearchKeyword(query);
     }
   };
-  
 
   useEffect(() => {
     if (!searchKeyword.trim()) {
@@ -42,12 +43,12 @@ export const AnnouncementList = () => {
         <>
           <FilterContainer>
             <SearchBar onSearch={handleSearch} />
-            &nbsp;
-            &nbsp;
-            &nbsp;
+            &nbsp; &nbsp; &nbsp;
             <SortDropdown
               sortOptions={["최신순", "오래된 순", "고정된 것만"]} // ✅ Notices와 동일한 정렬 옵션 사용
-              onSortChange={(index) => setSortType(["latest", "oldest", "pinned"][index])}
+              onSortChange={(index) =>
+                setSortType(["latest", "oldest", "pinned"][index])
+              }
             />
           </FilterContainer>
           <AnnouncementTable
@@ -66,4 +67,4 @@ export const AnnouncementList = () => {
       )}
     </Container>
   );
-}
+};
