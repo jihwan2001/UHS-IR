@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { MenuDatas } from "../../entities";
 import { FileName } from "./styles";
 import { NoticesAddPage, NoticesDetailPage } from "../../pages"; // ✅ 공지사항 추가 페이지 import
+import { InquiryClearForm, InquiryUnClearForm } from "../../widgets";
 
 // ✅ 개별 파일 import 매핑
 const pageModules: { [key: string]: () => Promise<any> } = {
@@ -52,10 +53,13 @@ export const DataCenter = () => {
       ? NoticesAddPage
       : subPath === "detail"
       ? NoticesDetailPage
+      : subPath === "clearPage"
+      ? InquiryClearForm
+      : subPath === "unClearPage"
+      ? InquiryUnClearForm
       : pageModules[id || ""]
       ? loadComponent(id!)
       : NotFound;
-
   return (
     <>
       {/* 어떤 페이지에 있는지 이름 보여주기 */}
