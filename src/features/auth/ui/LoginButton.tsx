@@ -4,11 +4,12 @@ import { ButtonWrapper, Icon } from "../styles";
 import { useRecoilValue } from "recoil";
 import { authState } from "../../../authAtom";
 import { useLogout } from "../hooks/logoutUser";
-import { useState } from "react";
+import { useUserRole } from "../../../shared/utils/userRoleUtil";
 
 export const LoginButton = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, username, userPosition } = useRecoilValue(authState); // ✅ 로그인 상태 가져오기
+  const { isAuthenticated, username } = useRecoilValue(authState); // ✅ 로그인 상태 가져오기
+  const userRole = useUserRole(); // ✅ 역할 받아오기
   const logout = useLogout(); // ✅ useLogout 훅 사용
 
   const handleLogout = () => {
@@ -16,14 +17,7 @@ export const LoginButton = () => {
       logout(); // ✅ 로그아웃 실행
     }
   };
-  const [userRole, setUserRole] = useState("");
-  if (userPosition === 0) {
-    setUserRole("학생");
-  } else if (userPosition === 1) {
-    setUserRole("교사");
-  } else if (userPosition === 2) {
-    setUserRole("관리자");
-  }
+
   return (
     <ButtonWrapper
       onClick={() =>

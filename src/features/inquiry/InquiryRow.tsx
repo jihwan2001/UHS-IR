@@ -1,5 +1,7 @@
 import { StyledTd, TitleTd } from "../notices/styles";
 import { ComplainItem } from "./model";
+import { useUserRole } from "../../shared/utils/userRoleUtil";
+import { useEffect, useState } from "react";
 
 interface InquiryRowProps {
   data: ComplainItem; // ✅ 데이터 바인딩을 위해 추가
@@ -7,6 +9,16 @@ interface InquiryRowProps {
 }
 
 export const InquiryRow = ({ data, onRowClick }: InquiryRowProps) => {
+  const [userRole, setUserRole] = useState("");
+  useEffect(() => {
+    if (data.userPosition === 0) {
+      setUserRole("학생");
+    } else if (data.userPosition === 1) {
+      setUserRole("교사");
+    } else if (data.userPosition === 2) {
+      setUserRole("관리자");
+    }
+  }, [data.userPosition]);
   return (
     <tr onClick={onRowClick}>
       {" "}
@@ -14,7 +26,7 @@ export const InquiryRow = ({ data, onRowClick }: InquiryRowProps) => {
       <StyledTd>{data.complainId}</StyledTd>
       <TitleTd>{data.complainTitle}</TitleTd>
       <StyledTd>{data.userName}</StyledTd>
-      <StyledTd>{data.complainantType}</StyledTd>
+      <StyledTd>{userRole}</StyledTd>
       <StyledTd>{data.complainDate}</StyledTd>
       <StyledTd>{data.complainState}</StyledTd>
       <StyledTd>{data.processor ?? "-"}</StyledTd>
