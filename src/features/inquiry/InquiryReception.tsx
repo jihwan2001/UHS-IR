@@ -1,14 +1,32 @@
+import React, { useState } from "react";
+import axios from "axios";
 import { Button, Container, Input, TextArea, Title } from "./styles";
-import { usePostInquiry } from "./hooks/PostInquiry";
 
 export const InquiryReception = () => {
-  const {
-    complainTitle,
-    setComplainTitle,
-    complainDescription,
-    setComplainDescription,
-    postInquiry,
-  } = usePostInquiry();
+  const [complainTitle, setComplainTitle] = useState("");
+  const [complainDescription, setComplainDescription] = useState("");
+
+  const postInquiry = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/complain/add",
+        {
+          complainTitle,
+          complainDescription,
+        },
+        {
+          withCredentials: true, // ✅ 세션 쿠키 포함
+        }
+      );
+      alert("민원이 성공적으로 등록되었습니다.");
+      setComplainTitle("");
+      setComplainDescription("");
+    } catch (error) {
+      console.error("민원 등록 오류:", error);
+      alert("민원 등록에 실패했습니다.");
+    }
+  };
+
   return (
     <Container>
       <Title>문의 접수</Title>
