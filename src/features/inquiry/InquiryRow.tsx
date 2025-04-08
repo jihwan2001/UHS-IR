@@ -17,7 +17,7 @@ export const InquiryRow = ({ data, onRowClick }: InquiryRowProps) => {
       setUserRole("교사");
     } else if (data.userPosition === 2) {
       setUserRole("관리자");
-    } 
+    }
   }, [data.userPosition]);
   return (
     <tr onClick={onRowClick}>
