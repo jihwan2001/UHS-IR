@@ -18,6 +18,7 @@ export const useAuth = () => {
           setAuth({
             isAuthenticated: true,
             username: res.data.username,
+            userAccount: res.data.userAccount,
             userPosition: res.data.userPosition,
           });
         }
@@ -26,6 +27,7 @@ export const useAuth = () => {
         setAuth({
           isAuthenticated: false,
           username: null,
+          userAccount: null,
           userPosition: null,
         });
       }

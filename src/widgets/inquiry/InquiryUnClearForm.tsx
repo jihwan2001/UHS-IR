@@ -41,10 +41,16 @@ export const InquiryUnClearForm = () => {
     <form onSubmit={handleSubmit}>
       <FormContainer>
         <Label>제목</Label>
-        <FormTitle value={item.complainTitle} placeholder="제목을 입력해주세요" />
+        <FormTitle
+          value={item.complainTitle}
+          placeholder="제목을 입력해주세요"
+        />
 
         <Label>내용</Label>
-        <FormContents value={item.complainDescription} placeholder="내용용을 입력해주세요" />
+        <FormContents
+          value={item.complainDescription}
+          placeholder="내용용을 입력해주세요"
+        />
 
         <Label>답변 보내기</Label>
         <FormContents
