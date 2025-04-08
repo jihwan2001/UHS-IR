@@ -2,10 +2,11 @@ import { useState } from "react";
 import { NavContainer, NavItem } from "./styles";
 import { AiAnalysis, DashBoard } from "..";
 import { NotFound } from "../../pages";
+import { BusinessNavs } from "./model";
+import { GroupNameBox } from "../../entities";
 
 export const PageNavbar = () => {
   const [clicked, setClicked] = useState("대시보드"); // 기본값 "대시보드"
-  const Navs = ["대시보드", "AI 분석"];
 
   // 선택된 메뉴에 따라 렌더링할 컴포넌트 결정
   const renderContent = () => {
@@ -22,16 +23,21 @@ export const PageNavbar = () => {
   return (
     <>
       <NavContainer>
-        {Navs.map((nav) => (
-          <NavItem
-            key={nav}
-            onClick={() => setClicked(nav)}
-            className={clicked === nav ? "active" : ""}
-          >
-            {nav}
-          </NavItem>
+        {BusinessNavs.map((nav) => (
+          <>
+            {/* <BusinessNavs /> */}
+
+            <NavItem
+              key={nav}
+              onClick={() => setClicked(nav)}
+              className={clicked === nav ? "active" : ""}
+            >
+              {nav}
+            </NavItem>
+          </>
         ))}
       </NavContainer>
+      {/* <GroupNameBox /> */}
       {renderContent()} {/* 선택된 메뉴에 해당하는 컴포넌트 렌더링 */}
     </>
   );

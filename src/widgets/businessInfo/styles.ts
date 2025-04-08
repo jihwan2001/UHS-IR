@@ -1,4 +1,3 @@
-import { ResponsiveContainer } from "recharts";
 import styled from "styled-components";
 
 export const NavContainer = styled.div`
@@ -24,13 +23,8 @@ export const NavItem = styled.p`
 
 export const DashboardWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); // 중요!
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); // 중요!
   gap: 20px;
   width: 100%;
   justify-content: center;
-`;
-
-export const ChartContainer = styled(ResponsiveContainer)`
-  width: 100% !important;
-  height: 180px !important;
 `;

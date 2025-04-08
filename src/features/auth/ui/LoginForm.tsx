@@ -16,7 +16,7 @@ export const LoginForm = () => {
     <Form onSubmit={handleSubmit}>
       <p> 로그인</p>
       <Input
-        type="text"
+        type="number"
         placeholder="학번 또는 교원 번호를 입력해주세요."
         value={account}
         onChange={(e) => setAccount(e.target.value)}

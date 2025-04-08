@@ -5,6 +5,8 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
+  userAccount: number;
+  userId: number;
   userName: string;
   message: string;
 }
