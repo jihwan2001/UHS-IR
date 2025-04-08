@@ -63,7 +63,7 @@ export const InquiryClearForm = () => {
       </FormContainer>
 
       <BtnGroup>
-      <FormBackBtn>목록</FormBackBtn>
+        <FormBackBtn>목록</FormBackBtn>
         <SubmitButton type="submit">답변 수정</SubmitButton>
       </BtnGroup>
     </form>
