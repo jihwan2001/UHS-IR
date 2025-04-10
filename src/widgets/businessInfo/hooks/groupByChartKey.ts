@@ -17,8 +17,9 @@ export const groupByChartKey = (data: ChartItem[]): ChartGrouped => {
       acc[item.chartKey] = [];
     }
     acc[item.chartKey].push({
-      year: item.year + "년", // 혹시 포맷 통일하려면
+      year: item.year + "년",
       value: item.value,
+      unit: item.unit, // ✅ 여기!
     });
     return acc;
   }, {});
