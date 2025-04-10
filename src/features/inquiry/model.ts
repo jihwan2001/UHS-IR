@@ -6,8 +6,8 @@ export interface ComplainItem {
   complainanType: string; // 문의자 구분 (예: "학생")
   complainDate: string; // 작성일 (예: "2025-02-23")
   complainState: string; // 처리 상태
-  processor?: string; // 처리자 (처리됨일 경우 값 있음)
-  processedDate?: string; // 처리일 (처리됨일 경우 값 있음)
+  handlerName?: string; // 처리자 (처리됨일 경우 값 있음)
+  handledDate?: string; // 처리일 (처리됨일 경우 값 있음)
   complainDescription?: string;
   complainAction?: string;
 }

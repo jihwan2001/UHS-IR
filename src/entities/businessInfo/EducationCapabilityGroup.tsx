@@ -4,7 +4,7 @@ import {
   CustomDotRed,
   GroupNameBox,
 } from "../../entities";
-import { useChartData } from "../../widgets/businessInfo/hooks/BusinessInfoChartHooks";
+import { useChartData } from "../../widgets/businessInfo/hooks/useChartData";
 import { groupByChartKey } from "../../widgets/businessInfo/hooks/groupByChartKey";
 import { DonutChartBox } from "./DonutChartBox ";
 
@@ -39,7 +39,9 @@ export const EducationCapabilityGroup = () => {
         {Object.entries(grouped).map(([chartKey, dataArr]) => {
           const color = colorMap[chartKey] || "#28a745";
 
-          // 🎯 전임교원 확보율 → 도넛 차트로 렌더링
+          // ✅ 첫 번째 데이터에서 unit 추출
+          const unit = dataArr[0]?.unit;
+
           if (chartKey === "전임교원 확보율") {
             const percent = dataArr[0]?.value ?? 0;
             return (
@@ -57,6 +59,7 @@ export const EducationCapabilityGroup = () => {
             <BusinessChartBox
               key={chartKey}
               title={chartKey}
+              unit={unit} // ✅ 여기 전달
               data={dataArr}
               stroke={color}
               fill={color}

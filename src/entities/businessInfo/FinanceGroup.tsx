@@ -4,7 +4,7 @@ import {
   CustomDotRed,
   GroupNameBox,
 } from "../../entities";
-import { useChartData } from "../../widgets/businessInfo/hooks/BusinessInfoChartHooks";
+import { useChartData } from "../../widgets/businessInfo/hooks/useChartData";
 import { groupByChartKey } from "../../widgets/businessInfo/hooks/groupByChartKey";
 import { DonutChartBox } from "./DonutChartBox ";
 
@@ -36,6 +36,7 @@ export const FinanceGroup = () => {
       >
         {Object.entries(groupByChartKey(data)).map(([chartKey, dataArr]) => {
           const color = colorMap[chartKey] || "#28a745";
+          const unit = dataArr[0]?.unit;
 
           // 🎯 도넛 차트 분기
           if (chartKey === "등록금 대비 교육비") {
@@ -54,6 +55,7 @@ export const FinanceGroup = () => {
           return (
             <BusinessChartBox
               key={chartKey}
+              unit={unit}
               title={chartKey}
               data={dataArr}
               stroke={color}

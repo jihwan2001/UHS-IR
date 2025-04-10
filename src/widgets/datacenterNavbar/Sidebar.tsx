@@ -59,7 +59,9 @@ export const Sidebar = () => {
                   const isActive =
                     location.pathname === `/datacenter/${child.no}` ||
                     location.pathname === `/datacenter/${child.no}/add` ||
-                    location.pathname === `/datacenter/${child.no}/detail`;
+                    location.pathname === `/datacenter/${child.no}/detail` ||
+                    location.pathname === `/datacenter/${child.no}/clearPage` ||
+                    location.pathname === `/datacenter/${child.no}/unClearPage`;
 
                   return (
                     <FileItem key={subIndex} isActive={isActive}>

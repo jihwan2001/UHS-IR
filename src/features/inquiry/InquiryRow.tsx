@@ -1,6 +1,5 @@
 import { StyledTd, TitleTd } from "../notices/styles";
 import { ComplainItem } from "./model";
-import { useUserRole } from "../../shared/utils/userRoleUtil";
 import { useEffect, useState } from "react";
 
 interface InquiryRowProps {
@@ -29,9 +28,9 @@ export const InquiryRow = ({ data, onRowClick }: InquiryRowProps) => {
       <StyledTd>{userRole}</StyledTd>
       <StyledTd>{data.complainDate}</StyledTd>
       <StyledTd>{data.complainState}</StyledTd>
-      <StyledTd>{data.processor ?? "-"}</StyledTd>
+      <StyledTd>{data.handlerName ?? "-"}</StyledTd>
       {/* 처리자가 없으면 "-" 표시 */}
-      <StyledTd>{data.processedDate ?? "-"}</StyledTd>
+      <StyledTd>{data.handledDate ?? "-"}</StyledTd>
       {/* 처리일이 없으면 "-" 표시 */}
     </tr>
   );
