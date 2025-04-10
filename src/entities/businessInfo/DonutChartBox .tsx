@@ -53,7 +53,7 @@ export const DonutChartBox = ({
               {data.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={index === 0 ? color : "#e9ecef"}
+                  fill={index === 0 ? color : "#C0C2C5"}
                 />
               ))}
             </Pie>
