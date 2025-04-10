@@ -13,25 +13,27 @@ export const LoginForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <p> 로그인</p>
-      <Input
-        type="text"
-        placeholder="학번 또는 교원 번호를 입력해주세요."
-        value={account}
-        onChange={(e) => setAccount(e.target.value)}
-      />
-      <Input
-        type="password"
-        placeholder="비밀번호를 입력해주세요."
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      {/*{error && <p style={{ color: "red" }}>{error}</p>}
+    <>
+      <Form onSubmit={handleSubmit}>
+        <p> 로그인</p>
+        <Input
+          type="text"
+          placeholder="학번 또는 교원 번호를 입력해주세요."
+          value={account}
+          onChange={(e) => setAccount(e.target.value)}
+        />
+        <Input
+          type="password"
+          placeholder="비밀번호를 입력해주세요."
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {/*{error && <p style={{ color: "red" }}>{error}</p>}
       {message && <p style={{ color: "green" }}>{message}</p>}*/}
-      <LoginButton type="submit" disabled={loading}>
-        {loading ? "접속 중..." : "접속하기"}
-      </LoginButton>
-    </Form>
+        <LoginButton type="submit" disabled={loading || !account || !password}>
+          {loading ? "접속 중..." : "접속하기"}
+        </LoginButton>
+      </Form>
+    </>
   );
 };

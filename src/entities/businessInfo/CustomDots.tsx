@@ -52,7 +52,7 @@ export const CustomDotRed = (props: {
         strokeWidth={2}
       />
       <text x={cx} y={cy - 10} textAnchor="middle" fontSize="14px" fill="#333">
-        {`${parsedValue.toFixed(2).replace(/\.?0+$/, "")}%`}
+        {`${parsedValue.toFixed(2).replace(/\.?0+$/, "")}`}
       </text>
     </g>
   );

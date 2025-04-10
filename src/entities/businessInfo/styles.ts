@@ -19,6 +19,9 @@ export const Title = styled.h3`
   text-align: center;
   font-size: 1.125rem;
   font-weight: bold;
+  p {
+    font-size: 0.8rem;
+  }
 `;
 
 export const ChartContainer = styled(ResponsiveContainer)`
