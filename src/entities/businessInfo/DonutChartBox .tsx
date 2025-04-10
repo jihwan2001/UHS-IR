@@ -3,6 +3,7 @@ import { BusinessBox } from "./BusinessBox";
 
 type DonutChartProps = {
   title: string;
+  unit?: string;
   percent: number;
   color: string;
   description?: string;
@@ -11,12 +12,12 @@ type DonutChartProps = {
 
 export const DonutChartBox = ({
   title,
+  unit,
   percent,
   color,
   description,
-  key,
 }: DonutChartProps) => {
-  const isTuitionRate = key === "등록금 대비 교육비";
+  const isTuitionRate = title === "등록금 대비 교육비";
 
   const data = isTuitionRate
     ? [
@@ -29,7 +30,7 @@ export const DonutChartBox = ({
       ];
 
   return (
-    <BusinessBox title={title}>
+    <BusinessBox title={title} unit={unit}>
       <div
         style={{
           flex: 1,
@@ -52,7 +53,7 @@ export const DonutChartBox = ({
               {data.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={index === 0 ? color : "#e9ecef"}
+                  fill={index === 0 ? color : "#C0C2C5"}
                 />
               ))}
             </Pie>

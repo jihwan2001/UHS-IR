@@ -1,18 +1,11 @@
 import React from "react";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  CartesianGrid,
-  Tooltip,
-  Line,
-  YAxis,
-} from "recharts";
+import { AreaChart, Area, XAxis, CartesianGrid, Line, YAxis } from "recharts";
 import { BusinessBox } from "../../entities";
 import { ChartContainer } from "./styles";
 
 interface BusinessChartBoxProps {
   title: string;
+  unit?: string;
   data: { year: string; value: number }[];
   stroke: string;
   fill: string;
@@ -21,13 +14,14 @@ interface BusinessChartBoxProps {
 
 export const BusinessChartBox = ({
   title,
+  unit,
   data,
   stroke,
   fill,
   dot,
 }: BusinessChartBoxProps) => {
   return (
-    <BusinessBox title={title}>
+    <BusinessBox title={title} unit={unit}>
       <ChartContainer>
         <AreaChart
           data={data}
@@ -36,7 +30,6 @@ export const BusinessChartBox = ({
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="year" tick={{ fontSize: "1rem" }} interval={0} />
           <YAxis hide />
-          <Tooltip />
           <Area
             type="monotone"
             dataKey="value"

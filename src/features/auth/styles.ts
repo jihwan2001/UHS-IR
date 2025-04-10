@@ -56,4 +56,8 @@ export const LoginButton = styled.button`
   &:hover {
     background-color: #091a60;
   }
+  &:disabled {
+    background-color: #cccccc;
+    cursor: default;
+  }
 `;

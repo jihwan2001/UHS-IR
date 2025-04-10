@@ -3,13 +3,16 @@ import { Box, Title } from "./styles";
 
 interface BusinessBoxProps {
   title: string;
+  unit?: string;
   children: React.ReactNode;
 }
 
-export const BusinessBox = ({ title, children }: BusinessBoxProps) => {
+export const BusinessBox = ({ title, children, unit }: BusinessBoxProps) => {
   return (
     <Box>
-      <Title>{title}</Title>
+      <Title>
+        {title} <span> (단위 : {unit})</span>
+      </Title>
       {children}
     </Box>
   );

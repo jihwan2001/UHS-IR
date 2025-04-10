@@ -6,7 +6,10 @@ export interface ChartItem {
   unit?: string;
 }
 
-export type ChartGrouped = Record<string, { year: string; value: number }[]>;
+export type ChartGrouped = Record<
+  string,
+  { unit?: string; year: string; value: number }[]
+>;
 
 export const groupByChartKey = (data: ChartItem[]): ChartGrouped => {
   return data.reduce((acc: ChartGrouped, item) => {

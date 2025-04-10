@@ -15,10 +15,14 @@ export const Box = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
-export const Title = styled.h3`
+export const Title = styled.p`
   text-align: center;
   font-size: 1.125rem;
   font-weight: bold;
+  span {
+    text-align: right;
+    font-size: 0.8rem;
+  }
 `;
 
 export const ChartContainer = styled(ResponsiveContainer)`

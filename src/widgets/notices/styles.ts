@@ -29,6 +29,7 @@ export const FormContainer = styled.div`
   width:70vw;
   max-width : 100%;
   overflow-x : hidden;
+
 `;
 
 export const Label = styled.label`

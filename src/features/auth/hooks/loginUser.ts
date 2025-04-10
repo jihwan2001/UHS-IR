@@ -16,9 +16,10 @@ export const loginUser = async (
     localStorage.setItem(
       "user",
       JSON.stringify({
-        userId: response.data.userId,
+        userId: response.data.message,
         userAccount: response.data.userAccount,
         userName: response.data.userName,
+        userPosition: response.data.userPosition,
       })
     ); // ✅ 유저 정보 저장
 

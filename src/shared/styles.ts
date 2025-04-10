@@ -51,8 +51,9 @@ export const StatisticsContainer = styled.section`
 `;
 
 export const CardContainer = styled.div`
-  width: 363px;
-  height: 191px;
+  width: 100%;
+  max-width: 363px;
+  aspect-ratio: 363 / 191; /* 비율 유지하면서 높이 자동 계산 */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -61,7 +62,8 @@ export const CardContainer = styled.div`
   background-color: white;
   border: 2px solid #0f2280;
   border-radius: 5px;
-  padding: 0 20px;
+  padding: 20px;
+  box-sizing: border-box;
 `;
 
 export const Title = styled.h3`
