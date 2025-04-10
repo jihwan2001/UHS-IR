@@ -1,25 +1,7 @@
-import styled from "styled-components";
 import { BusinessChartBox, CustomDot, CustomDotRed } from "../../../entities";
 import { DonutChartBox } from "../../../entities/businessInfo/DonutChartBox ";
 import { useChartAnalysis } from "../hooks/useChartAnalysis";
-
-const ChartRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 16px;
-  background: white;
-  border-radius: 12px;
-  margin-bottom: 16px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-`;
-
-const Description = styled.div`
-  flex: 1;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  color: #333;
-`;
+import { ChartRow, Description } from "./style";
 
 interface Props {
   chartKey: string;
@@ -52,7 +34,11 @@ export const ChartRowWithAnalysis = ({ chartKey, dataArr, color }: Props) => {
     </>
   );
 
-  if (chartKey === "전임교원 확보율") {
+  if (
+    chartKey === "전임교원 확보율" ||
+    chartKey === "2022년도 학생 만족도 조사" ||
+    chartKey === "등록금 대비 교육비"
+  ) {
     const percent = dataArr[0]?.value ?? 0;
     return (
       <ChartRow>
