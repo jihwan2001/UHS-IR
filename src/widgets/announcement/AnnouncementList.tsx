@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { SearchBar, AnnouncementTable } from "../../features";
 import { Container, FilterContainer, Header } from "../reportList/styles";
 import { AnnouncementContent } from "./AnnouncementContent";
-import { BoardDataProps } from "../../features/announcement/types";
 import { SortDropdown } from "../../shared";
+import { BoardDataProps } from "../../features/announcement/model";
 
 export const AnnouncementList = () => {
   const [contentsClick, setContentsClick] = useState(false);
   const [selectedReport, setSelectedReport] = useState<BoardDataProps | null>(
     null
-  );
+  ); //사용자가 클릭한 공지사항 데이터를 저장하는 상태
   const [sortType, setSortType] = useState("latest"); // 🔹 정렬 방식 상태 추가
   const [searchKeyword, setSearchKeyword] = useState(
     localStorage.getItem("searchTerm") || ""
@@ -35,7 +35,7 @@ export const AnnouncementList = () => {
     }
   }, [searchKeyword]);
 
-  //공지사항 클릭시 보이는 페이지
+  //공지사항글 클릭시 보이는 페이지
   return (
     <Container>
       <Header>공지사항</Header>

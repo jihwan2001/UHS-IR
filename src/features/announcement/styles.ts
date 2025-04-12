@@ -12,13 +12,16 @@ export const SameContainer = styled.div`
 export const Container = styled(SameContainer)`
   min-height: 340px;
   h1 {
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 10px;
   }
   p {
-    font-size: 16px;
+    font-size: 1rem;
     color: #666666;
+  }
+  div {
+    font-size: 1.125rem;
   }
 `;
 

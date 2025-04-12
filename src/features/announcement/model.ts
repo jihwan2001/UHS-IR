@@ -4,4 +4,5 @@ export interface BoardDataProps {
   userName: string;
   boardDate: string;
   isPinned: boolean;
+  boardDescription: string;
 }
