@@ -17,7 +17,7 @@ export const NoticesMain = () => {
     useNoticesDelete();
   const [notices, setNotices] = useState([]);
   const [searchTerm, setSearchTerm] = useState(
-    localStorage.getItem("searchTerm") || ""
+    sessionStorage.getItem("searchTerm") || ""
   ); // ✅ 새로고침 시 검색어 유지
   const [sortType, setSortType] = useState("latest");
   const [page, setPage] = useState(1);
@@ -56,8 +56,8 @@ export const NoticesMain = () => {
     console.log("🔍 검색 실행:", query);
 
     if (!query.trim()) {
-      sessionStorage.removeItem("searchTerm"); // ✅ 검색어가 없으면 `localStorage`에서 삭제
-      setSearchTerm(""); // ✅ 검색어를 초기화
+      sessionStorage.removeItem("searchTerm");
+      setSearchTerm("");
       setPage(1);
       fetchNotices();
     } else {
@@ -76,7 +76,7 @@ export const NoticesMain = () => {
 
   // 🔹 페이지 로드 시 & 검색어, 정렬 변경 시 API 호출
   useEffect(() => {
-    sessionStorage.clear(); // ✅ 모든 localStorage 데이터 삭제
+    sessionStorage.removeItem("searchTerm");
     fetchNotices();
   }, [searchTerm, page, sortType]);
 

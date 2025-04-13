@@ -22,7 +22,7 @@ const pageModules: { [key: string]: () => Promise<any> } = {
   "13": () => import("./officialsiteManagement/Notices"),
   "14": () => import("./officialsiteManagement/Inquiries"),
   "15": () => import("./officialsiteManagement/Reports"),
-  "16": () => import("./userManagement/UserPermissions"),
+  "16": () => import("./userManagement/UserPermissionPage"),
 };
 
 // ✅ NotFound 페이지 로드

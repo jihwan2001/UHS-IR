@@ -3,11 +3,29 @@ import { TableContainer, StyledTable } from "../notices/styles";
 import { InquiryHeader } from "./InquiryHeader";
 import { InquiryRow } from "./InquiryRow";
 import { ComplainItem } from "./model";
-import { useInquiries } from "./hooks/useInquiries";
+import { useEffect, useState } from "react";
 
-export const InquiryTable = () => {
-  const { inquiries, loading, error } = useInquiries(); // ✅ 커스텀 훅 사용
+interface InquiryTableProps {
+  data: ComplainItem[];
+}
+
+export const InquiryTable = ({ data }: InquiryTableProps) => {
   const navigate = useNavigate();
+  const [inquiries, setInquiries] = useState<ComplainItem[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    try {
+      setInquiries(data);
+      setError(null);
+    } catch (err: any) {
+      setError("데이터 로딩 중 오류 발생");
+    } finally {
+      setLoading(false);
+    }
+  }, [data]);
 
   const handleRowClick = (item: ComplainItem) => {
     if (item.complainState === "처리됨") {
@@ -17,8 +35,8 @@ export const InquiryTable = () => {
     }
   };
 
-  if (loading) return <p>로딩 중...</p>; // ✅ 로딩 상태 표시
-  if (error) return <p>{error}</p>; // ✅ 에러 발생 시 메시지 표시
+  if (loading) return <p>로딩 중...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <TableContainer>
