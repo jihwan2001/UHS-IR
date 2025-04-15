@@ -1,3 +1,4 @@
+// InquiryMain.tsx
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { SearchBar, InquiryBulkActionBar } from "../../features";
@@ -21,7 +22,7 @@ export const InquiryMain = () => {
           keyword: searchTerm,
           page,
           size: 10,
-          sortType,
+          sort: sortType, // ✅ 변경된 파라미터명
         },
       });
       setComplains(response.data);
@@ -43,11 +44,11 @@ export const InquiryMain = () => {
       let response;
       if (state === "전체보기") {
         response = await axios.get("/api/complain/search", {
-          params: { keyword: "", page: 1, size: 10, sortType },
+          params: { keyword: "", page: 1, size: 10, sort: sortType }, // ✅ 정렬 포함
         });
       } else {
         response = await axios.get("/api/complain/state", {
-          params: { value: state, page: 1, size: 10 },
+          params: { value: state, page: 1, size: 10, sort: sortType }, // ✅ 정렬 포함
         });
       }
       setComplains(response.data);
