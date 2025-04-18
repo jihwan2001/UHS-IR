@@ -26,9 +26,10 @@ export const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 70vw;
-  max-width: 100%;
-  overflow-x: hidden;
+  width:70vw;
+  max-width : 100%;
+  overflow-x : hidden;
+
 `;
 
 export const Label = styled.label`

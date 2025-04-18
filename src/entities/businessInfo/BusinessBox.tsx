@@ -11,6 +11,8 @@ export const BusinessBox = ({ title, children, unit }: BusinessBoxProps) => {
   return (
     <Box>
       <Title>
+
+
         {title}
         {unit && <span>(단위 : {unit})</span>}
       </Title>

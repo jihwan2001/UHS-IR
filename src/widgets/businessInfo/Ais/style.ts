@@ -13,7 +13,10 @@ export const ChartRow = styled.div`
 
 export const Description = styled.div`
   flex: 1;
-  font-size: 0.9rem;
+  font-size: 1.3rem;
   line-height: 1.4;
   color: #333;
+  p:first-child {
+    font-weight: bold;
+  }
 `;

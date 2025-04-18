@@ -56,8 +56,8 @@ export const NoticesMain = () => {
     console.log("🔍 검색 실행:", query);
 
     if (!query.trim()) {
-      sessionStorage.removeItem("searchTerm");
-      setSearchTerm("");
+      sessionStorage.removeItem("searchTerm"); // ✅ 검색어가 없으면 `localStorage`에서 삭제
+      setSearchTerm(""); // ✅ 검색어를 초기화
       setPage(1);
       fetchNotices();
     } else {

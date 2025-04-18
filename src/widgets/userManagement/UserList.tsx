@@ -6,14 +6,7 @@ import {
   ContentDetails,
   ButtonGroup,
 } from "./style";
-
-interface AccDatas {
-  user_id: number;
-  user_name: string;
-  user_level: number;
-  user_position: number;
-  user_dept: number;
-}
+import { AccDatas } from "./types";
 
 interface UserListProps {
   accountData: AccDatas[];
@@ -48,14 +41,14 @@ export const UserList: React.FC<UserListProps> = ({
       </RowContainer>
 
       {accountData.map((account, index) => (
-        <RowContainer key={account.user_id}>
-          <ContentDetails>{account.user_name}</ContentDetails>
+        <RowContainer key={account.userId}>
+          <ContentDetails>{account.userName}</ContentDetails>
 
           <ContentDetails>
             <select
-              value={account.user_level}
+              value={account.userLevel}
               onChange={(e) =>
-                handleSelectChange(index, "user_level", +e.target.value)
+                handleSelectChange(index, "userLevel", +e.target.value)
               }
             >
               <option value={0}>가</option>
@@ -67,9 +60,9 @@ export const UserList: React.FC<UserListProps> = ({
 
           <ContentDetails>
             <select
-              value={account.user_dept}
+              value={account.userDept}
               onChange={(e) =>
-                handleSelectChange(index, "user_dept", +e.target.value)
+                handleSelectChange(index, "userDept", +e.target.value)
               }
             >
               <option value={0}>행정</option>
@@ -82,9 +75,9 @@ export const UserList: React.FC<UserListProps> = ({
 
           <ContentDetails>
             <select
-              value={account.user_position}
+              value={account.userPosition}
               onChange={(e) =>
-                handleSelectChange(index, "user_position", +e.target.value)
+                handleSelectChange(index, "userPosition", +e.target.value)
               }
             >
               <option value={0}>학생</option>

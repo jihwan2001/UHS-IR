@@ -20,7 +20,7 @@ export const StudentPerformanceGroup = () => {
     취업률: "#dc3545",
     중도탈락률: "#dc3545",
     진학률: "#28a745",
-    "기숙사 수용률": "#0F2280",
+    "기숙사 수용률": "#dc3545",
   };
 
   const grouped = groupByChartKey(data);

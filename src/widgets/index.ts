@@ -25,6 +25,4 @@ export { NoticesMain } from "./notices/NoticesMain"; // notice 페이지
 export { NoticesAddForm } from "./notices/NoticesAddForm";
 export { NoticesDetailForm } from "./notices/NoticesDetailForm";
 
-export { UserPasswordCheck } from "./userManagement/UserPasswordCheck";
-export { UserList } from "./userManagement/UserList";
-export { UserPermission } from "./userManagement/UserPermission";
+export { StudentsInfoMain } from "./studentInfo/StudentsInfoMain";

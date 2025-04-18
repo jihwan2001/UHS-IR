@@ -65,9 +65,7 @@ export const InquiryUnClearForm = () => {
       </FormContainer>
 
       <BtnGroup>
-        <FormBackBtn>
-          목록
-        </FormBackBtn>
+        <FormBackBtn>목록</FormBackBtn>
         <SubmitButton type="submit">처리</SubmitButton>
       </BtnGroup>
     </form>

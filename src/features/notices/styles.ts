@@ -37,12 +37,12 @@ export const StyledTh = styled.th`
   text-align: center;
 `;
 
-export const StyledTd = styled.td`
+export const StyledTd = styled.td<{ noPointer?: boolean }>`
   padding: 12px;
   border: 1px solid #ddd;
   text-align: center;
   word-wrap: break-word;
-  cursor: pointer;
+  cursor: ${(props) => (props.noPointer ? "default" : "pointer")};
 `;
 
 export const TitleTd = styled(StyledTd)`

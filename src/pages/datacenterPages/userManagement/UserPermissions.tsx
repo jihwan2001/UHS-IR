@@ -1,12 +1,12 @@
-import { InquiryMain } from "../../../widgets/inquiry/InquiryMain";
+import { UserPermission } from "../../../widgets/userManagement/UserPermission";
 import { FormContainer, FormWrapper } from "../styles";
 
-export const Inquiries = () => {
+export const UserPermissionPage = () => {
   return (
     <>
       <FormContainer>
         <FormWrapper>
-          <InquiryMain />
+          <UserPermission />
         </FormWrapper>
       </FormContainer>
     </>

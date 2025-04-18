@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLogin } from "../hooks/useLogin";
 import { Form, Input, LoginButton } from "../styles";
 
@@ -12,10 +12,17 @@ export const LoginForm = () => {
     await login({ userAccount: account, userPw: password });
   };
 
+  // 👇 에러 발생 시 alert 띄우기
+  useEffect(() => {
+    if (error) {
+      alert(error);
+    }
+  }, [error]);
+
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <p> 로그인</p>
+        <p>로그인</p>
         <Input
           type="text"
           placeholder="학번 또는 교원 번호를 입력해주세요."
@@ -28,8 +35,6 @@ export const LoginForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        {/*{error && <p style={{ color: "red" }}>{error}</p>}
-      {message && <p style={{ color: "green" }}>{message}</p>}*/}
         <LoginButton type="submit" disabled={loading || !account || !password}>
           {loading ? "접속 중..." : "접속하기"}
         </LoginButton>

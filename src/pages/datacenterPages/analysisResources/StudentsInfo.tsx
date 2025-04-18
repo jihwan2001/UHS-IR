@@ -1,12 +1,12 @@
-import { InquiryMain } from "../../../widgets/inquiry/InquiryMain";
+import { StudentsInfoMain } from "../../../widgets";
 import { FormContainer, FormWrapper } from "../styles";
 
-export const Inquiries = () => {
+export const StudentInfo = () => {
   return (
     <>
       <FormContainer>
         <FormWrapper>
-          <InquiryMain />
+          <StudentsInfoMain />
         </FormWrapper>
       </FormContainer>
     </>
