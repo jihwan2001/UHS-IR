@@ -38,3 +38,15 @@ export { NoticesRow } from "./notices/NoticesRow";
 export { FormFileUpload } from "./notices/FormFileUpload";
 export { NoticesBulkActionBar } from "./notices/NoticesBulkActionBar";
 export { NoticesInfor } from "./notices/NoticesInfor";
+
+// studentInfo 페이지 관련 친구들
+export { StudentsRow } from "./studentsInfo/StudentsRow";
+export { StudentsTable } from "./studentsInfo/StudentsTable";
+export { StudentsHeader } from "./studentsInfo/StudentsHeader";
+export { StudentsBulkActionBar } from "./studentsInfo/StudentsBulkActionBar";
+
+// TeachersInfo 페이지 관련 친구들
+export { TeachersBulkActionBar } from "./teachersInfo/TeachersBulkActionBar";
+export { TeachersHeader } from "./teachersInfo/TeachersHeader";
+export { TeachersRow } from "./teachersInfo/TeachersRow";
+export { TeachersTable } from "./teachersInfo/TeachersTable";

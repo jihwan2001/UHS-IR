@@ -24,3 +24,5 @@ export { Sidebar } from "./datacenterNavbar/Sidebar";
 export { NoticesMain } from "./notices/NoticesMain"; // notice 페이지
 export { NoticesAddForm } from "./notices/NoticesAddForm";
 export { NoticesDetailForm } from "./notices/NoticesDetailForm";
+
+export { StudentsInfoMain } from "./studentInfo/StudentsInfoMain";
