@@ -29,9 +29,9 @@ export const InquiryTable = ({ data }: InquiryTableProps) => {
 
   const handleRowClick = (item: ComplainItem) => {
     if (item.complainState === "처리됨") {
-      navigate(`/datacenter/14/clearPage`, { state: item });
+      navigate(`/datacenter/6/clearPage`, { state: item });
     } else {
-      navigate(`/datacenter/14/unClearPage`, { state: item });
+      navigate(`/datacenter/6/unClearPage`, { state: item });
     }
   };
 

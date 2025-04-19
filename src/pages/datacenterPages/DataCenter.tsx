@@ -8,21 +8,16 @@ import { InquiryClearForm, InquiryUnClearForm } from "../../widgets";
 // ✅ 개별 파일 import 매핑
 const pageModules: { [key: string]: () => Promise<any> } = {
   "1": () => import("./infoAnalysis/BusinessInfo"),
-  "2": () => import("./infoAnalysis/AcademicInfo"),
-  "3": () => import("./infoAnalysis/Employment"),
-  "4": () => import("./infoAnalysis/Research"),
-  "5": () => import("./infoAnalysis/StudentSupport"),
-  "6": () => import("./analysisResources/StudentsInfo"),
-  "7": () => import("./analysisResources/TeachersInfo"),
-  "8": () => import("./analysisResources/ExternalInfo"),
-  "9": () => import("./utilization/ReportManagement"),
-  "10": () => import("./utilization/Simulation"),
-  "11": () => import("./utilization/LiveData"),
-  "12": () => import("./utilization/InstantSimulation"),
-  "13": () => import("./officialsiteManagement/Notices"),
-  "14": () => import("./officialsiteManagement/Inquiries"),
-  "15": () => import("./officialsiteManagement/Reports"),
-  "16": () => import("./userManagement/UserPermissionPage"),
+
+  "2": () => import("./analysisResources/StudentsInfo"),
+  "3": () => import("./analysisResources/TeachersInfo"),
+
+  "4": () => import("./utilization/ReportManagement"),
+
+  "5": () => import("./officialsiteManagement/Notices"),
+  "6": () => import("./officialsiteManagement/Inquiries"),
+  "7": () => import("./officialsiteManagement/Reports"),
+  "8": () => import("./userManagement/UserPermissionPage"),
 };
 
 // ✅ NotFound 페이지 로드

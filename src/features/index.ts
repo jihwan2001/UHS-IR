@@ -50,3 +50,7 @@ export { TeachersBulkActionBar } from "./teachersInfo/TeachersBulkActionBar";
 export { TeachersHeader } from "./teachersInfo/TeachersHeader";
 export { TeachersRow } from "./teachersInfo/TeachersRow";
 export { TeachersTable } from "./teachersInfo/TeachersTable";
+
+// reportManagement 페이지 관련 친구들
+export { ExcelDropzone } from "./reportManagement/ExcelDropzone";
+export { FileListDisplay } from "./reportManagement/FileListDisplay";

@@ -11,7 +11,6 @@ import {
 } from "../notices/styles";
 
 import axios from "axios";
-import { useUserRole } from "../../shared/utils/userRoleUtil";
 import { useRecoilValue } from "recoil";
 import { authState } from "../../authAtom";
 
@@ -34,7 +33,7 @@ export const InquiryUnClearForm = () => {
       });
 
       alert("처리되었습니다.");
-      navigate("/datacenter/14");
+      navigate("/datacenter/6");
     } catch (err) {
       alert("답변 등록 실패");
       console.error(err);

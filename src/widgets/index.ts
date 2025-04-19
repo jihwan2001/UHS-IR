@@ -28,3 +28,5 @@ export { NoticesDetailForm } from "./notices/NoticesDetailForm";
 export { UserPermission } from "./userManagement/UserPermission";
 
 export { StudentsInfoMain } from "./studentInfo/StudentsInfoMain";
+
+export { ReportManagementMain } from "./reportManagement/ReportManagementMain";
