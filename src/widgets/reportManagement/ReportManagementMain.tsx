@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { GroupNameInput } from "./styles";
 import { SubmitButton } from "../notices/styles";
-import { ExcelDropzone, FileListDisplay } from "../../features";
+import { ExcelDropzone } from "../../features";
 import { submitFiles } from "./hooks/useSubmitFiles";
 
 export const ReportManagementMain = () => {
@@ -18,7 +18,9 @@ export const ReportManagementMain = () => {
 
   const filterExcelFiles = (files: File[]) =>
     files.filter((file) =>
-      [".xls", ".xlsx", ".csv"].some((ext) => file.name.endsWith(ext))
+      [".xls", ".xlsx", ".csv"].some((ext) =>
+        file.name.toLowerCase().endsWith(ext)
+      )
     );
 
   const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
@@ -36,6 +38,17 @@ export const ReportManagementMain = () => {
     setSelectedFiles(excelFiles);
   }, []);
 
+  // 파일 중복 업로드 방지
+  const mergeUniqueFiles = (current: File[], incoming: File[]) => {
+    const map = new Map(
+      current.map((file) => [file.name + file.lastModified, file])
+    );
+    incoming.forEach((file) => {
+      map.set(file.name + file.lastModified, file);
+    });
+    return Array.from(map.values());
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     const excelFiles = filterExcelFiles(files);
@@ -45,7 +58,8 @@ export const ReportManagementMain = () => {
       return;
     }
 
-    setSelectedFiles(excelFiles);
+    setSelectedFiles((prev) => mergeUniqueFiles(prev, excelFiles));
+    e.target.value = ""; // <-- 여기 추가
   };
 
   const removeFile = (index: number) => {
@@ -63,6 +77,7 @@ export const ReportManagementMain = () => {
 
     await submitFiles(selectedFiles, trimmedGroupName);
     setGroupName("");
+    setSelectedFiles([]);
   };
 
   return (
@@ -73,9 +88,9 @@ export const ReportManagementMain = () => {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onFileChange={handleFileChange}
+        selectedFiles={selectedFiles}
+        removeFile={removeFile}
       />
-
-      <FileListDisplay files={selectedFiles} onRemove={removeFile} />
 
       <GroupNameInput
         value={groupName}

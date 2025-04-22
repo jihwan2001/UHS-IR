@@ -1,4 +1,8 @@
-import { FileList, FileItem, CancelIcon } from "../../features/notices/styles";
+import {
+  FileList,
+  FileItem,
+  CancelButton,
+} from "../../features/notices/styles";
 import cancelIcon from "../../img/cancel.png";
 
 interface FileListDisplayProps {
@@ -14,11 +18,12 @@ export const FileListDisplay = ({ files, onRemove }: FileListDisplayProps) => (
     {files.map((file, index) => (
       <FileItem key={index}>
         <span>{formatFileName(file)}</span>
-        <CancelIcon
-          src={cancelIcon}
-          alt="삭제"
+        <CancelButton
           onClick={() => onRemove(index)}
-        />
+          aria-label={`${file.name} 삭제`}
+        >
+          <img src={cancelIcon} alt="삭제 아이콘" />
+        </CancelButton>
       </FileItem>
     ))}
   </FileList>

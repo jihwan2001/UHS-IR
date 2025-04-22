@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { UploadArea, FileList, FileItem, CancelIcon } from "./styles";
-import cancelIcon from "../../img/cancel.png";
+import { UploadArea, FileList, FileItem, CancelButton } from "./styles";
 
 interface FormFileUploadProps {
   onFileSelect: (files: File[]) => void; // 여러 개의 파일을 부모 컴포넌트로 전달
@@ -41,7 +40,7 @@ export const FormFileUpload = ({ onFileSelect }: FormFileUploadProps) => {
 
   // 파일명과 확장자 표시
   const formatFileName = (file: File) => {
-    const extension = file.name.split(".").pop()?.toLowerCase();
+    // const extension = file.name.split(".").pop()?.toLowerCase();
     return `${file.name} `;
   };
 
@@ -69,9 +68,8 @@ export const FormFileUpload = ({ onFileSelect }: FormFileUploadProps) => {
         {selectedFiles.map((file, index) => (
           <FileItem key={index}>
             <span>{formatFileName(file)}</span>
-            <CancelIcon
-              src={cancelIcon}
-              alt="삭제"
+            <CancelButton
+              aria-label={`${file.name} 삭제`}
               onClick={() => removeFile(index)}
             />
           </FileItem>
