@@ -1,12 +1,12 @@
-import { UserPermission } from "../../../widgets/userManagement/UserPermission";
+import { StudentsInfoMain } from "../../../widgets";
 import { FormContainer, FormWrapper } from "../styles";
 
-export const UserPermissionPage = () => {
+export const StudentInfo = () => {
   return (
     <>
       <FormContainer>
         <FormWrapper>
-          <UserPermission />
+          <StudentsInfoMain />
         </FormWrapper>
       </FormContainer>
     </>

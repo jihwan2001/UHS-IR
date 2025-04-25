@@ -17,6 +17,7 @@ export const AutoLogoutManager = () => {
     clearLogoutTimer();
     logoutTimerRef.current = setTimeout(() => {
       logout();
+      alert("10분이 지나서 로그아웃 되었습니다.");
     }, TEN_MINUTES);
   };
 

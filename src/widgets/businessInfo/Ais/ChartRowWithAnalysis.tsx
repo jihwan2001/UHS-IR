@@ -1,6 +1,6 @@
 import { BusinessChartBox, CustomDot, CustomDotRed } from "../../../entities";
 import { DonutChartBox } from "../../../entities/businessInfo/DonutChartBox ";
-import { useChartAnalysis } from "../hooks/useCharAnalysis";
+import { useChartAnalysis } from "../hooks/useChartAnalysis";
 import { ChartRow, Description } from "./style";
 
 interface Props {
@@ -20,16 +20,16 @@ export const ChartRowWithAnalysis = ({ chartKey, dataArr, color }: Props) => {
   ) : (
     <>
       <p>
-        <p>전체 상태</p> {analysis?.status || "-"}
+        <strong>전체 상태</strong>: {analysis?.status || "-"}
       </p>
       <p>
-        <p>자료 해석</p> {analysis?.trend || "-"}
+        <strong>자료 해석</strong>: {analysis?.trend || "-"}
       </p>
       <p>
-        <p>보완 방안</p> {analysis?.suggestion || "-"}
+        <strong>보완 방안</strong>: {analysis?.suggestion || "-"}
       </p>
       <p>
-        <p>상태 등급</p> {analysis?.statusgrade || "-"}
+        <strong>상태 등급</strong>: {analysis?.statusgrade || "-"}
       </p>
     </>
   );

@@ -19,6 +19,10 @@ export const TableContainer = styled.div`
   max-width: 100%;
   margin: 0 auto;
   overflow-x: hidden;
+
+  @media (max-width: 768px) {
+    width: 95vw;
+  }
 `;
 
 export const StyledTable = styled.table`
@@ -37,12 +41,12 @@ export const StyledTh = styled.th`
   text-align: center;
 `;
 
-export const StyledTd = styled.td`
+export const StyledTd = styled.td<{ noPointer?: boolean }>`
   padding: 12px;
   border: 1px solid #ddd;
   text-align: center;
   word-wrap: break-word;
-  cursor: pointer;
+  cursor: ${(props) => (props.noPointer ? "default" : "pointer")};
 `;
 
 export const TitleTd = styled(StyledTd)`
@@ -91,10 +95,17 @@ export const FileItem = styled.div`
   border: 1px solid #ddd;
 `;
 
-export const CancelIcon = styled.img`
-  width: 16px;
-  height: 16px;
+export const CancelButton = styled.button`
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
   cursor: pointer;
+
+  img {
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 export const ActionBar = styled.div`

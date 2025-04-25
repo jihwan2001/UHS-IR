@@ -1,8 +1,8 @@
 import { Pagination } from "../pagination/Pagination";
 import axios from "axios"; // ✅ Axios 사용
 import { TableContainer, Header, Column, Row, Notice } from "../report/styles";
-import { BoardDataProps } from "../announcement/types";
 import { useEffect, useState } from "react";
+import { BoardDataProps } from "./model";
 
 interface BtnClickProps {
   setContentsClick: (value: boolean) => void;

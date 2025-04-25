@@ -1,9 +1,14 @@
 import { InquiryMain } from "../../../widgets/inquiry/InquiryMain";
+import { FormContainer, FormWrapper } from "../styles";
 
 export const Inquiries = () => {
   return (
     <>
-      <InquiryMain />
+      <FormContainer>
+        <FormWrapper>
+          <InquiryMain />
+        </FormWrapper>
+      </FormContainer>
     </>
   );
 };

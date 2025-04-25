@@ -16,14 +16,14 @@ export const StuPerformance = () => {
     취업률: "#dc3545",
     중도탈락률: "#dc3545",
     진학률: "#28a745",
-    "기숙사 수용률": "#dc3545",
+    "기숙사 수용률": "#0F2280",
   };
 
   return (
     <>
       <GroupNameBox>학생 성과 그룹</GroupNameBox>
       {Object.entries(grouped).map(([chartKey, dataArr]) => {
-        const color = colorMap[chartKey] || "#0F2280";
+        const color = colorMap[chartKey] || "#28a745";
         return (
           <ChartRowWithAnalysis
             key={chartKey}

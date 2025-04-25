@@ -8,8 +8,6 @@ import {
 } from "./style";
 import { AccDatas } from "./types";
 
-
-
 interface UserListProps {
   accountData: AccDatas[];
   setAccountData: React.Dispatch<React.SetStateAction<AccDatas[]>>;

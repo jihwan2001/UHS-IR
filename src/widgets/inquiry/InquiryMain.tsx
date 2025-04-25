@@ -22,6 +22,7 @@ export const InquiryMain = () => {
           keyword: searchTerm,
           page,
           size: 10,
+
           sort: sortType, // ✅ 변경된 파라미터명
         },
       });

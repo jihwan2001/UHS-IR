@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { NoticesTableProps, NoticeItem } from "./model";
 import { useState, useEffect } from "react"; // ✅ useState 추가
 
-
 export const NoticesTable = ({
   notices, // ✅ API에서 가져온 데이터 props로 받음
   isAllChecked,
@@ -13,12 +12,15 @@ export const NoticesTable = ({
   setSelectedNotices,
 }: NoticesTableProps) => {
   const navigate = useNavigate();
-  const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>({});
+  const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>(
+    {}
+  );
 
   const handleCheckboxChange = (notice: NoticeItem) => {
-    setCheckedItems((prev: { [key: number]: boolean }) => { // ✅ prev 타입 명시
+    setCheckedItems((prev: { [key: number]: boolean }) => {
+      // ✅ prev 타입 명시
       const updated = { ...prev, [notice.boardId]: !prev[notice.boardId] };
-  
+
       const selectedNotices = Object.keys(updated)
         .filter((key) => updated[Number(key)])
         .map((key) => {
@@ -29,7 +31,9 @@ export const NoticesTable = ({
         })
         .filter((item) => item !== null);
 
-      setSelectedNotices(selectedNotices as { id: number; isPinned: boolean }[]);
+      setSelectedNotices(
+        selectedNotices as { id: number; isPinned: boolean }[]
+      );
       setIsAnyChecked(selectedNotices.length > 0);
 
       return updated;
@@ -37,7 +41,7 @@ export const NoticesTable = ({
   };
 
   const handleRowClick = (item: NoticeItem) => {
-    navigate(`/datacenter/13/detail`, { state: item });
+    navigate(`/datacenter/5/detail`, { state: item });
   };
 
   useEffect(() => {
@@ -56,13 +60,20 @@ export const NoticesTable = ({
                 item={item}
                 isChecked={checkedItems[item.boardId] || false} // ✅ 체크된 상태 반영
                 onCheckboxChange={() => handleCheckboxChange(item)}
-                onRowClick={()=>handleRowClick(item)}
-                />
+                onRowClick={() => handleRowClick(item)}
+              />
             ))}
           </tbody>
         </StyledTable>
       ) : (
-        <div style={{ textAlign: "center", padding: "20px", fontSize: "16px", color: "#555" }}>
+        <div
+          style={{
+            textAlign: "center",
+            padding: "20px",
+            fontSize: "16px",
+            color: "#555",
+          }}
+        >
           검색 결과가 없습니다.
         </div>
       )}

@@ -16,3 +16,5 @@ export { NoticesAddPage } from "./datacenterPages/officialsiteManagement/Notices
 export { NoticesDetailPage } from "./datacenterPages/officialsiteManagement/NoticesDetailPage";
 export { Inquiries } from "./datacenterPages/officialsiteManagement/Inquiries";
 export { Reports } from "./datacenterPages/officialsiteManagement/Reports";
+
+export { ReportManagement } from "./datacenterPages/utilization/ReportManagement";

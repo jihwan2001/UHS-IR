@@ -16,7 +16,7 @@ export const Description = styled.div`
   font-size: 1.3rem;
   line-height: 1.4;
   color: #333;
-  p: first-child {
+  p:first-child {
     font-weight: bold;
   }
 `;

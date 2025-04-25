@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { BoardDataProps } from "../types";
+import { NoticeItem } from "../../../widgets/notices/model";
+// import { BoardDataProps } from "../model";
 
 export const useBoardData = (initialPage: number = 1) => {
-  const [datas, setDatas] = useState<BoardDataProps[]>([]);
+  const [datas, setDatas] = useState<NoticeItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [pageNumber, setPageNumber] = useState<number>(initialPage);
