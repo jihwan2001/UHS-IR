@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   YearSelector,
   SearchBar,
@@ -7,6 +8,8 @@ import {
 import { Container, Header, FilterContainer } from "./styles";
 
 export const ReportList = () => {
+  const [reportGroup] = useState<string>(""); // 초기값
+
   return (
     <Container>
       <Header>분석 보고서</Header>
@@ -14,7 +17,7 @@ export const ReportList = () => {
         <YearSelector />
         <SearchBar />
       </FilterContainer>
-      <ReportTable />
+      <ReportTable reportGroup={reportGroup} />
       {/* <Pagination /> */}
     </Container>
   );

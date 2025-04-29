@@ -1,17 +1,24 @@
 import { TableContainer, Header, Column, Row } from "./styles";
+import { handleRowClick } from "./hooks/handleRowClick";
+import { useReportDatas } from "./hooks/handleReportDatas";
 
-const sampleReports = [
-  { id: 124, title: "2024학년도 종합 보고서", date: "2025.01.30" },
-  {
-    id: 123,
-    title: "2024학년도 4분기 보고서",
-    date: "2024.12.28",
-  },
-  { id: 122, title: "2024학년도 3분기", date: "2024.09.26" },
-  { id: 121, title: "2024학년도 2분기", date: "2024.06.25" },
-];
+// 날짜 포맷: yyyy.mm.dd
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작
+  const day = String(date.getDate()).padStart(2, "0");
 
-export const ReportTable = () => {
+  return `${year}.${month}.${day}`;
+};
+
+export const ReportTable = ({ reportGroup }: { reportGroup: string }) => {
+  const { reports, loading } = useReportDatas(reportGroup);
+
+  if (loading) {
+    return <div>로딩 중...</div>;
+  }
+
   return (
     <TableContainer>
       <Header>
@@ -19,13 +26,21 @@ export const ReportTable = () => {
         <Column flexValue={5}>제목</Column>
         <Column flexValue={1}>작성일</Column>
       </Header>
-      {sampleReports.map((report) => (
-        <Row key={report.id}>
-          <Column flexValue={1}>{report.id}</Column>
-          <Column flexValue={5}>{report.title}</Column>
-          <Column flexValue={1}>{report.date}</Column>
-        </Row>
-      ))}
+
+      {reports.length > 0 ? (
+        reports.map((report) => (
+          <Row
+            key={report.reportId}
+            onClick={() => handleRowClick(report.reportId)}
+          >
+            <Column flexValue={1}>{report.reportId}</Column>
+            <Column flexValue={5}>{report.reportName}</Column>
+            <Column flexValue={1}>{formatDate(report.reportDate)}</Column>
+          </Row>
+        ))
+      ) : (
+        <div>데이터가 없습니다.</div>
+      )}
     </TableContainer>
   );
 };
