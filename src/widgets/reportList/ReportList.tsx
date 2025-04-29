@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  YearSelector,
-  SearchBar,
-  ReportTable,
-  Pagination,
-} from "../../features";
+import { YearSelector, SearchBar, ReportTable } from "../../features";
 import { Container, Header, FilterContainer } from "./styles";
 
 export const ReportList = () => {
@@ -18,7 +13,6 @@ export const ReportList = () => {
         <SearchBar />
       </FilterContainer>
       <ReportTable reportGroup={reportGroup} />
-      {/* <Pagination /> */}
     </Container>
   );
 };
