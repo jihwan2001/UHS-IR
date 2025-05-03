@@ -5,6 +5,7 @@ import { TeachersInfoItem } from "../../../features/teachersInfo/model";
 export const useTeachersData = () => {
   const [teachers, setTeachers] = useState<TeachersInfoItem[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>("");
 
   // 선생님 목록을 불러오는 함수
   const fetchTeachers = async () => {
@@ -16,6 +17,7 @@ export const useTeachersData = () => {
       setTeachers(response.data);
     } catch (error) {
       console.error("선생님 목록 불러오기 오류:", error);
+      setError(error as string);
     } finally {
       setLoading(false);
     }
@@ -24,5 +26,5 @@ export const useTeachersData = () => {
     fetchTeachers();
   }, []);
 
-  return { teachers, loading };
+  return { teachers, loading, error };
 };

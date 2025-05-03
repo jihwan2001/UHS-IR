@@ -7,7 +7,7 @@ export const Notices = () => {
 
   return (
     <>
-      {id === "13" && subId === "add" ? <NoticesAddPage /> : <NoticesMain />}
+      {id === "6" && subId === "add" ? <NoticesAddPage /> : <NoticesMain />}
       {/* {subId === "detail" ? <NoticesDetailPage /> : <NoticesMain />}
       {swi} */}
     </>

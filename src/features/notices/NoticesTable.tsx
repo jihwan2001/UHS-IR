@@ -41,7 +41,7 @@ export const NoticesTable = ({
   };
 
   const handleRowClick = (item: NoticeItem) => {
-    navigate(`/datacenter/5/detail`, { state: item });
+    navigate(`/datacenter/7/detail`, { state: item });
   };
 
   useEffect(() => {

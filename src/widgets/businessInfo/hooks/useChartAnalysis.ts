@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export interface ChartAnalysis {
   status: string;
@@ -15,15 +16,16 @@ export const useChartAnalysis = (chartKey: string) => {
   useEffect(() => {
     const fetchAnalysis = async () => {
       try {
-        const res = await fetch(
-          `/api/openai/analyze?chartKey=${encodeURIComponent(chartKey)}`
+        const res = await axios.get(
+          `http://localhost:8080/api/openai/analyze`,
+          {
+            params: { chartKey },
+          }
         );
-        if (!res.ok) throw new Error("분석 요청 실패");
 
-        const data: ChartAnalysis = await res.json();
-        setAnalysis(data);
+        setAnalysis(res.data);
       } catch (err: any) {
-        setError(err.message);
+        setError(err.response?.data?.message || err.message || "에러 발생");
       } finally {
         setLoading(false);
       }

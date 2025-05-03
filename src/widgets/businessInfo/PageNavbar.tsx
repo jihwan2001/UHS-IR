@@ -3,7 +3,6 @@ import { NavContainer, NavItem } from "./styles";
 import { AiAnalysis, DashBoard } from "..";
 import { NotFound } from "../../pages";
 import { BusinessNavs } from "./model";
-import { GroupNameBox } from "../../entities";
 
 export const PageNavbar = () => {
   const [clicked, setClicked] = useState("대시보드"); // 기본값 "대시보드"

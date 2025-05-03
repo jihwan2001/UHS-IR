@@ -33,7 +33,7 @@ export const InquiryUnClearForm = () => {
       });
 
       alert("처리되었습니다.");
-      navigate("/datacenter/6");
+      navigate("/datacenter/8");
     } catch (err) {
       alert("답변 등록 실패");
       console.error(err);

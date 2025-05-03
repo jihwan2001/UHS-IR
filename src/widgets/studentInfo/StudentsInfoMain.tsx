@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { dummyData } from "../../features/studentsInfo/dummyData";
 import { deleteStudents } from "./hooks/useDeleteStu";
 import { StudentsBulkActionBar, StudentsTable } from "../../features";
 import { useStudentsData } from "./hooks/useStudentsData";
 
 export const StudentsInfoMain = () => {
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const { students, loading } = useStudentsData();
+  const { students, loading, error } = useStudentsData();
   const handleSelectAll = () => {
     setSelectedIds((prev) =>
       prev.length === students.length ? [] : students.map((s) => s.userId)
@@ -24,13 +23,15 @@ export const StudentsInfoMain = () => {
   return (
     <>
       <StudentsBulkActionBar
-        isAllChecked={selectedIds.length === dummyData.length}
+        isAllChecked={selectedIds.length === students.length}
         isAnyChecked={selectedIds.length > 0} // ✅ 여기
         onSelectAll={handleSelectAll}
         onDelete={handleDelete}
       />
       {loading ? (
         <div style={{ textAlign: "center", padding: "20px" }}>로딩 중...</div>
+      ) : error ? (
+        alert("데이터를 불러오는 중 오류가 발생했습니다.")
       ) : (
         <StudentsTable
           students={students}

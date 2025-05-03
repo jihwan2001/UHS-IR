@@ -3,7 +3,7 @@ export { IrOverviewContents } from "./irOverview/IrOverviewContents";
 export { LoginForm } from "./auth/ui/LoginForm";
 export { LoginButton } from "./auth/ui/LoginButton";
 
-export { SideNavbar } from "./stats/sideNavbar/SideNavbar";
+export { StatsSideNavbar } from "./stats/statsSideNavbar/StatsSideNavbar";
 export { StatsYearName } from "./stats/header/StatsYearName";
 export { StatsContents } from "./stats/contents/StatsContents";
 
@@ -12,7 +12,7 @@ export { GotoDatacenter } from "./navbars/GotoDatacenter";
 
 export { Pagination } from "./pagination/Pagination";
 
-export { ReportTable } from "./report/ReportTable";
+export { ReportTable } from "./report/mainPage/ReportTable";
 export { YearSelector } from "./report/YearSelector";
 
 export { SearchBar } from "./searchBar/SearchBar";
