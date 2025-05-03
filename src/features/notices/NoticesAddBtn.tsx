@@ -6,8 +6,8 @@ export const NoticesAddBtn = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    const newPath = id === "5" ? `/datacenter/${id}/add` : `/datacenter/${id}`;
-    navigate(newPath); // ✅ id가 5일 때만 "/datacenter/:id/add"로 이동, 아니면 "/datacenter/:id"로 이동
+    const newPath = id === "7" ? `/datacenter/${id}/add` : `/datacenter/${id}`;
+    navigate(newPath); // ✅ id가 7일 때만 "/datacenter/:id/add"로 이동, 아니면 "/datacenter/:id"로 이동
   };
 
   return <AddBox onClick={handleClick}>공지사항 추가</AddBox>;

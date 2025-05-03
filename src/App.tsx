@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
-import RouterMain from "./RouterMain";
 import "pretendard/dist/web/static/pretendard.css";
 import { AutoLogoutManager } from "./features/auth/AutoLogoutManager";
+import { RouterMain } from "./RouterMain";
 
 const GlobalStlye = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -69,7 +69,7 @@ function App() {
     <>
       <GlobalStlye />
       <AutoLogoutManager />
-      <RouterMain></RouterMain>
+      <RouterMain />
     </>
   );
 }

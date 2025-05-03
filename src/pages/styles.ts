@@ -25,3 +25,10 @@ export const LoginPageContainer = styled.div`
   height: 100vh; /* 화면 높이의 100% */
   width: 100%;
 `;
+export const StatsLayoutWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+  margin-bottom: 30px;
+`;

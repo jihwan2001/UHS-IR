@@ -3,7 +3,7 @@ import axios from "axios";
 export const getReportDownload = async (reportId: number) => {
   try {
     const response = await axios.get(
-      `http://localhost:8080//api/report/download/pdf`,
+      `http://localhost:8080/api/main/report/download/pdf`,
       {
         params: {
           reportId,

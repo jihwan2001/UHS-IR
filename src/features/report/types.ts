@@ -1,4 +1,4 @@
-export interface ReportProps {
+export interface ReportItems {
   reportId: number;
   reportName: string;
   reportYear: number;

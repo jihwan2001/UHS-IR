@@ -13,6 +13,8 @@ export const loginUser = async (
         headers: { "Content-Type": "application/json" },
       }
     );
+    const role = positionToRole(response.data.userPosition);
+
     localStorage.setItem(
       "user",
       JSON.stringify({
@@ -20,8 +22,9 @@ export const loginUser = async (
         userAccount: response.data.userAccount,
         userName: response.data.userName,
         userPosition: response.data.userPosition,
+        role: role, // ✅ role 저장
       })
-    ); // ✅ 유저 정보 저장
+    );
 
     window.location.href = "/"; // 홈페이지로 이동
     return response.data;
@@ -33,5 +36,19 @@ export const loginUser = async (
     }
 
     throw new Error(errorMessage);
+  }
+};
+const positionToRole = (position: number): string => {
+  switch (position) {
+    case 0:
+      return "STUDENT";
+    case 1:
+      return "TEACHER";
+    case 2:
+      return "IR_MANAGER";
+    case 3:
+      return "ADMIN";
+    default:
+      return "UNKNOWN";
   }
 };

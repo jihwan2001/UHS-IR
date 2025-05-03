@@ -82,6 +82,7 @@ export const FileList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-bottom: 20px;
 `;
 
 export const FileItem = styled.div`

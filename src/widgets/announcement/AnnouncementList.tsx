@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { SearchBar, AnnouncementTable } from "../../features";
-import { Container, FilterContainer, Header } from "../reportList/styles";
+import { Container, FilterContainer, Header } from "../analyzeReport/styles";
 import { AnnouncementContent } from "./AnnouncementContent";
 import { SortDropdown } from "../../shared";
 import { BoardDataProps } from "../../features/announcement/model";

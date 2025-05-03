@@ -30,7 +30,7 @@ export const InquiryClearForm = () => {
     try {
       await axios.put(`/api/complain/${item.complainId}/edit`, action);
       alert("답변이 수정되었습니다.");
-      navigate("/datacenter/6");
+      navigate("/datacenter/8");
     } catch (err) {
       alert("수정 실패");
       console.error(err);

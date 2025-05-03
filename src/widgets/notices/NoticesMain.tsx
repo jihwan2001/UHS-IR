@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "../../api/axiosConfig";
 
 import {
@@ -18,27 +18,28 @@ export const NoticesMain = () => {
   const [notices, setNotices] = useState([]);
   const [searchTerm, setSearchTerm] = useState(
     sessionStorage.getItem("searchTerm") || ""
-  ); // ✅ 새로고침 시 검색어 유지
+  );
   const [sortType, setSortType] = useState("latest");
   const [page, setPage] = useState(1);
   const [pageSize] = useState(10);
   const [loading, setLoading] = useState(false);
 
-  const fetchNotices = async () => {
+  // 🔁 공지사항 목록 API 호출
+  const fetchNotices = useCallback(async () => {
     setLoading(true);
     try {
-      let response;
-      if (!searchTerm.trim()) {
-        response = await axios.get(`http://localhost:8080/api/board/list`, {
-          params: { page, size: pageSize, sortType },
-          withCredentials: true, // ✅ 세션 유지 추가
-        });
-      } else {
-        response = await axios.get(`http://localhost:8080/api/board/search`, {
-          params: { keyword: searchTerm, page, size: pageSize, sortType },
-          withCredentials: true, // ✅ 검색 요청에도 세션 유지 추가
-        });
-      }
+      const endpoint = searchTerm.trim()
+        ? `http://localhost:8080/api/board/search`
+        : `http://localhost:8080/api/board/list`;
+
+      const params = searchTerm.trim()
+        ? { keyword: searchTerm, page, size: pageSize, sortType }
+        : { page, size: pageSize, sortType };
+
+      const response = await axios.get(endpoint, {
+        params,
+        withCredentials: true,
+      });
 
       console.log("📌 API 응답 데이터:", response.data);
       setNotices(response.data?.content || response.data || []);
@@ -48,37 +49,34 @@ export const NoticesMain = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchTerm, page, pageSize, sortType]);
+
   const { handlePinToggle } = useNoticePin(fetchNotices);
 
-  // 🔹 검색 실행 함수
+  // 🔍 검색 실행
   const handleSearch = (query: string) => {
     console.log("🔍 검색 실행:", query);
-
     if (!query.trim()) {
-      sessionStorage.removeItem("searchTerm"); // ✅ 검색어가 없으면 `localStorage`에서 삭제
-      setSearchTerm(""); // ✅ 검색어를 초기화
-      setPage(1);
-      fetchNotices();
+      sessionStorage.removeItem("searchTerm");
+      setSearchTerm("");
     } else {
       sessionStorage.setItem("searchTerm", query);
       setSearchTerm(query);
     }
-
-    setPage(1);
+    setPage(1); // 검색 시 페이지 초기화
   };
 
+  // 🔁 검색어 변경 시 전체 리스트 자동 호출 (빈 검색어일 때만)
   useEffect(() => {
-    if (searchTerm.trim() === "") {
-      fetchNotices(); // ✅ 검색어가 없을 경우 자동으로 전체 리스트 호출
+    if (!searchTerm.trim()) {
+      fetchNotices();
     }
-  }, [searchTerm]);
+  }, [searchTerm, fetchNotices]);
 
-  // 🔹 페이지 로드 시 & 검색어, 정렬 변경 시 API 호출
+  // 🔁 페이지, 정렬 방식 변경 시 API 호출
   useEffect(() => {
-    sessionStorage.removeItem("searchTerm");
     fetchNotices();
-  }, [searchTerm, page, sortType]);
+  }, [fetchNotices]);
 
   return (
     <NoticeContainer>

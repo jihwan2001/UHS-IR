@@ -14,7 +14,13 @@ export const Logo = ({
   const navigate = useNavigate();
 
   return (
-    <LogoWrapper onClick={() => navigate("/")}>
+    <LogoWrapper
+      onClick={() => {
+        window.scrollTo({ top: 0, behavior: "smooth" }); // 맨 위로
+        navigate("/"); // 홈으로 이동
+      }}
+    >
+      {" "}
       <LogoImage logoSize={logoSize} src={symbolMark} alt="Logo" />
       <LogoText fontSize={fontSize}>UHS IR</LogoText>{" "}
       {/* fontSize props 전달 */}

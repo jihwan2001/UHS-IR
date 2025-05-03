@@ -30,3 +30,7 @@ export { UserPermission } from "./userManagement/UserPermission";
 export { StudentsInfoMain } from "./studentInfo/StudentsInfoMain";
 
 export { ReportManagementMain } from "./reportManagement/ReportManagementMain";
+export { PplManagementMain } from "./pplManagement/PplManagementMain";
+export { ReportReportMain } from "./reportReport/ReportReportMain";
+
+export { ReportList } from "./analyzeReport/mainPage/ReportList";

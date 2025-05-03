@@ -1,16 +1,23 @@
-import { useState } from "react";
 import { Select } from "../../shared/ui/Select";
 
-export const YearSelector = () => {
-  const [selectedYear, setSelectedYear] = useState("2024");
-  const years = Array.from({ length: 10 }, (_, i) =>
-    (new Date().getFullYear() - i).toString()
+interface YearSelectorProps {
+  selectedYear: number;
+  onYearChange: (year: number) => void;
+}
+
+export const YearSelector = ({
+  selectedYear,
+  onYearChange,
+}: YearSelectorProps) => {
+  const years = Array.from(
+    { length: 10 },
+    (_, i) => new Date().getFullYear() - i
   );
 
   return (
     <Select
-      value={selectedYear}
-      onChange={(e) => setSelectedYear(e.target.value)}
+      value={selectedYear.toString()}
+      onChange={(e) => onYearChange(parseInt(e.target.value))}
     >
       {years.map((year) => (
         <option key={year} value={year}>

@@ -13,11 +13,14 @@ const pageModules: { [key: string]: () => Promise<any> } = {
   "3": () => import("./analysisResources/TeachersInfo"),
 
   "4": () => import("./utilization/ReportManagement"),
+  "5": () => import("./utilization/PplManagement"),
+  "6": () => import("./utilization/ReportReport"),
 
-  "5": () => import("./officialsiteManagement/Notices"),
-  "6": () => import("./officialsiteManagement/Inquiries"),
-  "7": () => import("./officialsiteManagement/Reports"),
-  "8": () => import("./userManagement/UserPermissionPage"),
+  "7": () => import("./officialsiteManagement/Notices"),
+  "8": () => import("./officialsiteManagement/Inquiries"),
+  "9": () => import("./officialsiteManagement/Reports"),
+
+  "10": () => import("./userManagement/UserPermissionPage"),
 };
 
 // ✅ NotFound 페이지 로드
