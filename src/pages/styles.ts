@@ -32,3 +32,10 @@ export const StatsLayoutWrapper = styled.div`
   justify-content: space-between;
   margin-bottom: 30px;
 `;
+export const StatsContentsWrapper = styled.div`
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;

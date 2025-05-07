@@ -2,6 +2,10 @@ import { createGlobalStyle } from "styled-components";
 import "pretendard/dist/web/static/pretendard.css";
 import { AutoLogoutManager } from "./features/auth/AutoLogoutManager";
 import { RouterMain } from "./RouterMain";
+import { useRecoilValue } from "recoil";
+import { authState } from "./authAtom";
+import { useAuthCheck } from "./features/auth/hooks/useAuthCheck";
+import { Loading } from "./loading";
 
 const GlobalStlye = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -65,10 +69,15 @@ a{
 `;
 
 function App() {
+  useAuthCheck(); // 앱 로드 시 로그인 상태 확인
+  const { isAuthenticated, authLoading } = useRecoilValue(authState);
+
+  if (authLoading) return <Loading />; // ✅ 로딩 중이면 스피너만 보여줌
+
   return (
     <>
       <GlobalStlye />
-      <AutoLogoutManager />
+      {isAuthenticated && <AutoLogoutManager />}
       <RouterMain />
     </>
   );

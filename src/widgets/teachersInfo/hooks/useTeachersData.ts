@@ -12,7 +12,7 @@ export const useTeachersData = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/account/teachers`
+        `http://localhost:8080/api/account/list/teacher`
       );
       setTeachers(response.data);
     } catch (error) {

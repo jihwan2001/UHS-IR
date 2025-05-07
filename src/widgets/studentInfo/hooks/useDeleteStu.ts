@@ -1,23 +1,36 @@
-// hooks/useDeleteStu.ts (예시)
-
+// submitUsersFiles.ts
 import axios from "axios";
 
-export const deleteStudents = async (ids: number[]) => {
-  if (!ids || ids.length === 0) {
-    alert("삭제할 항목이 없습니다.");
+export const submitUsersFiles = async (
+  files: File[],
+  groupName: string = "default"
+) => {
+  if (!files || files.length === 0) {
+    alert("업로드할 파일이 없습니다.");
     return;
   }
 
+  const formData = new FormData();
+  formData.append("file", files[0]); // ✅ 단일 파일만 전송
+  formData.append("groupName", groupName);
+
   try {
-    await Promise.all(
-      ids.map((id) =>
-        axios.delete(`http://localhost:8080/api/account/student/${id}`)
-      )
+    const response = await axios.post(
+      "http://localhost:8080/api/excel/upload",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
-    alert("선택된 항목이 삭제되었습니다.");
-    window.location.reload();
-  } catch (error) {
-    console.error("삭제 중 에러:", error);
-    alert("삭제 중 오류가 발생했습니다.");
+
+    alert(response.data || "업로드 및 분석 완료");
+  } catch (error: any) {
+    console.error("에러 : ", error);
+    alert(
+      error.response?.data ||
+        "전송에 실패했습니다. 파일 또는 chart_key를 확인해주세요."
+    );
   }
 };

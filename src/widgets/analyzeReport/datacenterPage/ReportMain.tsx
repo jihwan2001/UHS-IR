@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import { ReportBulkActionBar } from "../../../features/report/datacenterPage/ReportBulkActionBar";
 import { ReportTable } from "../../../features/report/datacenterPage/ReportTable";
 import { useReportDatas } from "../../../features/report/hooks/useReportDatas";
-import { deleteReports } from "./hooks/useDeleteReports";
 import { handleDelete } from "./hooks/handleDelete";
 
 export const ReportMain = () => {
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const [reportGroup] = useState("SCHOOL"); // 🔸 추후 prop으로 분리 가능
+  const [reportGroup] = useState("협성대학교"); // 🔸 추후 prop으로 분리 가능
   const [pageNumber, setPageNumber] = useState(1);
 
   const { reports, loading, error, totalPages, refetch } = useReportDatas(
