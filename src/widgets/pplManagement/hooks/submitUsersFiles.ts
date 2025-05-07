@@ -11,12 +11,12 @@ export const submitUsersFiles = async (
   }
 
   const formData = new FormData();
-  files.forEach((file) => formData.append("files", file));
+  formData.append("file", files[0]); // ✅ 단일 파일만 전송
   formData.append("groupName", groupName);
 
   try {
     const response = await axios.post(
-      "http://localhost:8080//api/excel/upload",
+      "http://localhost:8080/api/excel/upload",
       formData,
       {
         headers: {

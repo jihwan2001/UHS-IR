@@ -11,7 +11,7 @@ export const useStudentsData = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/account/students`
+        `http://localhost:8080/api/account/list/student`
       );
       setStudents(response.data);
     } catch (error) {

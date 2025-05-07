@@ -10,11 +10,12 @@ export const ReportList = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
 
-  // 🔁 검색 조건 바뀌면 페이지 초기화
+  // 🔁 검색 조건 변경 시 페이지 초기화
   useEffect(() => {
     setPageNumber(1);
   }, [searchKeyword, selectedYear]);
 
+  // ✅ 검색용 훅 사용
   const { reports, loading, error, totalPages } = useReportSearchData(
     searchKeyword,
     selectedYear,
