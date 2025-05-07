@@ -11,7 +11,7 @@ export const deleteTeachers = async (ids: number[]) => {
   try {
     await Promise.all(
       ids.map((id) =>
-        axios.delete(`http://localhost:8080/api/account/teacher/${id}`)
+        axios.delete(`http://localhost:8080/api/account/list/teacher/${id}`)
       )
     );
     alert("선택된 항목이 삭제되었습니다.");

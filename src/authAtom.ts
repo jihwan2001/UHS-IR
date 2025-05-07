@@ -11,5 +11,6 @@ export const authState = atom({
     userAccount: parsedUser?.userAccount || null,
     username: parsedUser?.userName || null, // 저장된 userName이 있으면 사용
     userPosition: parsedUser?.userPosition || null,
+    authLoading: true,
   },
 });
