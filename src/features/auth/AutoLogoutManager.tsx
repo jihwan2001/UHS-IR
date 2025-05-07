@@ -1,8 +1,11 @@
 import { useEffect, useRef } from "react";
 import { useLogout } from "./hooks/logoutUser";
+import { useRecoilValue } from "recoil";
+import { authState } from "../../authAtom";
 
 export const AutoLogoutManager = () => {
-  const logout = useLogout();
+  const { logout, clearAuthState } = useLogout();
+  const isAuthenticated = useRecoilValue(authState).isAuthenticated;
   const logoutTimerRef = useRef<NodeJS.Timeout | null>(null);
   const TEN_MINUTES = 10 * 60 * 1000;
 
@@ -14,45 +17,42 @@ export const AutoLogoutManager = () => {
   };
 
   const startLogoutTimer = () => {
+    if (!isAuthenticated) return;
     clearLogoutTimer();
     logoutTimerRef.current = setTimeout(() => {
       logout();
-      alert("10분이 지나서 로그아웃 되었습니다.");
+      alert("10분이 지나서 자동으로 로그아웃되었습니다.");
     }, TEN_MINUTES);
   };
 
   useEffect(() => {
+    if (!isAuthenticated) return; // ❌ 로그인 안 되어 있으면 이벤트 등록하지 않음
+
     const handleVisibilityChange = () => {
       if (document.visibilityState === "hidden") {
-        // 화면이 보이지 않을 때 타이머 시작
         startLogoutTimer();
       } else if (document.visibilityState === "visible") {
-        // 화면이 다시 보이면 타이머 취소
         clearLogoutTimer();
       }
     };
 
-    const handlePageHide = () => {
-      // 페이지가 사라질 때 타이머 시작
-      startLogoutTimer();
-    };
-
-    const handlePageShow = () => {
-      // 페이지가 다시 보이면 타이머 취소 (모바일에서 유용)
-      clearLogoutTimer();
-    };
+    const handlePageHide = () => startLogoutTimer();
+    const handlePageShow = () => clearLogoutTimer();
+    const handleBeforeUnload = () => clearAuthState();
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener("pagehide", handlePageHide);
     window.addEventListener("pageshow", handlePageShow);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("pagehide", handlePageHide);
       window.removeEventListener("pageshow", handlePageShow);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
       clearLogoutTimer();
     };
-  }, [logout]);
+  }, [logout, clearAuthState, isAuthenticated]);
 
   return null;
 };

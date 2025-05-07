@@ -2,6 +2,8 @@ import { createGlobalStyle } from "styled-components";
 import "pretendard/dist/web/static/pretendard.css";
 import { AutoLogoutManager } from "./features/auth/AutoLogoutManager";
 import { RouterMain } from "./RouterMain";
+import { useRecoilValue } from "recoil";
+import { authState } from "./authAtom";
 
 const GlobalStlye = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -65,10 +67,12 @@ a{
 `;
 
 function App() {
+  const { isAuthenticated } = useRecoilValue(authState);
+
   return (
     <>
       <GlobalStlye />
-      <AutoLogoutManager />
+      {isAuthenticated && <AutoLogoutManager />}
       <RouterMain />
     </>
   );

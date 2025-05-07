@@ -12,18 +12,23 @@ export const useLogout = () => {
         {},
         { withCredentials: true }
       );
-      setAuth({
-        isAuthenticated: false,
-        username: null,
-        userAccount: null,
-        userPosition: null,
-      }); // ✅ 로그인 상태 초기화
-      window.location.reload(); // ✅ 새로고침하여 UI 업데이트
-      localStorage.clear();
+      alert("로그아웃 되었습니다.");
+      clearAuthState(); // ✅ 공통 클라이언트 정리
     } catch (error) {
       console.error("로그아웃 실패:", error);
     }
   };
 
-  return logout;
+  const clearAuthState = () => {
+    setAuth({
+      isAuthenticated: false,
+      username: null,
+      userAccount: null,
+      userPosition: null,
+    });
+    localStorage.clear();
+    window.location.reload();
+  };
+
+  return { logout, clearAuthState };
 };

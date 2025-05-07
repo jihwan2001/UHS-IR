@@ -8,13 +8,13 @@ import { useUserRole } from "../../../shared/utils/userRoleUtil";
 
 export const LoginButton = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, username } = useRecoilValue(authState); // ✅ 로그인 상태 가져오기
-  const userRole = useUserRole(); // ✅ 역할 받아오기
-  const logout = useLogout(); // ✅ useLogout 훅 사용
+  const { isAuthenticated, username } = useRecoilValue(authState);
+  const userRole = useUserRole();
+  const { logout } = useLogout(); // ✅ 구조 분해로 logout만 사용
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
-      logout(); // ✅ 로그아웃 실행
+      await logout(); // ✅ await 추가
     }
   };
 
@@ -25,7 +25,6 @@ export const LoginButton = () => {
       }
     >
       <span>{isAuthenticated ? `${userRole} ${username}` : "Login"}</span>
-      {/* ✅ 로그인한 유저 이름 표시 */}
       <Icon src={loginIcon} alt="Login" />
     </ButtonWrapper>
   );

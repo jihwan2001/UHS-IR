@@ -45,8 +45,6 @@ const positionToRole = (position: number): string => {
     case 1:
       return "TEACHER";
     case 2:
-      return "IR_MANAGER";
-    case 3:
       return "ADMIN";
     default:
       return "UNKNOWN";
