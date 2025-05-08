@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import { authState } from "../../authAtom";
 
 export const AutoLogoutManager = () => {
-  const { logout, clearAuthState } = useLogout();
+  const { logout } = useLogout(); // ❌ clearAuthState 제거
   const isAuthenticated = useRecoilValue(authState).isAuthenticated;
   const logoutTimerRef = useRef<NodeJS.Timeout | null>(null);
   const TEN_MINUTES = 10 * 60 * 1000;
@@ -26,7 +26,7 @@ export const AutoLogoutManager = () => {
   };
 
   useEffect(() => {
-    if (!isAuthenticated) return; // ❌ 로그인 안 되어 있으면 이벤트 등록하지 않음
+    if (!isAuthenticated) return;
 
     const handleVisibilityChange = () => {
       if (document.visibilityState === "hidden") {
@@ -38,21 +38,19 @@ export const AutoLogoutManager = () => {
 
     const handlePageHide = () => startLogoutTimer();
     const handlePageShow = () => clearLogoutTimer();
-    const handleBeforeUnload = () => clearAuthState();
 
+    // ❌ 새로고침 시 logout 방지: beforeunload 제거
     document.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener("pagehide", handlePageHide);
     window.addEventListener("pageshow", handlePageShow);
-    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("pagehide", handlePageHide);
       window.removeEventListener("pageshow", handlePageShow);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
       clearLogoutTimer();
     };
-  }, [logout, clearAuthState, isAuthenticated]);
+  }, [logout, isAuthenticated]);
 
   return null;
 };

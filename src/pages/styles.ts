@@ -37,5 +37,5 @@ export const StatsContentsWrapper = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100vh;
 `;

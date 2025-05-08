@@ -51,7 +51,7 @@ export const StatsSideNavbar = ({
                     >
                       {item.baseName
                         .replace(/\.pdf$/i, "")
-                        .replace(/_\d{4}$/, "")
+                        //.replace(/_\d{4}$/, "")
                         .replace(/_/g, " ")}
                     </li>
                   );

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { PdfItem } from "../types";
 import { PdfDownloadButton } from "./PdfDownloadButton";
 import { StatsContentsWrapper } from "../../../pages/styles";
+import { PdfViewer } from "./PdfViewer"; // 추가된 PDF.js 뷰어
 
 interface Props {
   selectedItem: PdfItem | null;
@@ -10,14 +11,24 @@ interface Props {
 
 export const StatsContents = ({ selectedItem, selectedYear }: Props) => {
   const [pdfExists, setPdfExists] = useState<boolean | null>(null);
+  const [fileUrl, setFileUrl] = useState<string>("");
 
   useEffect(() => {
     if (!selectedItem) return;
 
-    const filename = `${selectedItem.baseName}_${selectedYear}.pdf`;
+    const normalize = (str: string) => str.replace(/\s+/g, "_");
+
+    const filename = `${normalize(selectedItem.groupName)}_${normalize(
+      selectedItem.baseName
+    )}_${selectedYear}.pdf`;
+
     const url = `http://localhost:8080/api/publicfile/preview/pdf/${encodeURIComponent(
       selectedItem.groupName
     )}/${encodeURIComponent(filename)}`;
+
+    setFileUrl(url);
+    console.log("정제된 filename:", filename);
+    console.log("전체 URL:", url);
 
     fetch(url, { method: "HEAD" })
       .then((res) => setPdfExists(res.ok))
@@ -43,16 +54,14 @@ export const StatsContents = ({ selectedItem, selectedYear }: Props) => {
               year={selectedYear}
             />
           </div>
+
+          {/* <PdfViewer fileUrl={fileUrl} /> */}
           <iframe
-            src={`http://localhost:8080/api/publicfile/preview/pdf/${encodeURIComponent(
-              selectedItem.groupName
-            )}/${encodeURIComponent(
-              `${selectedItem.baseName}_${selectedYear}.pdf`
-            )}`}
+            src={fileUrl}
             width="100%"
             height="100%"
+            style={{ border: "none" }}
             title="PDF Viewer"
-            style={{ border: "none", flex: 1 }}
           />
         </>
       )}

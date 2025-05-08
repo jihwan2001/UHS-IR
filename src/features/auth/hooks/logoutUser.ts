@@ -13,21 +13,22 @@ export const useLogout = () => {
         { withCredentials: true }
       );
       alert("로그아웃 되었습니다.");
-      clearAuthState(); // ✅ 공통 클라이언트 정리
+      clearAuthState(); // ✅ 상태 및 저장소 정리
     } catch (error) {
       console.error("로그아웃 실패:", error);
     }
   };
 
   const clearAuthState = () => {
-    setAuth({
+    const cleared = {
       isAuthenticated: false,
       username: null,
       userAccount: null,
       userPosition: null,
-    });
-    localStorage.clear();
-    window.location.reload();
+    };
+    setAuth(cleared);
+    localStorage.removeItem("auth"); // ✅ 전체 삭제 대신 auth 정보만 제거
+    // window.location.reload(); ❌ 제거
   };
 
   return { logout, clearAuthState };

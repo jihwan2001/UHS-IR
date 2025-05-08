@@ -66,6 +66,11 @@ export const NoticesMain = () => {
     setPage(1); // 검색 시 페이지 초기화
   };
 
+  const handleSelectAll = () => {
+    const allIds = notices.map((notice: any) => notice.id); // 공지 ID 배열 추출
+    setSelectedNotices(allIds);
+  };
+
   // 🔁 검색어 변경 시 전체 리스트 자동 호출 (빈 검색어일 때만)
   useEffect(() => {
     if (!searchTerm.trim()) {
@@ -85,8 +90,9 @@ export const NoticesMain = () => {
           <NoticesAddBtn />
           <Line heightSize={22} />
           <NoticesBulkActionBar
+            isAllChecked={selectedNotices.length === notices.length}
             isAnyChecked={selectedNotices.length > 0}
-            onSelectAll={() => {}}
+            onSelectAll={handleSelectAll}
             onDelete={handleDelete}
             onPin={() => handlePinToggle(selectedNotices)}
           />
@@ -108,8 +114,11 @@ export const NoticesMain = () => {
       ) : (
         <NoticesTable
           notices={notices}
-          isAllChecked={false}
-          setIsAnyChecked={() => {}}
+          isAllChecked={selectedNotices.length === notices.length} // ✅ 전체선택 여부 반영
+          setIsAnyChecked={(value) => {
+            // ✅ 최소 하나라도 선택되었는지 감지하여 처리
+            if (!value) setSelectedNotices([]);
+          }}
           setSelectedNotices={setSelectedNotices}
         />
       )}

@@ -1,22 +1,19 @@
 import { useState, useEffect } from "react";
 import { YearSelector, SearchBar, ReportTable } from "../../../features";
 import { Container, Header, FilterContainer } from "../styles";
-import { useReportSearchData } from "./hooks/useReportSearchData";
+import { useDynamicReportData } from "./hooks/useDynamicReportData";
 
 export const ReportList = () => {
-  const [selectedYear, setSelectedYear] = useState<number>(
-    new Date().getFullYear()
-  );
   const [searchKeyword, setSearchKeyword] = useState("");
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [pageNumber, setPageNumber] = useState(1);
 
-  // 🔁 검색 조건 변경 시 페이지 초기화
   useEffect(() => {
     setPageNumber(1);
   }, [searchKeyword, selectedYear]);
 
-  // ✅ 검색용 훅 사용
-  const { reports, loading, error, totalPages } = useReportSearchData(
+  // ✅ 올바르게 훅 사용됨 (컴포넌트 본문 안에서 호출)
+  const { reports, loading, error, totalPages } = useDynamicReportData(
     searchKeyword,
     selectedYear,
     pageNumber

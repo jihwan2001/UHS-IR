@@ -11,7 +11,7 @@ export const useAccountList = () => {
     const fetchAccountList = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/account/list"
+          "http://localhost:8080/api/account/list/admin"
         );
         setAccountData(response.data);
       } catch (error) {

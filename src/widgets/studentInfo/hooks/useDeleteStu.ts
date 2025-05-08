@@ -1,4 +1,4 @@
-// hooks/useDeleteStu.ts (예시)
+// hooks/useDeleteStudents.ts
 
 import axios from "axios";
 
@@ -9,12 +9,12 @@ export const deleteStudents = async (ids: number[]) => {
   }
 
   try {
-    await Promise.all(
-      ids.map((id) =>
-        axios.delete(`http://localhost:8080/api/account/student/${id}`)
-      )
-    );
-    alert("선택된 항목이 삭제되었습니다.");
+    await axios.delete("http://localhost:8080/api/account/delete/student", {
+      data: ids,
+      headers: { "Content-Type": "application/json" },
+    });
+
+    alert("선택된 학생이 삭제되었습니다.");
     window.location.reload();
   } catch (error) {
     console.error("삭제 중 에러:", error);

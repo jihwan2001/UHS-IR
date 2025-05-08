@@ -81,7 +81,10 @@ export const universityData: {
   {
     category: "학생",
     items: [
-      { baseName: "캡스톤 디자인(창의적 설계) 운영 현황", groupName: "학생" },
+      {
+        baseName: "캡스톤 디자인(창의적 설계) 운영 현황",
+        groupName: "학생",
+      },
       { baseName: "계약학과 설치 운영 현황", groupName: "학생" },
       { baseName: "교양과목 성적 분포", groupName: "학생" },
       { baseName: "외국대학과 학점 교류 현황", groupName: "학생" },
